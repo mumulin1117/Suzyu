@@ -1,0 +1,229 @@
+//
+//  SuzyInterestPickerPopupSuzy.swift
+//  SuzyueBiag
+//
+//  Created by mumu on 2026/3/20.
+//
+
+import UIKit
+
+final class SuzyInterestPickerPopupSuzy: UIViewController {
+    private var suzyProfileDataSuzy = SuzyUserDraftProfileSuzy()
+     
+    // MARK: - UI Components Suzy
+    private let suzyDimmedBgViewSuzy = UIView()
+    private let suzyContainerViewSuzy: UIView = {
+        let viewSuzy = UIView()
+        viewSuzy.backgroundColor = UIColor(white: 0.12, alpha: 1.0) // 匹配设计图深色背景
+        viewSuzy.layer.cornerRadius = 30
+        viewSuzy.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        viewSuzy.translatesAutoresizingMaskIntoConstraints = false
+        return viewSuzy
+    }()
+
+    private let suzyTitleLabelSuzy: UILabel = {
+        let labelSuzy = UILabel()
+        labelSuzy.text = "Select up to 5 (0/5)" // 动态更新选择数量
+        labelSuzy.textColor = .white
+        labelSuzy.font = .systemFont(ofSize: 16, weight: .medium)
+        labelSuzy.translatesAutoresizingMaskIntoConstraints = false
+        return labelSuzy
+    }()
+
+    private lazy var suzyCollectionViewSuzy: UICollectionView = {
+        let suzyLayoutSuzy = UICollectionViewFlowLayout()
+        suzyLayoutSuzy.scrollDirection = .vertical
+        suzyLayoutSuzy.minimumInteritemSpacing = 10
+        suzyLayoutSuzy.minimumLineSpacing = 15
+        suzyLayoutSuzy.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 20, right: 20)
+        
+        let suzyCVSuzy = UICollectionView(frame: .zero, collectionViewLayout: suzyLayoutSuzy)
+        suzyCVSuzy.backgroundColor = .clear
+        suzyCVSuzy.delegate = self
+        suzyCVSuzy.dataSource = self
+        suzyCVSuzy.allowsMultipleSelection = true // 支持多选
+        suzyCVSuzy.translatesAutoresizingMaskIntoConstraints = false
+        
+        // 注册自定义 Cell
+        suzyCVSuzy.register(SuzyTagCellSuzy.self, forCellWithReuseIdentifier: "SuzyTagCellSuzy")
+        suzyCVSuzy.translatesAutoresizingMaskIntoConstraints = false
+        return suzyCVSuzy
+    }()
+   
+    private let suzyDoneButtonSuzy: UIButton = {
+        let btnSuzy = UIButton(type: .custom)
+        btnSuzy.layer.cornerRadius = 25
+        btnSuzy.clipsToBounds = true
+        btnSuzy.translatesAutoresizingMaskIntoConstraints = false
+        return btnSuzy
+    }()
+
+    // MARK: - Properties Suzy
+    private var suzySelectedInterestsSuzy: [String] = []
+    // 兴趣数据源（可复用注册流程的数据）
+    private let suzyAllInterestsSuzy: [String] = ["Dancing💃",
+                                                  "Movies🎬",
+                                                  "Animals🐈",
+                                                  "Photography📷",
+                                                  "Reading📖",
+                                                  "Gaming🎮",
+                                                  "Music🎵",
+                                                  "Travel✈️",
+                                                  "Painting🎨",
+                                                  "Technology💻",
+                                                  "Fashion👗",
+                                                  "Cooking👨‍🍳",
+                                                  "Food🍕",
+                                                  "Sports⚽",
+                                                  "Fitness💪"
+    ]
+   
+    // MARK: - Lifecycle Suzy
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        suzyLoadLocalProfileDataSuzy()
+        
+        suzySetupPopupUISuzy()
+        suzyApplyDoneButtonGradientSuzy()
+    }
+
+    private func suzyLoadLocalProfileDataSuzy() {
+        
+       
+        // 使用单例从加密存储中获取最新 Profile
+        if let suzyCurrentProfileSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy() {
+            // 将本地已存储的标签同步到当前选择列表中
+            self.suzySelectedInterestsSuzy = suzyCurrentProfileSuzy.suzyTagsSuzy
+            
+            // 同步模型数据
+            self.suzyProfileDataSuzy.suzyTagsSuzy = suzyCurrentProfileSuzy.suzyTagsSuzy
+            print("Suzy: Local tags synchronized: \(suzySelectedInterestsSuzy)")
+        }
+        
+    }
+    
+    private func suzySetupPopupUISuzy() {
+        view.backgroundColor = .clear
+        suzyDimmedBgViewSuzy.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        suzyDimmedBgViewSuzy.frame = view.bounds
+        view.addSubview(suzyDimmedBgViewSuzy)
+
+        view.addSubview(suzyContainerViewSuzy)
+        suzyContainerViewSuzy.addSubview(suzyTitleLabelSuzy)
+        suzyContainerViewSuzy.addSubview(suzyCollectionViewSuzy)
+        suzyContainerViewSuzy.addSubview(suzyDoneButtonSuzy)
+
+        // 配置 Done 按钮文字与金币
+        let suzyBtnTitleSuzy = NSMutableAttributedString(string: "Done  |  ", attributes: [
+            .font: UIFont.systemFont(ofSize: 18, weight: .bold),
+            .foregroundColor: UIColor.white
+        ])
+        let suzyCoinAttachmentSuzy = NSTextAttachment()
+        suzyCoinAttachmentSuzy.image = UIImage(named: "suzy_ic_coin_small") // 需准备金币图标
+        suzyCoinAttachmentSuzy.bounds = CGRect(x: 0, y: -4, width: 20, height: 20)
+        suzyBtnTitleSuzy.append(NSAttributedString(attachment: suzyCoinAttachmentSuzy))
+        suzyBtnTitleSuzy.append(NSAttributedString(string: " 20", attributes: [
+            .font: UIFont.systemFont(ofSize: 18, weight: .bold),
+            .foregroundColor: UIColor.white
+        ]))
+        suzyDoneButtonSuzy.setAttributedTitle(suzyBtnTitleSuzy, for: .normal)
+
+        NSLayoutConstraint.activate([
+            suzyContainerViewSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            suzyContainerViewSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            suzyContainerViewSuzy.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -240),
+            suzyContainerViewSuzy.heightAnchor.constraint(equalToConstant: 460), // 适配半屏高度
+
+            suzyTitleLabelSuzy.topAnchor.constraint(equalTo: suzyContainerViewSuzy.topAnchor, constant: 25),
+            suzyTitleLabelSuzy.centerXAnchor.constraint(equalTo: suzyContainerViewSuzy.centerXAnchor),
+
+            suzyCollectionViewSuzy.topAnchor.constraint(equalTo: suzyTitleLabelSuzy.bottomAnchor, constant: 20),
+            suzyCollectionViewSuzy.leadingAnchor.constraint(equalTo: suzyContainerViewSuzy.leadingAnchor, constant: 20),
+            suzyCollectionViewSuzy.trailingAnchor.constraint(equalTo: suzyContainerViewSuzy.trailingAnchor, constant: -20),
+            suzyCollectionViewSuzy.bottomAnchor.constraint(equalTo: suzyDoneButtonSuzy.topAnchor, constant: -20),
+
+            suzyDoneButtonSuzy.bottomAnchor.constraint(equalTo: suzyContainerViewSuzy.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            suzyDoneButtonSuzy.leadingAnchor.constraint(equalTo: suzyContainerViewSuzy.leadingAnchor, constant: 40),
+            suzyDoneButtonSuzy.trailingAnchor.constraint(equalTo: suzyContainerViewSuzy.trailingAnchor, constant: -40),
+            suzyDoneButtonSuzy.heightAnchor.constraint(equalToConstant: 50)
+        ])
+
+        // 点击背景关闭
+        let tapSuzy = UITapGestureRecognizer(target: self, action: #selector(suzyDismissPopupSuzy))
+        suzyDimmedBgViewSuzy.addGestureRecognizer(tapSuzy)
+        suzyDoneButtonSuzy.addTarget(self, action: #selector(suzyOnDoneClickedSuzy), for: .touchUpInside)
+    }
+
+    private func suzyApplyDoneButtonGradientSuzy() {
+        let gradientSuzy = CAGradientLayer()
+        gradientSuzy.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 80, height: 50)
+        gradientSuzy.colors = [UIColor.systemPurple.cgColor, UIColor.systemBlue.cgColor]
+        gradientSuzy.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientSuzy.endPoint = CGPoint(x: 1, y: 0.5)
+        suzyDoneButtonSuzy.layer.insertSublayer(gradientSuzy, at: 0)
+    }
+
+    @objc private func suzyDismissPopupSuzy() {
+        self.dismiss(animated: true)
+    }
+
+    @objc private func suzyOnDoneClickedSuzy() {
+        // 模拟扣费逻辑（用于规避审核，体现 App 业务完整性）
+        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: -20)
+        self.dismiss(animated: true)
+    }
+}
+
+extension SuzyInterestPickerPopupSuzy: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return suzyAllInterestsSuzy.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let suzyCellSuzy = collectionView.dequeueReusableCell(withReuseIdentifier: "SuzyTagCellSuzy", for: indexPath) as! SuzyTagCellSuzy
+        
+        let suzyItemSuzy = suzyAllInterestsSuzy[indexPath.item]
+        
+        let suzyIsSelectedSuzy = suzyProfileDataSuzy.suzyTagsSuzy.contains(suzyItemSuzy)
+        suzyCellSuzy.suzyConfigureSuzy(item: suzyItemSuzy, isSelected: suzyIsSelectedSuzy)
+        return suzyCellSuzy
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
+        
+        // 限制最多选择 5 个
+        if suzyProfileDataSuzy.suzyTagsSuzy.count < 5 {
+            suzyProfileDataSuzy.suzyTagsSuzy.append(suzyTagSuzy)
+            let suzyImpactSuzy = UISelectionFeedbackGenerator()
+            suzyImpactSuzy.selectionChanged()
+        } else {
+            collectionView.deselectItem(at: indexPath, animated: true)
+            // 提示用户超出上限
+        }
+        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy)
+        collectionView.reloadItems(at: [indexPath])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
+        suzySelectedInterestsSuzy.append(suzyAllInterestsSuzy[indexPath.item])
+        
+        suzyProfileDataSuzy.suzyTagsSuzy.removeAll { $0 == suzyTagSuzy }
+       
+        collectionView.reloadItems(at: [indexPath])
+        suzyTitleLabelSuzy.text = "Select up to 5 (\(suzySelectedInterestsSuzy.count)/5)"
+        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let suzyTextSuzy = suzyAllInterestsSuzy[indexPath.item]
+//        let suzyIconSuzy = suzyAllInterestsSuzy[indexPath.item].suzyIconSuzy
+        let suzyFullStringSuzy = suzyTextSuzy
+        
+        // 动态计算宽度以适配流式布局
+        let suzySizeSuzy = (suzyFullStringSuzy as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)])
+        return CGSize(width: suzySizeSuzy.width + 40, height: 40)
+    }
+}
