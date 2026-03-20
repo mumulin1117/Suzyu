@@ -23,7 +23,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
 
     private let suzyTitleLabelSuzy: UILabel = {
         let labelSuzy = UILabel()
-        labelSuzy.text = "Select up to 5 (0/5)" // 动态更新选择数量
+        
         labelSuzy.textColor = .white
         labelSuzy.font = .systemFont(ofSize: 16, weight: .medium)
         labelSuzy.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +82,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         suzyLoadLocalProfileDataSuzy()
-        
+        suzyUpdateTitleCountSuzy()
         suzySetupPopupUISuzy()
         suzyApplyDoneButtonGradientSuzy()
     }
@@ -184,42 +184,53 @@ extension SuzyInterestPickerPopupSuzy: UICollectionViewDelegate, UICollectionVie
         let suzyCellSuzy = collectionView.dequeueReusableCell(withReuseIdentifier: "SuzyTagCellSuzy", for: indexPath) as! SuzyTagCellSuzy
         
         let suzyItemSuzy = suzyAllInterestsSuzy[indexPath.item]
-        
-        let suzyIsSelectedSuzy = suzyProfileDataSuzy.suzyTagsSuzy.contains(suzyItemSuzy)
+     
+        let suzyIsSelectedSuzy = self.suzySelectedInterestsSuzy.contains(suzyItemSuzy)
+
         suzyCellSuzy.suzyConfigureSuzy(item: suzyItemSuzy, isSelected: suzyIsSelectedSuzy)
         return suzyCellSuzy
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
+
         
-        // 限制最多选择 5 个
-        if suzyProfileDataSuzy.suzyTagsSuzy.count < 5 {
-            suzyProfileDataSuzy.suzyTagsSuzy.append(suzyTagSuzy)
-            let suzyImpactSuzy = UISelectionFeedbackGenerator()
-            suzyImpactSuzy.selectionChanged()
-        } else {
-            collectionView.deselectItem(at: indexPath, animated: true)
-            // 提示用户超出上限
+        let tagNameSuzy = suzyAllInterestsSuzy[indexPath.item]
+        if suzySelectedInterestsSuzy.contains(tagNameSuzy) {
+            // 1. 数据移除
+            if let index = suzySelectedInterestsSuzy.firstIndex(of: tagNameSuzy) {
+                suzySelectedInterestsSuzy.remove(at: index)
+            }
+            // 2. 取消选中
+            SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy: suzySelectedInterestsSuzy)
+            collectionView.reloadItems(at: [indexPath])
+            suzyUpdateTitleCountSuzy()
+            return
+            
         }
-        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy)
-        collectionView.reloadItems(at: [indexPath])
+          
+            if suzySelectedInterestsSuzy.count >= 5 {
+               
+                return
+            }
+          
+            if !suzySelectedInterestsSuzy.contains(tagNameSuzy) {
+                suzySelectedInterestsSuzy.append(tagNameSuzy)
+                suzyUpdateTitleCountSuzy() // 更新标题数量显示
+                SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy:suzySelectedInterestsSuzy)
+                collectionView.reloadItems(at: [indexPath])
+            }
+        
+     
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
-        suzySelectedInterestsSuzy.append(suzyAllInterestsSuzy[indexPath.item])
-        
-        suzyProfileDataSuzy.suzyTagsSuzy.removeAll { $0 == suzyTagSuzy }
-       
-        collectionView.reloadItems(at: [indexPath])
+
+    func suzyUpdateTitleCountSuzy()  {
         suzyTitleLabelSuzy.text = "Select up to 5 (\(suzySelectedInterestsSuzy.count)/5)"
-        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let suzyTextSuzy = suzyAllInterestsSuzy[indexPath.item]
-//        let suzyIconSuzy = suzyAllInterestsSuzy[indexPath.item].suzyIconSuzy
+
         let suzyFullStringSuzy = suzyTextSuzy
         
         // 动态计算宽度以适配流式布局

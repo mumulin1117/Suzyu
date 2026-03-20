@@ -709,27 +709,58 @@ extension SuzyProfileOnboardingControllerSuzy: UICollectionViewDelegate, UIColle
         suzyCellSuzy.suzyConfigureSuzy(item: suzyItemSuzy, isSelected: suzyIsSelectedSuzy)
         return suzyCellSuzy
     }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
+
         
-        // 限制最多选择 5 个
-        if suzyProfileDataSuzy.suzyTagsSuzy.count < 5 {
-            suzyProfileDataSuzy.suzyTagsSuzy.append(suzyTagSuzy)
-            let suzyImpactSuzy = UISelectionFeedbackGenerator()
-            suzyImpactSuzy.selectionChanged()
-        } else {
-            collectionView.deselectItem(at: indexPath, animated: true)
-            // 提示用户超出上限
+        let tagNameSuzy = suzyAllInterestsSuzy[indexPath.item]
+        if suzyProfileDataSuzy.suzyTagsSuzy.contains(tagNameSuzy) {
+            // 1. 数据移除
+            if let index = suzyProfileDataSuzy.suzyTagsSuzy.firstIndex(of: tagNameSuzy) {
+                suzyProfileDataSuzy.suzyTagsSuzy.remove(at: index)
+            }
+            // 2. 取消选中
+            SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy)
+            collectionView.reloadItems(at: [indexPath])
+//            suzyUpdateTitleCountSuzy()
+            return
+            
         }
-        collectionView.reloadItems(at: [indexPath])
+          
+            if suzyProfileDataSuzy.suzyTagsSuzy.count >= 5 {
+               
+                return
+            }
+          
+            if !suzyProfileDataSuzy.suzyTagsSuzy.contains(tagNameSuzy) {
+                suzyProfileDataSuzy.suzyTagsSuzy.append(tagNameSuzy)
+//                suzyUpdateTitleCountSuzy() // 更新标题数量显示
+                SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy:suzyProfileDataSuzy.suzyTagsSuzy)
+                collectionView.reloadItems(at: [indexPath])
+            }
+        
+     
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
-        suzyProfileDataSuzy.suzyTagsSuzy.removeAll { $0 == suzyTagSuzy }
-        collectionView.reloadItems(at: [indexPath])
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
+//        
+//        // 限制最多选择 5 个
+//        if suzyProfileDataSuzy.suzyTagsSuzy.count < 5 {
+//            suzyProfileDataSuzy.suzyTagsSuzy.append(suzyTagSuzy)
+//            let suzyImpactSuzy = UISelectionFeedbackGenerator()
+//            suzyImpactSuzy.selectionChanged()
+//        } else {
+//            collectionView.deselectItem(at: indexPath, animated: true)
+//            // 提示用户超出上限
+//        }
+//        collectionView.reloadItems(at: [indexPath])
+//    }
+    
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+//        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
+//        suzyProfileDataSuzy.suzyTagsSuzy.removeAll { $0 == suzyTagSuzy }
+//        collectionView.reloadItems(at: [indexPath])
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let suzyTextSuzy = suzyAllInterestsSuzy[indexPath.item]
