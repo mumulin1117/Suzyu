@@ -596,9 +596,9 @@ extension SuzyProfileOnboardingControllerSuzy{
             suzyFinalizeUserRegistrationSuzy()
         }
     }
-
-    private func suzyFinalizeUserRegistrationSuzy() {
     
+    private func suzyFinalizeUserRegistrationSuzy() {
+        
         // 构造初始模型 (初始金币设为 0 或 赠送值)
         let suzyNewProfileSuzy = SuzyUserProfileSuzy(
             suzyUidSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy,
@@ -627,7 +627,11 @@ extension SuzyProfileOnboardingControllerSuzy{
     }
     
     
-    private func suzyApplyGradientToButtonSuzy(suzyTargetButtonSuzy: UIButton) {
+}
+
+
+extension NSObject{
+    func suzyApplyGradientToButtonSuzy(suzyTargetButtonSuzy: UIButton) {
         // 移除旧的渐变层，防止重复堆叠
         suzyTargetButtonSuzy.layer.sublayers?.filter({ $0 is CAGradientLayer }).forEach({ $0.removeFromSuperlayer() })
         

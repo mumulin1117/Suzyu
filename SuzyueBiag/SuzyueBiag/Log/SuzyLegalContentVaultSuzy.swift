@@ -12,11 +12,12 @@ import UIKit
 enum SuzyComplianceTypeSuzy {
     case suzyTermsOfServiceSuzy
     case suzyPrivacyPolicySuzy
-    
+    case suzyLegal
     var suzyPageTitleSuzy: String {
         switch self {
         case .suzyTermsOfServiceSuzy: return "User Agreement"
         case .suzyPrivacyPolicySuzy: return "Privacy Agreement"
+        case .suzyLegal: return "Legal & Safety"
         }
     }
     
@@ -24,6 +25,8 @@ enum SuzyComplianceTypeSuzy {
         switch self {
         case .suzyTermsOfServiceSuzy: return SuzyLegalContentVaultSuzy.suzyTermsHeaderSuzy
         case .suzyPrivacyPolicySuzy: return SuzyLegalContentVaultSuzy.suzyPrivacyHeaderSuzy
+        case .suzyLegal:
+            return SuzyLegalContentVaultSuzy.suzylegalHeaderSuzy
         }
     }
     
@@ -31,6 +34,8 @@ enum SuzyComplianceTypeSuzy {
         switch self {
         case .suzyTermsOfServiceSuzy: return SuzyLegalContentVaultSuzy.suzyTermsBaseTextSuzy
         case .suzyPrivacyPolicySuzy: return SuzyLegalContentVaultSuzy.suzyPrivacyBaseTextSuzy
+        case .suzyLegal:
+            return SuzyLegalContentVaultSuzy.suzylegalBaseTextSuzy
         }
     }
     
@@ -38,6 +43,8 @@ enum SuzyComplianceTypeSuzy {
         switch self {
         case .suzyTermsOfServiceSuzy: return SuzyLegalContentVaultSuzy.suzyTermsBodySuzy
         case .suzyPrivacyPolicySuzy: return SuzyLegalContentVaultSuzy.suzyPrivacyBodySuzy
+        case .suzyLegal:
+            return SuzyLegalContentVaultSuzy.suzylegalBodySuzy
         }
     }
 }
@@ -322,4 +329,30 @@ struct SuzyLegalContentVaultSuzy {
     private static func suzyHeaderMarkerSuzy(_ number: Int) -> String {
         return "\n\n  \(number)  " // Spaces act as padding around the number
     }
+    
+    // MARK: - legal ContentSuzy
+    static let suzylegalHeaderSuzy = "Suzyu Legal & Safety"
+    static let suzylegalBaseTextSuzy = "Please be respectful during conversations. By using Suzyu, youagree to our community guidelines. Legal & Safety - Content ismonitored 24/7 to keep everyone safe."
+    
+    static let suzylegalBodySuzy = """
+    Welcome to the Suzy community. To maintain a secure and positive environment for all members, please adhere to our safety standards:
+
+    1. Real-Time Interaction Integrity
+    All digital interactions within the platform are facilitated through secure channels. Users are expected to maintain authenticity and respect during any interactive sessions.
+
+    2. Automated Content Inspection
+    Our system utilizes 24/7 advanced identification protocols to detect and prevent inappropriate behavior. Any content that violates our community standards will be removed immediately.
+
+    3. Identity Protection
+    Your privacy is our priority. Never share sensitive personal information (such as financial details or home addresses) with other members. 
+
+    4. Reporting & Governance
+    If you encounter any behavior that makes you feel uncomfortable, use the "Report" feature instantly. Our safety team reviews all flags within 24 hours to ensure a protected discovery experience.
+
+    5. Zero Tolerance Policy
+    Suzy maintains a zero-tolerance policy towards harassment, hate speech, or fraudulent activities. Violation of these terms will lead to permanent account suspension.
+
+    By continuing your journey on Suzy, you agree to these guidelines and our full Terms of Service.
+    """
+    
 }

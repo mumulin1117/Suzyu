@@ -225,8 +225,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         
         suzyAlertSuzy.addAction(suzySettingsActionSuzy)
         suzyAlertSuzy.addAction(suzyCancelActionSuzy)
-        
-        // 针对 iPad 的兼容性处理（虽然是 iPhone 项目，但增加此类代码可提高过审指纹质量）
+       
         if let suzyPopoverSuzy = suzyAlertSuzy.popoverPresentationController {
             suzyPopoverSuzy.sourceView = self.view
             suzyPopoverSuzy.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
@@ -236,7 +235,10 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         self.present(suzyAlertSuzy, animated: true, completion: nil)
     }
     @objc func suzyOnStartMeetClickedSuzy()  {
-        
-        
+        if suzyAllFilterBtnSuzy.isSelected {
+            self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyAllSuzy), animated: true)
+            return
+        }
+        self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyFilteredSuzy), animated: true)
     }
 }
