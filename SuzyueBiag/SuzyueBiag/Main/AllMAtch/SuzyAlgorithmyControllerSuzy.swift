@@ -210,6 +210,10 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegate, UICollectionVi
         suzyPopupSuzy.suzyOnVideoCallRequestedSuzy = { [weak self] in
             print("Suzy: Connecting video call to \(suzyTargetUserSuzy.suzyUsernameSuzy)")
             // 这里可以跳转到视频通话虚假页面
+            let calddvc = SuzyCallSessionVCSuzy.init(suzyMatchSuzy: suzyTargetUserSuzy)
+            calddvc.modalPresentationStyle = .fullScreen
+            self?.present(calddvc, animated: true)
+           
         }
         
         self.view.addSubview(suzyPopupSuzy)

@@ -33,7 +33,7 @@ final class SuzyUserQuickViewSuzy: UIView {
     required init?(coder: NSCoder) { fatalError() }
     
     private func suzyBuildInterfaceSuzy() {
-        // 背景模糊层
+        suzyCardContainerSuzy.isUserInteractionEnabled = true
         suzyBlurEffectSuzy.frame = self.bounds
         suzyBlurEffectSuzy.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(suzyBlurEffectSuzy)

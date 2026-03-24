@@ -14,12 +14,12 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     private let suzyCameraPreviewLayerSuzy = AVCaptureVideoPreviewLayer()
     private let suzyCaptureSessionSuzy = AVCaptureSession()
     
-    // 背景回退图（当拒绝权限时显示）
+  
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
         iv.contentMode = .scaleAspectFill
-        iv.isHidden = true // 默认隐藏，只有拒绝权限才显示
+        iv.isHidden = true
         return iv
     }()
     
