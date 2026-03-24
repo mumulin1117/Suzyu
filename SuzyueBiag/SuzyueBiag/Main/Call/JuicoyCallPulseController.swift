@@ -71,26 +71,30 @@ final class SuzyCallSessionVCSuzy: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // 动态适配屏幕比例
-        suzySelfPreviewLayerSuzy?.frame = view.bounds
-        suzyUserPlaceholderSuzy.frame = view.bounds
+        suzyRemoteContainerSuzy.frame = view.bounds
         suzyRemotePreviewLayerSuzy?.frame = suzyRemoteContainerSuzy.bounds
+        suzySelfPreviewLayerSuzy?.frame = suzyUserPlaceholderSuzy.bounds
+//        suzySelfPreviewLayerSuzy?.frame = CGRect(x: 0, y: 0, width: 100, height: 150)
+              
     }
 
     // MARK: - Hierarchy Suzy
     private func suzyBuildCallCanvasSuzy() {
-        view.backgroundColor = .black
         
-        // 1. 本地摄像头层（最底层）
+        suzyRemoteContainerSuzy.backgroundColor = .red
+         suzyRemoteContainerSuzy.frame = view.bounds
+         
+         view.addSubview(suzyRemoteContainerSuzy)
+        
+       
         suzyUserPlaceholderSuzy.backgroundColor = .darkGray
         view.addSubview(suzyUserPlaceholderSuzy)
+    
+        suzyUserPlaceholderSuzy.layer.cornerRadius = 15
+        suzyUserPlaceholderSuzy.layer.masksToBounds = true
+        suzyUserPlaceholderSuzy.translatesAutoresizingMaskIntoConstraints = false
         
-        // 2. 对方虚假视频层（左侧小框）
-        suzyRemoteContainerSuzy.backgroundColor = .black
-        suzyRemoteContainerSuzy.layer.cornerRadius = 15
-        suzyRemoteContainerSuzy.layer.masksToBounds = true
-        suzyRemoteContainerSuzy.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(suzyRemoteContainerSuzy)
+
         
         // 3. 顶部 UI（权限、镜头、信息）
         suzyControlWrapperSuzy.axis = .horizontal
@@ -117,24 +121,16 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         suzyMatchedUserInfoSuzy.layer.cornerRadius = 10
         suzyMatchedUserInfoSuzy.setImage(UIImage(named: "exclamationmark"), for: .normal)
         suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
-        //模拟举报/信息图标
+      
             suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
-//            suzyMatchedUserInfoSuzy.semanticContentAttribute = .forceRightToLeft // 让图标在名字右侧（或左侧，取决于你的设计）
-        // 根据具体 ID 或属性展示虚拟币（仅作 UI 展示）
-//        let suzyDisplayCoinsSuzy = (suzyCurrentMatchSuzy.suzyIdentifierSuzy.contains("102")) ? "60" : "20"
-//            suzyCoinIndicatorBtnSuzy.setTitle(" 💰 \(suzyDisplayCoinsSuzy) ", for: .normal)
-//        
+
         [suzyCameraSwitchBtnSuzy, suzyCameraToggleBtnSuzy, suzyMatchedUserInfoSuzy].forEach {
             $0.tintColor = .white
             $0.translatesAutoresizingMaskIntoConstraints = false
             suzyControlWrapperSuzy.addArrangedSubview($0)
             
         }
-        
-        // 4. 底部 UI（金币、挂断）
-//        suzyCoinIndicatorBtnSuzy.setTitle(" 💰 \(suzyCurrentMatchSuzy.suzyIdentifierSuzy == "suzy_102" ? 20 : 0)", for: .normal)
-//        suzyCoinIndicatorBtnSuzy.backgroundColor = UIColor(white: 0.2, alpha: 0.8)
-//        suzyCoinIndicatorBtnSuzy.layer.cornerRadius = 10
+
         suzyCoinIndicatorBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyCoinIndicatorBtnSuzy)
         
@@ -164,10 +160,10 @@ final class SuzyCallSessionVCSuzy: UIViewController {
             suzyControlWrapperSuzy.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             suzyControlWrapperSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            suzyRemoteContainerSuzy.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            suzyRemoteContainerSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            suzyRemoteContainerSuzy.widthAnchor.constraint(equalToConstant: 100),
-            suzyRemoteContainerSuzy.heightAnchor.constraint(equalToConstant: 150),
+            suzyUserPlaceholderSuzy.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            suzyUserPlaceholderSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            suzyUserPlaceholderSuzy.widthAnchor.constraint(equalToConstant: 100),
+            suzyUserPlaceholderSuzy.heightAnchor.constraint(equalToConstant: 150),
             
             suzyCoinIndicatorBtnSuzy.bottomAnchor.constraint(equalTo: suzyEndCallActionBtnSuzy.topAnchor, constant: -30),
             suzyCoinIndicatorBtnSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -185,6 +181,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
             suzyStatusAlertSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             suzyStatusAlertSuzy.heightAnchor.constraint(equalToConstant: 60)
         ])
+        
     }
 }
 
@@ -252,11 +249,14 @@ extension SuzyCallSessionVCSuzy {
         
         guard let suzyPathSuzy = Bundle.main.path(forResource: suzyLocalTargetSuzy, ofType: "mp4") else { return }
         let suzyVidURLSuzy = URL(fileURLWithPath: suzyPathSuzy)
-        
-        // 对方视频层（左侧小框）
         suzyRemoteVidPlayerSuzy = AVPlayer(url: suzyVidURLSuzy)
+        suzyRemotePreviewLayerSuzy?.removeFromSuperlayer()
+        
+       
         suzyRemotePreviewLayerSuzy = AVPlayerLayer(player: suzyRemoteVidPlayerSuzy)
+        
         suzyRemotePreviewLayerSuzy?.videoGravity = .resizeAspectFill
+        suzyRemotePreviewLayerSuzy?.frame = suzyRemoteContainerSuzy.bounds
         suzyRemoteContainerSuzy.layer.addSublayer(suzyRemotePreviewLayerSuzy!)
         suzyRemoteVidPlayerSuzy?.play()
         
@@ -294,7 +294,7 @@ extension SuzyCallSessionVCSuzy {
         // 本地摄像头层（最底层）
         suzySelfPreviewLayerSuzy = AVCaptureVideoPreviewLayer(session: suzyCapSessionSuzy!)
         suzySelfPreviewLayerSuzy?.videoGravity = .resizeAspectFill
-        view.layer.insertSublayer(suzySelfPreviewLayerSuzy!, at: 0)
+        self.suzyUserPlaceholderSuzy.layer.insertSublayer(suzySelfPreviewLayerSuzy!, at: 0)
         
         DispatchQueue.global().async { self.suzyCapSessionSuzy?.startRunning() }
     }
@@ -318,14 +318,14 @@ extension SuzyCallSessionVCSuzy {
     
     @objc private func suzyPerformCamToggleSuzy() {
         suzyCameraToggleBtnSuzy.isSelected.toggle()
-        if suzyCameraToggleBtnSuzy.isSelected { // Camera Off
+        if suzyCameraToggleBtnSuzy.isSelected {
             suzyCapSessionSuzy?.stopRunning()
             suzySelfPreviewLayerSuzy?.opacity = 0
             suzyUserPlaceholderSuzy.isHidden = false
         } else {
             suzyCapSessionSuzy?.startRunning()
             suzySelfPreviewLayerSuzy?.opacity = 1
-            // 逻辑：即便Camera On，如果SuzyW校验失败，依然显示灰色框
+           
             if UserDefaults.standard.string(forKey: "suzy_w") != "suzy_w_approved" {
                  suzyUserPlaceholderSuzy.isHidden = false
             } else {
@@ -340,6 +340,6 @@ extension SuzyCallSessionVCSuzy {
         }
         suzyCapSessionSuzy?.stopRunning()
         suzyRemoteVidPlayerSuzy?.pause()
-        self.dismiss(animated: true) // 挂断，返回上一级
+        self.dismiss(animated: true)
     }
 }
