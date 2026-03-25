@@ -26,7 +26,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
         iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
         iv.contentMode = .scaleAspectFill
-        iv.isHidden = true
+        
         return iv
     }()
     // MARK: - Data Source Suzy
@@ -81,7 +81,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
     // MARK: - Hierarchy Suzy
     private func suzyBuildCallCanvasSuzy() {
         
-        suzyRemoteContainerSuzy.backgroundColor = .red
+        suzyRemoteContainerSuzy.backgroundColor = .clear
          suzyRemoteContainerSuzy.frame = view.bounds
          
          view.addSubview(suzyRemoteContainerSuzy)
@@ -130,7 +130,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
             suzyControlWrapperSuzy.addArrangedSubview($0)
             
         }
-
+        suzyCoinIndicatorBtnSuzy.setBackgroundImage(UIImage.init(named: "suzIndicatorBtnSuzy"), for: .normal)
         suzyCoinIndicatorBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyCoinIndicatorBtnSuzy)
         
@@ -212,67 +212,102 @@ extension SuzyCallSessionVCSuzy {
     // MARK: - State Machine Suzy
     private func suzyInitiateCallStateMachineSuzy() {
         self.suzyCallStateSuzy = .suzyConnectingSuzy
-        suzyStatusAlertSuzy.text = " Dialing... "
+        suzyStatusAlertSuzy.text = " Connecting... "
         suzyStatusAlertSuzy.isHidden = false
         
-        // 检查资产计数器
-        UserDefaults.standard.set(0, forKey: "suzy_v_counter")
-        let suzyVidCntSuzy = UserDefaults.standard.integer(forKey: "suzy_v_counter")
+        // 1. 检查这个特定用户是否已经拨打过并接通
+        let suzyCalledIdsSuzy = UserDefaults.standard.stringArray(forKey: "suzy_called_success_ids") ?? []
         
-        // 延迟两秒执行接通逻辑
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+        // 延迟 2.5 秒模拟拨号过程，增加真实感
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
             guard let self = self else { return }
             
-            if suzyVidCntSuzy >= 4 { // 所有性别视频测试都已完成
-                self.suzyStatusAlertSuzy.text = " Remote User Left "
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self.suzyPerformHangupActionSuzy()
-                }
+            if suzyCalledIdsSuzy.contains(self.suzyCurrentMatchSuzy.suzyIdentifierSuzy) {
+                // 如果该 ID 之前接通成功过，直接显示离开
+                self.suzyHandleUserUnavailableSuzy(reason: "User is busy now")
             } else {
-                self.suzyStatusAlertSuzy.isHidden = true
+                // 如果是新用户，尝试分配视频资产
                 self.suzyConfigureRemoteFakeFeedSuzy()
             }
         }
     }
-    
+
     // MARK: - Fake Feed Suzy
     private func suzyConfigureRemoteFakeFeedSuzy() {
-        // 根据性别和资产计数器筛选视频
-        let suzyVidCntSuzy = UserDefaults.standard.integer(forKey: "suzy_v_counter")
-        let suzyBaseVidsSuzy = (self.suzyCurrentMatchSuzy.suzyGenderSuzy == 0) ? SuzyLocalAssetsSuzy.suzyMaleVidsSuzy : SuzyLocalAssetsSuzy.suzyFemaleVidsSuzy
-        let suzyLocalTargetSuzy = suzyBaseVidsSuzy.randomElement() // 随机性别
+        // 2. 检查视频资产消耗情况
+        var suzyPlayedVidsSuzy = UserDefaults.standard.stringArray(forKey: "suzy_played_vids") ?? []
+        let suzyBasePoolSuzy = (self.suzyCurrentMatchSuzy.suzyGenderSuzy == 0) ?
+            SuzyLocalAssetsSuzy.suzyMaleVidsSuzy :
+            SuzyLocalAssetsSuzy.suzyFemaleVidsSuzy
         
-        // 找到该视频在所有测试中的索引（模拟所有性别都用过）
-        // 这里只是虚假计数，审核员在不同性别匹配时体验不同
-        let suzyIdxSuzy = max(suzyVidCntSuzy, (self.suzyCurrentMatchSuzy.suzyGenderSuzy == 0 ? 0 : 2))
-        UserDefaults.standard.set(suzyIdxSuzy + 1, forKey: "suzy_v_counter")
+        // 找出未使用的视频
+        let suzyAvailableVidsSuzy = suzyBasePoolSuzy.filter { !suzyPlayedVidsSuzy.contains($0) }
         
-        guard let suzyPathSuzy = Bundle.main.path(forResource: suzyLocalTargetSuzy, ofType: "mp4") else { return }
+        guard let suzyTargetVidSuzy = suzyAvailableVidsSuzy.first else {
+            // 如果该性别的 2 个视频都用完了，即便没打过这个 ID 也显示离开
+            self.suzyHandleUserUnavailableSuzy(reason: "User left the match")
+            return
+        }
+        
+        // --- 执行到这里说明：ID 没打过 且 有可用视频 ---
+        
+        // 3. 记录 ID 和 视频文件名，防止二次使用
+        var suzyCalledIdsSuzy = UserDefaults.standard.stringArray(forKey: "suzy_called_success_ids") ?? []
+        suzyCalledIdsSuzy.append(self.suzyCurrentMatchSuzy.suzyIdentifierSuzy)
+        UserDefaults.standard.set(suzyCalledIdsSuzy, forKey: "suzy_called_success_ids")
+        
+        suzyPlayedVidsSuzy.append(suzyTargetVidSuzy)
+        UserDefaults.standard.set(suzyPlayedVidsSuzy, forKey: "suzy_played_vids")
+        
+        // 4. 视频播放逻辑
+        self.suzyStatusAlertSuzy.isHidden = true
+        guard let suzyPathSuzy = Bundle.main.path(forResource: suzyTargetVidSuzy, ofType: "mp4") else { return }
         let suzyVidURLSuzy = URL(fileURLWithPath: suzyPathSuzy)
+        
         suzyRemoteVidPlayerSuzy = AVPlayer(url: suzyVidURLSuzy)
         suzyRemotePreviewLayerSuzy?.removeFromSuperlayer()
-        
-       
         suzyRemotePreviewLayerSuzy = AVPlayerLayer(player: suzyRemoteVidPlayerSuzy)
-        
         suzyRemotePreviewLayerSuzy?.videoGravity = .resizeAspectFill
         suzyRemotePreviewLayerSuzy?.frame = suzyRemoteContainerSuzy.bounds
         suzyRemoteContainerSuzy.layer.addSublayer(suzyRemotePreviewLayerSuzy!)
         suzyRemoteVidPlayerSuzy?.play()
         
-        // 监听视频播放完毕
+        // 监听正常播放结束
         suzyPlaybackEndedObserverSuzy = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: suzyRemoteVidPlayerSuzy?.currentItem, queue: nil) { [weak self] _ in
-            guard let self = self else { return }
             DispatchQueue.main.async {
-                // 如果资产计数小于 4，当视频结束时，过两秒择显示对方已经离开
-                if UserDefaults.standard.integer(forKey: "suzy_v_counter") < 4 {
-                    self.suzyStatusAlertSuzy.text = " Remote User Left "
-                    self.suzyStatusAlertSuzy.isHidden = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        self.suzyPerformHangupActionSuzy()
-                    }
-                }
+                self?.suzyHandleUserUnavailableSuzy(reason: "The user has left")
             }
+        }
+    }
+
+    // MARK: - Helper Suzy
+    private func suzyHandleUserUnavailableSuzy(reason: String) {
+        self.suzyStatusAlertSuzy.text = " \(reason) "
+        self.suzyStatusAlertSuzy.isHidden = false
+        
+        // 确保提示框在最前，且停止视频展示
+        view.bringSubviewToFront(suzyStatusAlertSuzy)
+        suzyRemoteVidPlayerSuzy?.pause()
+        suzyRemotePreviewLayerSuzy?.opacity = 0
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.suzyPerformHangupActionSuzy()
+        }
+    }
+
+    private func suzyHandleUserUnavailableSuzy() {
+        // 确保 UI 提示在最上层
+        view.bringSubviewToFront(suzyStatusAlertSuzy)
+        suzyStatusAlertSuzy.text = " User is no longer online "
+        suzyStatusAlertSuzy.isHidden = false
+        
+        // 停止任何可能正在播放的残余视频
+        suzyRemoteVidPlayerSuzy?.pause()
+        suzyRemotePreviewLayerSuzy?.opacity = 0
+        
+        // 延迟 2 秒后挂断返回，模拟真实的“断开”感
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.suzyPerformHangupActionSuzy()
         }
     }
 }
