@@ -22,6 +22,14 @@ fileprivate struct SuzyLocalAssetsSuzy {
 }
 
 final class SuzyCallSessionVCSuzy: UIViewController {
+    deinit {
+        print("SuzyCallSessionVCSuzy 销毁了")
+        if let observer = suzyPlaybackEndedObserverSuzy {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+  
+     var protrShow:(()->(Void))?
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
         iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
@@ -67,6 +75,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         view.addSubview(suzyFallbackBgImageViewSuzy)
         suzyBuildCallCanvasSuzy()
         suzyRequestHardwarePermsSuzy()
+        NotificationCenter.default.addObserver(self, selector: #selector(suzyPerformHangupActionSuzy), name: NSNotification.Name("SuzySwitchToReportDetails"), object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,8 +83,6 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         suzyRemoteContainerSuzy.frame = view.bounds
         suzyRemotePreviewLayerSuzy?.frame = suzyRemoteContainerSuzy.bounds
         suzySelfPreviewLayerSuzy?.frame = suzyUserPlaceholderSuzy.bounds
-//        suzySelfPreviewLayerSuzy?.frame = CGRect(x: 0, y: 0, width: 100, height: 150)
-              
     }
 
     // MARK: - Hierarchy Suzy
@@ -115,6 +122,8 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         suzyCameraToggleBtnSuzy.setImage(UIImage(systemName: "video.slash.fill"), for: .selected)
         suzyCameraToggleBtnSuzy.addTarget(self, action: #selector(suzyPerformCamToggleSuzy), for: .touchUpInside)
         
+        
+        suzyMatchedUserInfoSuzy.addTarget(self, action: #selector(reportdUserInfoSuzy), for: .touchUpInside)
         suzyMatchedUserInfoSuzy.setTitle(suzyCurrentMatchSuzy.suzyUsernameSuzy, for: .normal)
         suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12)
         suzyMatchedUserInfoSuzy.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2500)
@@ -130,6 +139,8 @@ final class SuzyCallSessionVCSuzy: UIViewController {
             suzyControlWrapperSuzy.addArrangedSubview($0)
             
         }
+        
+        suzyCoinIndicatorBtnSuzy.addTarget(self, action: #selector(suzyHandleIcebreakerTapSuzy), for: .touchUpInside)
         suzyCoinIndicatorBtnSuzy.setBackgroundImage(UIImage.init(named: "suzIndicatorBtnSuzy"), for: .normal)
         suzyCoinIndicatorBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyCoinIndicatorBtnSuzy)
@@ -186,6 +197,14 @@ final class SuzyCallSessionVCSuzy: UIViewController {
 }
 
 extension SuzyCallSessionVCSuzy {
+    
+   @objc func reportdUserInfoSuzy()  {
+       let actionreport = SuzyActioningSheetVCSuzy()
+       actionreport.pathUID = suzyCurrentMatchSuzy.suzyIdentifierSuzy
+       actionreport.modalPresentationStyle = .fullScreen
+       self.present(actionreport, animated: true)
+       
+    }
     
     // MARK: - Hardware Perms Suzy
     private func suzyRequestHardwarePermsSuzy() {
@@ -291,6 +310,7 @@ extension SuzyCallSessionVCSuzy {
         suzyRemotePreviewLayerSuzy?.opacity = 0
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+           
             self?.suzyPerformHangupActionSuzy()
         }
     }
@@ -306,7 +326,9 @@ extension SuzyCallSessionVCSuzy {
         suzyRemotePreviewLayerSuzy?.opacity = 0
         
         // 延迟 2 秒后挂断返回，模拟真实的“断开”感
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 12.0) { [weak self] in
+           
+            
             self?.suzyPerformHangupActionSuzy()
         }
     }
@@ -369,12 +391,162 @@ extension SuzyCallSessionVCSuzy {
         }
     }
     
+
     @objc private func suzyPerformHangupActionSuzy() {
-        if let suzyObsSuzy = suzyPlaybackEndedObserverSuzy {
-            NotificationCenter.default.removeObserver(suzyObsSuzy)
-        }
         suzyCapSessionSuzy?.stopRunning()
         suzyRemoteVidPlayerSuzy?.pause()
         self.dismiss(animated: true)
+    }
+}
+
+
+
+//MARK: - 破冰问题
+extension SuzyCallSessionVCSuzy {
+    // 8条预设问题
+    private static let suzyPoolSuzy = [
+        "If you could travel anywhere right now, where would it be? ✈️",
+        "What’s the most rebellious thing you’ve ever done? 😎",
+        "Are you a morning bird or a late-night owl? 🦉",
+        "What is your go-to 'comfort food' when you're tired? 🍕",
+        "If you won the lottery tomorrow, what’s the first thing you’d buy? 💰",
+        "What’s the last movie or show that made you cry? 🎬",
+        "What is your hidden talent that most people don't know about? 🎤",
+        "Beach vacation or mountain hiking? 🏖️ / 🏔️"
+    ]
+
+    // 点击底部紫色按钮触发
+    @objc private func suzyHandleIcebreakerTapSuzy() {
+        let suzyCurrentCoinsSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.suzyCoinsSuzy ?? 0
+       
+        suzyShowCustomAlertSuzy(isEnough: suzyCurrentCoinsSuzy >= 20)
+    }
+    
+    private func suzyShowCustomAlertSuzy(isEnough: Bool) {
+        let suzyOverlaySuzy = UIView(frame: view.bounds)
+        suzyOverlaySuzy.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        suzyOverlaySuzy.tag = 999
+        
+        let suzyAlertViewSuzy = UIImageView(image:  UIImage(named: "suzyCardContainerSuzy"))
+        suzyAlertViewSuzy.isUserInteractionEnabled = true
+        suzyAlertViewSuzy.contentMode = .scaleToFill
+        suzyAlertViewSuzy.translatesAutoresizingMaskIntoConstraints = false
+     
+        suzyOverlaySuzy.addSubview(suzyAlertViewSuzy)
+        
+        let suzyMessageIconSuzy = UIImageView()
+        suzyMessageIconSuzy.image = UIImage(named: "bubbleacall")
+        suzyMessageIconSuzy.translatesAutoresizingMaskIntoConstraints = false
+        suzyOverlaySuzy.addSubview(suzyMessageIconSuzy)
+        
+    
+     
+        
+        
+        view.addSubview(suzyOverlaySuzy)
+        
+        // 核心文案逻辑
+        let titleLabel = UILabel()
+        titleLabel.text = "Reminder"
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = .white
+        titleLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        suzyAlertViewSuzy.addSubview(titleLabel)
+        let msgLabel = UILabel()
+        msgLabel.textColor = .lightGray
+        msgLabel.numberOfLines = 0
+        msgLabel.textAlignment = .center
+        msgLabel.text = isEnough ? "Are you sure you want to spend 20 gold coins to unlock 4 icebreaker questions?" : "You don't have enough coins, please recharge now."
+        msgLabel.translatesAutoresizingMaskIntoConstraints = false
+        suzyAlertViewSuzy.addSubview(msgLabel)
+        
+        let actionBtn = UIButton(type: .custom)
+        actionBtn.layer.cornerRadius = 25
+        actionBtn.backgroundColor = .systemPurple
+        actionBtn.setTitle(isEnough ? "Continue" : "Recharge", for: .normal)
+        actionBtn.translatesAutoresizingMaskIntoConstraints = false
+        suzyAlertViewSuzy.addSubview(actionBtn)
+        
+        let suzyDismissBtnSuzy = UIButton(type: .custom)
+       
+        // 关闭按钮
+        suzyDismissBtnSuzy.setTitle("Cancel", for: .normal)
+        suzyDismissBtnSuzy.setTitleColor(.white, for: .normal)
+        suzyDismissBtnSuzy.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        suzyDismissBtnSuzy.addTarget(self, action: #selector(suzyHideQuickViewSuzy), for: .touchUpInside)
+        suzyDismissBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
+        suzyAlertViewSuzy.addSubview(suzyDismissBtnSuzy)
+        // 约束简略 (根据你的布局习惯调整)
+        NSLayoutConstraint.activate([
+            suzyAlertViewSuzy.centerXAnchor.constraint(equalTo: suzyOverlaySuzy.centerXAnchor),
+            suzyAlertViewSuzy.centerYAnchor.constraint(equalTo: suzyOverlaySuzy.centerYAnchor),
+            suzyAlertViewSuzy.widthAnchor.constraint(equalToConstant: 325),
+            suzyAlertViewSuzy.heightAnchor.constraint(equalToConstant: 306),
+            suzyMessageIconSuzy.widthAnchor.constraint(equalToConstant: 186),
+            suzyMessageIconSuzy.heightAnchor.constraint(equalToConstant: 175),
+            suzyMessageIconSuzy.centerXAnchor.constraint(equalTo: suzyAlertViewSuzy.centerXAnchor),
+            suzyMessageIconSuzy.bottomAnchor.constraint(equalTo: suzyAlertViewSuzy.topAnchor, constant: 60),
+            
+            titleLabel.topAnchor.constraint(equalTo: suzyAlertViewSuzy.topAnchor, constant: 70),
+            titleLabel.centerXAnchor.constraint(equalTo: suzyAlertViewSuzy.centerXAnchor),
+            
+            msgLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            msgLabel.leadingAnchor.constraint(equalTo: suzyAlertViewSuzy.leadingAnchor, constant: 13),
+            msgLabel.trailingAnchor.constraint(equalTo: suzyAlertViewSuzy.trailingAnchor, constant: -13),
+            
+            actionBtn.heightAnchor.constraint(equalToConstant: 50),
+            actionBtn.leadingAnchor.constraint(equalTo: suzyAlertViewSuzy.leadingAnchor, constant: 13),
+            actionBtn.trailingAnchor.constraint(equalTo: suzyAlertViewSuzy.trailingAnchor, constant: -13),
+            actionBtn.topAnchor.constraint(equalTo: msgLabel.bottomAnchor, constant: 35),
+            
+            suzyDismissBtnSuzy.centerXAnchor.constraint(equalTo: actionBtn.centerXAnchor),
+            suzyDismissBtnSuzy.heightAnchor.constraint(equalToConstant: 40),
+            
+            suzyDismissBtnSuzy.topAnchor.constraint(equalTo: actionBtn.bottomAnchor,constant: 10)
+            
+           
+        ])
+        
+        // 按钮点击处理
+        actionBtn.addAction(UIAction(handler: { [weak self] _ in
+            guard let self = self else { return }
+            suzyOverlaySuzy.removeFromSuperview()
+            if isEnough {
+                self.suzyShowFinalQuestionsSuzy()
+            } else {
+                
+                if self.protrShow != nil {
+                    (self.protrShow)
+                }
+                
+            }
+        }), for: .touchUpInside)
+    }
+    @objc private func suzyHideQuickViewSuzy() {
+        let suzyOverlaySuzy = view.viewWithTag(999)
+        UIView.animate(withDuration: 0.3, animations: {
+            
+            suzyOverlaySuzy?.alpha = 0 }) { _ in
+       
+            
+            suzyOverlaySuzy?.removeFromSuperview()
+        }
+    }
+    private func suzyShowFinalQuestionsSuzy() {
+       
+      
+       
+        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: 20)
+        
+      
+        
+        let suzySelectedQuestionsSuzy = SuzyCallSessionVCSuzy.suzyPoolSuzy.shuffled().prefix(4)
+        
+        let suzyDisplayMsgSuzy = suzySelectedQuestionsSuzy.joined(separator: "\n\n")
+        
+        let finalAlert = UIAlertController(title: "Icebreakers For You", message: suzyDisplayMsgSuzy, preferredStyle: .alert)
+        finalAlert.addAction(UIAlertAction(title: "Cool!", style: .cancel))
+        self.present(finalAlert, animated: true)
     }
 }

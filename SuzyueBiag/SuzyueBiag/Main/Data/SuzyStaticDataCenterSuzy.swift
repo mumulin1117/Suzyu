@@ -9,7 +9,7 @@ import UIKit
 
 struct SuzyStaticDataCenterSuzy {
     
-    static let suzyMockUserLibrarySuzy: [SuzyMatchEntitySuzy] = [
+    static var suzyMockUserLibrarySuzy: [SuzyMatchEntitySuzy] = [
         SuzyMatchEntitySuzy(suzyIdentifierSuzy: "suzy_u_01", suzyUsernameSuzy: "Aria Smith", suzyGenderSuzy: 1, suzyInterestsSuzy: ["Dancing💃", "Music🎵"], suzyIsActiveSuzy: true, suzyBioSuzy: "Dancing through life with a melody in my heart! ✨"),
         SuzyMatchEntitySuzy(suzyIdentifierSuzy: "suzy_u_02", suzyUsernameSuzy: "Liam Brown", suzyGenderSuzy: 0, suzyInterestsSuzy: ["Gaming🎮", "Technology💻"], suzyIsActiveSuzy: true, suzyBioSuzy: "Tech enthusiast and hardcore gamer. 🎮"),
         SuzyMatchEntitySuzy(suzyIdentifierSuzy: "suzy_u_03", suzyUsernameSuzy: "Chloe Garcia", suzyGenderSuzy: 1, suzyInterestsSuzy: ["Travel✈️", "Photography📷"], suzyIsActiveSuzy: false, suzyBioSuzy: "Capturing the world one city at a time. 📸"),

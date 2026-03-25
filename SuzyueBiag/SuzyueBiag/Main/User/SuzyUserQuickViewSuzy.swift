@@ -28,6 +28,11 @@ final class SuzyUserQuickViewSuzy: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         suzyBuildInterfaceSuzy()
+        NotificationCenter.default.addObserver(self, selector: #selector(SuzyBlockToReportDetails), name: NSNotification.Name("SuzySwitchToReportDetails"), object: nil)
+    }
+    @objc  func SuzyBlockToReportDetails(_ notification: Notification) {
+       
+        self.removeFromSuperview()
     }
     
     required init?(coder: NSCoder) { fatalError() }

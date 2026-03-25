@@ -32,8 +32,28 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
         suzySetupNavigationBarSuzy()
         suzyInitializeCanvasSuzy()
         suzyFetchRemoteRecordsSuzy()
+        suzyNotifyIconBtnSuzy.addTarget(self, action: #selector(packetLossSuue), for: .touchUpInside)
+        suzySettingsIconBtnSuzy.addTarget(self, action: #selector(memoryLeakSuue), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SuzyBlockToReportDetails), name: NSNotification.Name("SuzySwitchToReportDetails"), object: nil)
     }
-   
+    
+   @objc func packetLossSuue() {
+       self.navigationController?.pushViewController(SuzyInformationViewController(), animated: true)
+    }
+    
+    
+    @objc func memoryLeakSuue() {
+//        self.navigationController?.pushViewController((), animated: true)
+     }
+    @objc  func SuzyBlockToReportDetails(_ notification: Notification) {
+        guard let suzyInfoSuzy = notification.object as? Dictionary<String,String>,
+              let suzyTargetIDSuzy = suzyInfoSuzy["suzyTargetID"] else { return }
+        
+        
+        suzyDataSourceSuzy.removeAll { $0.suzyIdentifierSuzy == suzyTargetIDSuzy }
+        self.suzyCollectionSuzy.reloadData()
+    }
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
         iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
@@ -211,6 +231,11 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegate, UICollectionVi
             print("Suzy: Connecting video call to \(suzyTargetUserSuzy.suzyUsernameSuzy)")
             // 这里可以跳转到视频通话虚假页面
             let calddvc = SuzyCallSessionVCSuzy.init(suzyMatchSuzy: suzyTargetUserSuzy)
+            calddvc.protrShow = {
+                let vc = SuzyGoldShopVCSuzy()
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            }
             calddvc.modalPresentationStyle = .fullScreen
             self?.present(calddvc, animated: true)
            
