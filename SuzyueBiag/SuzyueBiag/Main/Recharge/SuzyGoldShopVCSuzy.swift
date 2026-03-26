@@ -29,9 +29,9 @@ final class SuzyGoldShopVCSuzy: UIViewController {
     private lazy var suzyGridViewSuzy: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let screenWidth = UIScreen.main.bounds.width
-        let padding = screenWidth * 0.05
+        let padding = 15.0
         let itemWidth = (screenWidth - (padding * 3)) / 2
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.3)
+        layout.itemSize = CGSize(width: itemWidth, height: 184)
         layout.minimumLineSpacing = padding
         layout.minimumInteritemSpacing = padding
         layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
@@ -68,13 +68,6 @@ final class SuzyGoldShopVCSuzy: UIViewController {
         
         suzyHeaderPanelSuzy.layer.cornerRadius = 25
         suzyHeaderPanelSuzy.layer.masksToBounds = true
-        let graidientdent = CAGradientLayer()
-        graidientdent.colors = [UIColor(red: 0.38, green: 0.18, blue: 0.94, alpha: 1).cgColor, UIColor(red: 0.75, green: 0.18, blue: 0.94, alpha: 1).cgColor]
-        graidientdent.locations = [0, 1]
-        graidientdent.frame = CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width - 40, height: 60)
-        graidientdent.startPoint = CGPoint(x: 0, y: 0.5)
-        graidientdent.endPoint = CGPoint(x: 0.5, y: 0.5)
-        suzyHeaderPanelSuzy.layer.insertSublayer(graidientdent, at: 0)
         view.addSubview(suzyHeaderPanelSuzy)
         
         suzyBalanceLabelSuzy.textColor = .white
@@ -101,7 +94,7 @@ final class SuzyGoldShopVCSuzy: UIViewController {
             suzyHeaderPanelSuzy.topAnchor.constraint(equalTo: suzyBackActionBtnSuzy.bottomAnchor, constant: 20),
             suzyHeaderPanelSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             suzyHeaderPanelSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            suzyHeaderPanelSuzy.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+            suzyHeaderPanelSuzy.heightAnchor.constraint(equalToConstant: 60),
             
             suzyBalanceLabelSuzy.centerYAnchor.constraint(equalTo: suzyHeaderPanelSuzy.centerYAnchor),
             suzyBalanceLabelSuzy.leadingAnchor.constraint(equalTo: suzyHeaderPanelSuzy.leadingAnchor, constant: 25),
@@ -116,6 +109,15 @@ final class SuzyGoldShopVCSuzy: UIViewController {
             suzyGridViewSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             suzyGridViewSuzy.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        
+        let graidientdent = CAGradientLayer()
+        graidientdent.colors = [UIColor(red: 0.38, green: 0.18, blue: 0.94, alpha: 1).cgColor, UIColor(red: 0.75, green: 0.18, blue: 0.94, alpha: 1).cgColor]
+        graidientdent.locations = [0, 1]
+        graidientdent.frame = CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width - 40, height: 60)
+        graidientdent.startPoint = CGPoint(x: 0, y: 0.5)
+        graidientdent.endPoint = CGPoint(x: 0.5, y: 0.5)
+        suzyHeaderPanelSuzy.layer.insertSublayer(graidientdent, at: 0)
+        
     }
     
     private func suzyRefreshCurrentGoldSuzy() {
@@ -125,6 +127,11 @@ final class SuzyGoldShopVCSuzy: UIViewController {
     }
     
     @objc private func suzyDismissShopSuzy() {
+        if navigationController == nil {
+            self.dismiss(animated: true)
+            return
+        }
+        
         navigationController?.popViewController(animated: true)
     }
 }

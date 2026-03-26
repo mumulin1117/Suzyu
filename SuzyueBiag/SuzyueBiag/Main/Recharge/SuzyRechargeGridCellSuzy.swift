@@ -24,7 +24,7 @@ final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
   
         contentView.addSubview(suzyMainContainerSuzy)
         
-        suzyCoinIconSuzy.image = UIImage(named: "suzy_ic_coin_small")
+        suzyCoinIconSuzy.image = UIImage(named: "bubbleacall")
         suzyCoinIconSuzy.contentMode = .scaleAspectFit
         suzyMainContainerSuzy.addSubview(suzyCoinIconSuzy)
         
@@ -42,15 +42,6 @@ final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
         suzyMainContainerSuzy.addSubview(suzyPurchaseBtnSuzy)
         
         
-        
-        let graidientdent = CAGradientLayer()
-        graidientdent.colors = [UIColor(red: 0.38, green: 0.18, blue: 0.94, alpha: 1).cgColor, UIColor(red: 0.75, green: 0.18, blue: 0.94, alpha: 1).cgColor]
-        graidientdent.locations = [0, 1]
-        graidientdent.frame = CGRect.init(x: 0, y: 0, width: 85, height: 30)
-        graidientdent.startPoint = CGPoint(x: 0, y: 0.5)
-        graidientdent.endPoint = CGPoint(x: 0.5, y: 0.5)
-        suzyPurchaseBtnSuzy.layer.insertSublayer(graidientdent, at: 0)
-        
         suzyMainContainerSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyCoinIconSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyAmountLabelSuzy.translatesAutoresizingMaskIntoConstraints = false
@@ -62,12 +53,12 @@ final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
             suzyMainContainerSuzy.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             suzyMainContainerSuzy.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            suzyCoinIconSuzy.topAnchor.constraint(equalTo: suzyMainContainerSuzy.topAnchor, constant: 15),
+            suzyCoinIconSuzy.topAnchor.constraint(equalTo: suzyMainContainerSuzy.topAnchor, constant: 0),
             suzyCoinIconSuzy.centerXAnchor.constraint(equalTo: suzyMainContainerSuzy.centerXAnchor),
-            suzyCoinIconSuzy.widthAnchor.constraint(equalTo: suzyMainContainerSuzy.widthAnchor, multiplier: 0.6),
+            suzyCoinIconSuzy.widthAnchor.constraint(equalTo: suzyMainContainerSuzy.widthAnchor, multiplier: 0.5),
             suzyCoinIconSuzy.heightAnchor.constraint(equalTo: suzyCoinIconSuzy.widthAnchor),
             
-            suzyAmountLabelSuzy.topAnchor.constraint(equalTo: suzyCoinIconSuzy.bottomAnchor, constant: 10),
+            suzyAmountLabelSuzy.topAnchor.constraint(equalTo: suzyCoinIconSuzy.bottomAnchor, constant: 4),
             suzyAmountLabelSuzy.centerXAnchor.constraint(equalTo: suzyMainContainerSuzy.centerXAnchor),
             
             suzyPurchaseBtnSuzy.bottomAnchor.constraint(equalTo: suzyMainContainerSuzy.bottomAnchor, constant: -15),

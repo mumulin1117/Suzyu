@@ -154,7 +154,14 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
         if fromrEdit {
             suzyDoneButtonSuzy.setTitle("Sure", for: .normal)
         }else{
-            suzyDoneButtonSuzy.setAttributedTitle( suzyBtnTitleSuzy, for: .normal)
+           let recomine = SuzyMatchManagerSuzy.shared.suzyGetRemainingFreeMatchesSuzy()
+            if recomine > 0 {
+                suzyDoneButtonSuzy.setTitleColor(.white, for: .normal)
+                suzyDoneButtonSuzy.setTitle("Three free times a day \(recomine)/3", for: .normal)
+            }else{
+                suzyDoneButtonSuzy.setAttributedTitle( suzyBtnTitleSuzy, for: .normal)
+            }
+            
         }
         
         NSLayoutConstraint.activate([

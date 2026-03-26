@@ -16,7 +16,7 @@ final class SuzyReportDetailVCSuzy: UIViewController {
     private let suzyReasonInputAreaSuzy = UITextView()
     private let suzyConfirmActionBtnSuzy = UIButton(type: .custom)
     
-    private var suzySelectedReasonIdxSuzy: Int = 3 // 默认选中 Other
+    private var suzySelectedReasonIdxSuzy: Int = 0 // 默认选中 Other
     private let suzyReasonListSuzy = ["Fake photo", "Scam or commercial", "Not interested", "Other"]
 
     override func viewDidLoad() {
@@ -30,6 +30,10 @@ final class SuzyReportDetailVCSuzy: UIViewController {
        
         return iv
     }()
+    
+     @objc func suzyGoBackSuzy(){
+        self.dismiss(animated: true)
+    }
     private func suzyBuildReportInterfaceSuzy() {
         view.addSubview(suzyFallbackBgImageViewSuzy)
         let suzyScreenHeightSuzy = UIScreen.main.bounds.height
@@ -39,7 +43,8 @@ final class SuzyReportDetailVCSuzy: UIViewController {
         suzyBackActionBtnSuzy.tintColor = .white
         suzyBackActionBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyBackActionBtnSuzy)
-        
+        suzyConfirmActionBtnSuzy.addTarget(self, action: #selector(suzyPerformConfirmActionSuzy), for: .touchUpInside)
+        suzyBackActionBtnSuzy.addTarget(self, action: #selector(suzyGoBackSuzy), for: .touchUpInside)
         // 2. 标题提示
         suzyTitleHeaderSuzy.text = "Please select the reason for reporting this user:"
         suzyTitleHeaderSuzy.textColor = .lightGray
@@ -106,10 +111,18 @@ final class SuzyReportDetailVCSuzy: UIViewController {
     
     private func suzyCreateReasonRowSuzy(titleSuzy: String, tagSuzy: Int) -> UIView {
         let suzyContainerSuzy = UIView()
+        suzyContainerSuzy.tag = tagSuzy // 标记索引
+        
+        // 添加点击手势
+        let tap = UITapGestureRecognizer(target: self, action: #selector(suzyDidSelectReasonSuzy(_:)))
+        suzyContainerSuzy.addGestureRecognizer(tap)
+        suzyContainerSuzy.isUserInteractionEnabled = true
+
         let suzyIsSelectedSuzy = (tagSuzy == suzySelectedReasonIdxSuzy)
         
-        // 圆形选择框
         let suzyCircleSuzy = UIImageView()
+        // 使用 tag 方便后面查找更新
+        suzyCircleSuzy.tag = 100
         let suzyImgNameSuzy = suzyIsSelectedSuzy ? "checkmark.circle.fill" : "circle"
         suzyCircleSuzy.image = UIImage(systemName: suzyImgNameSuzy)
         suzyCircleSuzy.tintColor = suzyIsSelectedSuzy ? .systemRed : .gray
@@ -130,12 +143,74 @@ final class SuzyReportDetailVCSuzy: UIViewController {
             suzyCircleSuzy.centerYAnchor.constraint(equalTo: suzyContainerSuzy.centerYAnchor),
             suzyCircleSuzy.widthAnchor.constraint(equalToConstant: 24),
             suzyCircleSuzy.heightAnchor.constraint(equalToConstant: 24),
-            
             suzyLabelSuzy.leadingAnchor.constraint(equalTo: suzyCircleSuzy.trailingAnchor, constant: 15),
             suzyLabelSuzy.centerYAnchor.constraint(equalTo: suzyContainerSuzy.centerYAnchor),
-            suzyContainerSuzy.heightAnchor.constraint(equalToConstant: 30)
+            suzyContainerSuzy.heightAnchor.constraint(equalToConstant: 40) // 稍微增加点击区域
         ])
         
         return suzyContainerSuzy
+    }
+    
+    
+}
+// MARK: - Interaction & Logic Suzy
+extension SuzyReportDetailVCSuzy {
+    
+    // 初始化时默认不选中（或者选中一个）
+    // private var suzySelectedReasonIdxSuzy: Int = -1
+
+    @objc private func suzyDidSelectReasonSuzy(_ sender: UITapGestureRecognizer) {
+        guard let tappedView = sender.view else { return }
+        suzySelectedReasonIdxSuzy = tappedView.tag
+        
+        // 刷新所有选项的 UI
+        for (index, subview) in suzyOptionsStackSuzy.arrangedSubviews.enumerated() {
+            if let circle = subview.viewWithTag(100) as? UIImageView {
+                let isSelected = (index == suzySelectedReasonIdxSuzy)
+                circle.image = UIImage(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                circle.tintColor = isSelected ? .systemRed : .gray
+            }
+        }
+    }
+
+    @objc private func suzyPerformConfirmActionSuzy() {
+        // 1. 检查是否勾选
+        if suzySelectedReasonIdxSuzy == -1 {
+            suzyShowToastSuzy(msg: "Please select a reason.")
+            return
+        }
+        
+        // 2. 检查 "Other" 逻辑 (假设 Other 是最后一个)
+        let otherIdx = suzyReasonListSuzy.count - 1
+        if suzySelectedReasonIdxSuzy == otherIdx {
+            let content = suzyReasonInputAreaSuzy.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            if content.isEmpty || content == "Enter your reason hers ..." {
+                suzyShowToastSuzy(msg: "Please describe the reason.")
+                return
+            }
+        }
+        
+        // 3. 提交成功效果
+        suzySubmitSuccessSuzy()
+    }
+    
+    private func suzySubmitSuccessSuzy() {
+        suzyConfirmActionBtnSuzy.isEnabled = false
+        // 模拟网络请求转圈或直接弹出成功
+        let alert = UIAlertController(title: "Success", message: "Thank you for your report. We will review it shortly.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true)
+        }))
+        self.present(alert, animated: true)
+    }
+    
+    private func suzyShowToastSuzy(msg: String) {
+        // 简单的提示逻辑
+        let alert = UIAlertController(title: nil, message: msg, preferredStyle: .alert)
+        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            alert.dismiss(animated: true)
+        }
     }
 }

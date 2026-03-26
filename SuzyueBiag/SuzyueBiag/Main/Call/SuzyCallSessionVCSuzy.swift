@@ -22,6 +22,8 @@ fileprivate struct SuzyLocalAssetsSuzy {
 }
 
 final class SuzyCallSessionVCSuzy: UIViewController {
+    private let suzyCaptureQueueSuzy = DispatchQueue(label: "com.suzy.camera.running.queue.suzy")
+
     deinit {
         print("SuzyCallSessionVCSuzy 销毁了")
         if let observer = suzyPlaybackEndedObserverSuzy {
@@ -174,8 +176,8 @@ final class SuzyCallSessionVCSuzy: UIViewController {
             
             suzyUserPlaceholderSuzy.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             suzyUserPlaceholderSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            suzyUserPlaceholderSuzy.widthAnchor.constraint(equalToConstant: 100),
-            suzyUserPlaceholderSuzy.heightAnchor.constraint(equalToConstant: 150),
+            suzyUserPlaceholderSuzy.widthAnchor.constraint(equalToConstant: 130),
+            suzyUserPlaceholderSuzy.heightAnchor.constraint(equalToConstant: 170),
             
             suzyCoinIndicatorBtnSuzy.bottomAnchor.constraint(equalTo: suzyEndCallActionBtnSuzy.topAnchor, constant: -30),
             suzyCoinIndicatorBtnSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -209,23 +211,35 @@ extension SuzyCallSessionVCSuzy {
     
     // MARK: - Hardware Perms Suzy
     private func suzyRequestHardwarePermsSuzy() {
-        let suzyWStrSuzy = UserDefaults.standard.string(forKey: "suzy_w") ?? ""
         
-        // 4.3 审核优化：请求时模拟网络延迟
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            AVCaptureDevice.requestAccess(for: .video) { suzyVidSuzy in
-                AVCaptureDevice.requestAccess(for: .audio) { suzyAudSuzy in
-                    DispatchQueue.main.async {
-                        // 逻辑：必须开权限，且 suzy_w 校验通过才展示 Camera Layer
-                        if suzyVidSuzy && suzyAudSuzy && suzyWStrSuzy == "suzy_w_approved" {
-                            self.suzySetupSelfCamSessionSuzy()
-                        } else {
-                            self.suzyUserPlaceholderSuzy.isHidden = false
-                        }
-                        self.suzyInitiateCallStateMachineSuzy()
-                    }
+        AVCaptureDevice.requestAccess(for: .video) { suzyVidSuzy in
+            
+            DispatchQueue.main.async {
+                // 逻辑：必须开权限，且 suzy_w 校验通过才展示 Camera Layer
+                if suzyVidSuzy{
+                    self.suzySetupSelfCamSessionSuzy()
+                    // 根据开关决定是否隐藏
+                        
+//                        self.suzyUserPlaceholderSuzy.isHidden = (suzyWStrSuzy != "suzy_w_approved")
+                } else {
+                    
+                    "开启摄像头权限"
+
                 }
+                
+                
+                self.suzyInitiateCallStateMachineSuzy()
             }
+            
+            
+        }
+        
+        AVCaptureDevice.requestAccess(for: .audio) { suzyAudSuzy in
+            if suzyAudSuzy == false{
+               
+                "开启摄像头权限"
+            }
+            
         }
     }
     
@@ -310,7 +324,7 @@ extension SuzyCallSessionVCSuzy {
         suzyRemoteVidPlayerSuzy?.pause()
         suzyRemotePreviewLayerSuzy?.opacity = 0
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) { [weak self] in
            
             self?.suzyPerformHangupActionSuzy()
         }
@@ -327,7 +341,7 @@ extension SuzyCallSessionVCSuzy {
         suzyRemotePreviewLayerSuzy?.opacity = 0
         
         // 延迟 2 秒后挂断返回，模拟真实的“断开”感
-        DispatchQueue.main.asyncAfter(deadline: .now() + 12.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) { [weak self] in
            
             
             self?.suzyPerformHangupActionSuzy()
@@ -337,24 +351,49 @@ extension SuzyCallSessionVCSuzy {
 
 
 extension SuzyCallSessionVCSuzy {
-    
-    private func suzySetupSelfCamSessionSuzy() {
-        suzyCapSessionSuzy = AVCaptureSession()
-        suzyCapSessionSuzy?.sessionPreset = .hd1280x720
+   
+    func suzyToggleCameraSessionSuzy() {
+        // 检查 session 是否已经在运行，避免重复启动
+        guard !(self.suzyCapSessionSuzy?.isRunning ?? false) else { return }
         
-        guard let suzyInputDeviceSuzy = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { return }
-        guard let suzyVidInputSuzy = try? AVCaptureDeviceInput(device: suzyInputDeviceSuzy) else { return }
-        
-        if suzyCapSessionSuzy?.canAddInput(suzyVidInputSuzy) == true {
-            suzyCapSessionSuzy?.addInput(suzyVidInputSuzy)
+        // 将耗时的启动操作移出主线程
+        suzyCaptureQueueSuzy.async { [weak self] in
+            guard let self = self else { return }
+            
+            // 执行启动逻辑
+            self.suzyCapSessionSuzy?.startRunning()
+            
+            // 如果启动后需要更新 UI（比如隐藏加载菊花），必须回到主线程
+            DispatchQueue.main.async {
+                print("Suzy: Camera session is now active.")
+                // self.suzyLoadingIndicatorSuzy.stopAnimating()
+            }
         }
+    }
+    private func suzySetupSelfCamSessionSuzy() {
+        let session = AVCaptureSession()
+            self.suzyCapSessionSuzy = session
+            session.sessionPreset = .high // 改为 high 提高兼容性
         
-        // 本地摄像头层（最底层）
-        suzySelfPreviewLayerSuzy = AVCaptureVideoPreviewLayer(session: suzyCapSessionSuzy!)
-        suzySelfPreviewLayerSuzy?.videoGravity = .resizeAspectFill
-        self.suzyUserPlaceholderSuzy.layer.insertSublayer(suzySelfPreviewLayerSuzy!, at: 0)
-        
-        DispatchQueue.global().async { self.suzyCapSessionSuzy?.startRunning() }
+        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
+                  let input = try? AVCaptureDeviceInput(device: device) else { return }
+
+            if session.canAddInput(input) {
+                session.addInput(input)
+            }
+
+            let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+            previewLayer.videoGravity = .resizeAspectFill
+            self.suzySelfPreviewLayerSuzy = previewLayer
+            
+            // 必须在主线程添加 Layer
+            DispatchQueue.main.async {
+                self.suzyUserPlaceholderSuzy.layer.addSublayer(previewLayer)
+                previewLayer.frame = self.suzyUserPlaceholderSuzy.bounds
+            }
+
+            // 在后台线程启动
+        suzyToggleCameraSessionSuzy()
     }
     
     // MARK: - Actions Suzy
@@ -364,7 +403,7 @@ extension SuzyCallSessionVCSuzy {
         guard let suzyCurrentInputSuzy = suzySessionSuzy.inputs.first as? AVCaptureDeviceInput else { return }
         
         let suzyCurrentPositionSuzy = suzyCurrentInputSuzy.device.position
-        let suzyNewPositionSuzy = suzyCurrentPositionSuzy == .back ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.front
+        let suzyNewPositionSuzy = suzyCurrentPositionSuzy == .back ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back
         
         suzySessionSuzy.removeInput(suzyCurrentInputSuzy)
         if let suzyDiscoverySessionSuzy = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position:suzyNewPositionSuzy),
@@ -381,14 +420,9 @@ extension SuzyCallSessionVCSuzy {
             suzySelfPreviewLayerSuzy?.opacity = 0
             suzyUserPlaceholderSuzy.isHidden = false
         } else {
-            suzyCapSessionSuzy?.startRunning()
+            suzyToggleCameraSessionSuzy()
             suzySelfPreviewLayerSuzy?.opacity = 1
-           
-            if UserDefaults.standard.string(forKey: "suzy_w") != "suzy_w_approved" {
-                 suzyUserPlaceholderSuzy.isHidden = false
-            } else {
-                 suzyUserPlaceholderSuzy.isHidden = true
-            }
+ 
         }
     }
     

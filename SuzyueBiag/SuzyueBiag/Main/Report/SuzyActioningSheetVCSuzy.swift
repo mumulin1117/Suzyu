@@ -109,16 +109,17 @@ final class SuzyActioningSheetVCSuzy: UIViewController {
     // MARK: - Interactive Actions Suzy
 
     @objc private func suzyHandleBlockConfirmedSuzy() {
+        
         guard let uidd = self.pathUID  else{
             return
         }
         SuzyStaticDataCenterSuzy.suzyMockUserLibrarySuzy.removeAll { $0.suzyIdentifierSuzy == uidd }
         SuzyMessageCacheManager.shared.conversations.removeAll { $0.userInfo.suzyIdentifierSuzy == uidd }
         let suzyDataPackageSuzy: [String: Any] = ["suzyTargetID": uidd]
-       
+        self.dismiss(animated: false)
         NotificationCenter.default.post(name: NSNotification.Name("SuzySwitchToReportDetails"), object: suzyDataPackageSuzy)
         
-        self.dismiss(animated: false)
+       
         
     }
 

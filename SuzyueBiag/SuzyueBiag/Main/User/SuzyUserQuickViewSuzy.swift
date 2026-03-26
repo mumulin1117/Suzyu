@@ -185,6 +185,8 @@ final class SuzyUserQuickViewSuzy: UIView {
     }
     
     @objc private func suzyInitiateCallSuzy() {
+        
+        
         suzyOnVideoCallRequestedSuzy?()
         sendCallmessageAction()
     }

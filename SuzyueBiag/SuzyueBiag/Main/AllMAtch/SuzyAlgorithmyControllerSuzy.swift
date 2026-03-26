@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 final class SuzyAlgorithmyControllerSuzy: UIViewController {
     var suzyCurrentMatchTypeSuzy: SuzyMatchLogicTypeSuzy = .suzyAllSuzy
@@ -230,6 +231,12 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegate, UICollectionVi
         suzyPopupSuzy.suzyOnVideoCallRequestedSuzy = { [weak self] in
             print("Suzy: Connecting video call to \(suzyTargetUserSuzy.suzyUsernameSuzy)")
             // 这里可以跳转到视频通话虚假页面
+            // 权限检查
+            guard AVCaptureDevice.authorizationStatus(for: .video) == .authorized else {
+                self?.suzyShowPermissionAlertSuzy()
+                return
+            }
+            
             let calddvc = SuzyCallSessionVCSuzy.init(suzyMatchSuzy: suzyTargetUserSuzy)
             calddvc.protrShow = {
                 let vc = SuzyGoldShopVCSuzy()
@@ -245,6 +252,36 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegate, UICollectionVi
         UIView.animate(withDuration: 0.3) {
             suzyPopupSuzy.alpha = 1
         }
+    }
+    
+    private func suzyShowPermissionAlertSuzy() {
+        let suzyAlertSuzy = UIAlertController(
+            title: "Camera Access Required",
+            message: "To start a video call and verify , please enable camera access in your device settings.",
+            preferredStyle: .alert
+        )
+        
+        // “去设置” 动作：直接跳转到当前 App 的系统设置页面
+        let suzySettingsActionSuzy = UIAlertAction(title: "Go to Settings", style: .default) { _ in
+            guard let suzySettingsUrlSuzy = URL(string: UIApplication.openSettingsURLString) else { return }
+            if UIApplication.shared.canOpenURL(suzySettingsUrlSuzy) {
+                UIApplication.shared.open(suzySettingsUrlSuzy, options: [:], completionHandler: nil)
+            }
+        }
+        
+        // “取消” 动作
+        let suzyCancelActionSuzy = UIAlertAction(title: "Maybe Later", style: .cancel, handler: nil)
+        
+        suzyAlertSuzy.addAction(suzySettingsActionSuzy)
+        suzyAlertSuzy.addAction(suzyCancelActionSuzy)
+       
+        if let suzyPopoverSuzy = suzyAlertSuzy.popoverPresentationController {
+            suzyPopoverSuzy.sourceView = self.view
+            suzyPopoverSuzy.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            suzyPopoverSuzy.permittedArrowDirections = []
+        }
+        
+        self.present(suzyAlertSuzy, animated: true, completion: nil)
     }
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {

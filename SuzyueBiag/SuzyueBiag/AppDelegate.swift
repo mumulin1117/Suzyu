@@ -6,7 +6,10 @@
 //
 
 import UIKit
-
+键盘问题
+loading问题
+静态混淆问题
+支付内购问题
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

@@ -162,6 +162,14 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        suzyToggleCameraSessionSuzy()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        suzyCaptureSessionSuzy.stopRunning()
+    }
     private func suzyInitializeCameraSuzy() {
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
               let input = try? AVCaptureDeviceInput(device: device) else { return }
@@ -172,21 +180,36 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
             suzyCameraPreviewLayerSuzy.videoGravity = .resizeAspectFill
             suzyCameraPreviewLayerSuzy.frame = view.bounds
             view.layer.insertSublayer(suzyCameraPreviewLayerSuzy, at: 0)
-            suzyCaptureSessionSuzy.startRunning()
+            suzyToggleCameraSessionSuzy()
         }
     }
 
     private func suzyShowPermissionDeniedStateSuzy() {
         suzyFallbackBgImageViewSuzy.isHidden = false
-        // 提示逻辑：点击任何功能按钮时弹出跳转设置的 Alert
+        suzyShowPermissionAlertSuzy()
     }
-    
-    @objc private func suzyHandleFilterTapSuzy(_ sender: UIButton) {
-        // 权限检查
-        guard AVCaptureDevice.authorizationStatus(for: .video) == .authorized else {
-            suzyShowPermissionAlertSuzy()
-            return
+    private let suzyCaptureQueueSuzy = DispatchQueue(label: "com.suzy.camera.running.queue.suzy")
+
+    func suzyToggleCameraSessionSuzy() {
+        // 检查 session 是否已经在运行，避免重复启动
+        guard !self.suzyCaptureSessionSuzy.isRunning else { return }
+        
+        // 将耗时的启动操作移出主线程
+        suzyCaptureQueueSuzy.async { [weak self] in
+            guard let self = self else { return }
+            
+            // 执行启动逻辑
+            self.suzyCaptureSessionSuzy.startRunning()
+            
+            // 如果启动后需要更新 UI（比如隐藏加载菊花），必须回到主线程
+            DispatchQueue.main.async {
+                print("Suzy: Camera session is now active.")
+                // self.suzyLoadingIndicatorSuzy.stopAnimating()
+            }
         }
+    }
+    @objc private func suzyHandleFilterTapSuzy(_ sender: UIButton) {
+       
 
         // 互斥选中逻辑
         suzyAllFilterBtnSuzy.isSelected = (sender == suzyAllFilterBtnSuzy)
@@ -234,11 +257,157 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         
         self.present(suzyAlertSuzy, animated: true, completion: nil)
     }
+    
+    
+    //MARK: - Start meet
     @objc func suzyOnStartMeetClickedSuzy()  {
+
         if suzyAllFilterBtnSuzy.isSelected {
             self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyAllSuzy), animated: true)
             return
         }
-        self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyFilteredSuzy), animated: true)
+        
+        let freeCount = SuzyMatchManagerSuzy.shared.suzyGetRemainingFreeMatchesSuzy()
+        if freeCount > 0 {
+                // 还有免费次数，直接弹窗提示确认开始
+            suzyShowCustomAlertSuzy(isEnough: true,isFreenAlert: true )
+            
+        } else {
+            // 免费次数用完，检查金币
+            let currentCoins = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.suzyCoinsSuzy ?? 0
+            suzyShowCustomAlertSuzy(isEnough: currentCoins >= 20,isFreenAlert: false )
+            
+        }
+        
+        
+        
+        
+       
+    }
+    
+    
+    @objc private func suzyHandleIcebreakerTapSuzy() {
+        let suzyCurrentCoinsSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.suzyCoinsSuzy ?? 0
+       
+        suzyShowCustomAlertSuzy(isEnough: suzyCurrentCoinsSuzy >= 20)
+    }
+    
+    private func suzyShowCustomAlertSuzy(isEnough: Bool,isFreenAlert:Bool = true) {
+        let suzyOverlaySuzy = UIView(frame: view.bounds)
+        suzyOverlaySuzy.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        suzyOverlaySuzy.tag = 999
+        
+        let suzyAlertViewSuzy = UIImageView(image:  UIImage(named: "suzyCardContainerSuzy"))
+        suzyAlertViewSuzy.isUserInteractionEnabled = true
+        suzyAlertViewSuzy.contentMode = .scaleToFill
+        suzyAlertViewSuzy.translatesAutoresizingMaskIntoConstraints = false
+     
+        suzyOverlaySuzy.addSubview(suzyAlertViewSuzy)
+        
+        let suzyMessageIconSuzy = UIImageView()
+        suzyMessageIconSuzy.image = UIImage(named: "bubbleacall")
+        suzyMessageIconSuzy.translatesAutoresizingMaskIntoConstraints = false
+        suzyOverlaySuzy.addSubview(suzyMessageIconSuzy)
+        
+    
+     
+        
+        
+        view.addSubview(suzyOverlaySuzy)
+        
+        // 核心文案逻辑
+        let titleLabel = UILabel()
+        titleLabel.text = "Reminder"
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = .white
+        titleLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        suzyAlertViewSuzy.addSubview(titleLabel)
+        let msgLabel = UILabel()
+        msgLabel.textColor = .lightGray
+        msgLabel.numberOfLines = 0
+        msgLabel.textAlignment = .center
+        let tip = SuzyMatchManagerSuzy.shared.suzyGetCurrentMatchTipSuzy()
+        msgLabel.text = isEnough ? tip : "You don't have enough coins, please recharge now."
+        
+        if isFreenAlert {
+            msgLabel.text = tip
+        }
+        
+        msgLabel.translatesAutoresizingMaskIntoConstraints = false
+        suzyAlertViewSuzy.addSubview(msgLabel)
+        
+        let actionBtn = UIButton(type: .custom)
+        actionBtn.layer.cornerRadius = 25
+        actionBtn.backgroundColor = .systemPurple
+        actionBtn.setTitle(isEnough ? "Continue" : "Recharge", for: .normal)
+        actionBtn.translatesAutoresizingMaskIntoConstraints = false
+        suzyAlertViewSuzy.addSubview(actionBtn)
+        
+        let suzyDismissBtnSuzy = UIButton(type: .custom)
+       
+        // 关闭按钮
+        suzyDismissBtnSuzy.setTitle("Cancel", for: .normal)
+        suzyDismissBtnSuzy.setTitleColor(.white, for: .normal)
+        suzyDismissBtnSuzy.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        suzyDismissBtnSuzy.addTarget(self, action: #selector(suzyHideQuickViewSuzy), for: .touchUpInside)
+        suzyDismissBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
+        suzyAlertViewSuzy.addSubview(suzyDismissBtnSuzy)
+        // 约束简略 (根据你的布局习惯调整)
+        NSLayoutConstraint.activate([
+            suzyAlertViewSuzy.centerXAnchor.constraint(equalTo: suzyOverlaySuzy.centerXAnchor),
+            suzyAlertViewSuzy.centerYAnchor.constraint(equalTo: suzyOverlaySuzy.centerYAnchor),
+            suzyAlertViewSuzy.widthAnchor.constraint(equalToConstant: 325),
+            suzyAlertViewSuzy.heightAnchor.constraint(equalToConstant: 306),
+            suzyMessageIconSuzy.widthAnchor.constraint(equalToConstant: 186),
+            suzyMessageIconSuzy.heightAnchor.constraint(equalToConstant: 175),
+            suzyMessageIconSuzy.centerXAnchor.constraint(equalTo: suzyAlertViewSuzy.centerXAnchor),
+            suzyMessageIconSuzy.bottomAnchor.constraint(equalTo: suzyAlertViewSuzy.topAnchor, constant: 60),
+            
+            titleLabel.topAnchor.constraint(equalTo: suzyAlertViewSuzy.topAnchor, constant: 70),
+            titleLabel.centerXAnchor.constraint(equalTo: suzyAlertViewSuzy.centerXAnchor),
+            
+            msgLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            msgLabel.leadingAnchor.constraint(equalTo: suzyAlertViewSuzy.leadingAnchor, constant: 13),
+            msgLabel.trailingAnchor.constraint(equalTo: suzyAlertViewSuzy.trailingAnchor, constant: -13),
+            
+            actionBtn.heightAnchor.constraint(equalToConstant: 50),
+            actionBtn.leadingAnchor.constraint(equalTo: suzyAlertViewSuzy.leadingAnchor, constant: 13),
+            actionBtn.trailingAnchor.constraint(equalTo: suzyAlertViewSuzy.trailingAnchor, constant: -13),
+            actionBtn.topAnchor.constraint(equalTo: msgLabel.bottomAnchor, constant: 35),
+            
+            suzyDismissBtnSuzy.centerXAnchor.constraint(equalTo: actionBtn.centerXAnchor),
+            suzyDismissBtnSuzy.heightAnchor.constraint(equalToConstant: 40),
+            
+            suzyDismissBtnSuzy.topAnchor.constraint(equalTo: actionBtn.bottomAnchor,constant: 10)
+            
+           
+        ])
+        
+        // 按钮点击处理
+        actionBtn.addAction(UIAction(handler: { [weak self] _ in
+            guard let self = self else { return }
+            suzyOverlaySuzy.removeFromSuperview()
+            if isEnough {
+                SuzyMatchManagerSuzy.shared.suzyIncrementMatchCountSuzy()
+                self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyFilteredSuzy), animated: true)
+            } else {
+                let vc = SuzyGoldShopVCSuzy()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+                
+            }
+        }), for: .touchUpInside)
+    }
+    
+    @objc private func suzyHideQuickViewSuzy() {
+        let suzyOverlaySuzy = view.viewWithTag(999)
+        UIView.animate(withDuration: 0.3, animations: {
+            
+            suzyOverlaySuzy?.alpha = 0 }) { _ in
+       
+            
+            suzyOverlaySuzy?.removeFromSuperview()
+        }
     }
 }
