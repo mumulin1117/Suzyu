@@ -113,7 +113,7 @@ final class SuzyActioningSheetVCSuzy: UIViewController {
             return
         }
         SuzyStaticDataCenterSuzy.suzyMockUserLibrarySuzy.removeAll { $0.suzyIdentifierSuzy == uidd }
-        
+        SuzyMessageCacheManager.shared.conversations.removeAll { $0.userInfo.suzyIdentifierSuzy == uidd }
         let suzyDataPackageSuzy: [String: Any] = ["suzyTargetID": uidd]
        
         NotificationCenter.default.post(name: NSNotification.Name("SuzySwitchToReportDetails"), object: suzyDataPackageSuzy)

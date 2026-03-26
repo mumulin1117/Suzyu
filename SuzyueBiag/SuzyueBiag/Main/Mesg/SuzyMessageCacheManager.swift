@@ -42,34 +42,34 @@ class SuzyMessageCacheManager {
     
     var conversations: [SuzyConversationModel] = []
 
-    private init() {
-        setupMockData()
-    }
+//    private init() {
+//        setupMockData()
+//    }
 
-    private func setupMockData() {
+//    private func setupMockData() {
         // 模拟两个用户实体
-       if let user1 = SuzyStaticDataCenterSuzy.suzyMockUserLibrarySuzy.first,
-          let user2 = SuzyStaticDataCenterSuzy.suzyMockUserLibrarySuzy.last{
-           
+//       if let user1 = SuzyStaticDataCenterSuzy.suzyMockUserLibrarySuzy.first,
+//          let user2 = SuzyStaticDataCenterSuzy.suzyMockUserLibrarySuzy.last{
+//           
             // 组装对话列表
-            self.conversations = [
-                SuzyConversationModel(
-                    userInfo: user1,
-                    unreadCount: 1,
-                    messages: [
-                        SuzyChatDetailRecord(isMine: false, content: .text("How do you do today?"), time: "10:31AM")
-                    ]
-                ),
-                SuzyConversationModel(
-                    userInfo: user2,
-                    unreadCount: 0,
-                    messages: [
-                        SuzyChatDetailRecord(isMine: false, content: .call(duration: "02:15"), time: "10:31AM")
-                    ]
-                )
-            ]
-       }
+//            self.conversations = [
+//                SuzyConversationModel(
+//                    userInfo: user1,
+//                    unreadCount: 1,
+//                    messages: [
+//                        SuzyChatDetailRecord(isMine: false, content: .text("How do you do today?"), time: "10:31AM")
+//                    ]
+//                ),
+//                SuzyConversationModel(
+//                    userInfo: user2,
+//                    unreadCount: 0,
+//                    messages: [
+//                        SuzyChatDetailRecord(isMine: false, content: .call(duration: "02:15"), time: "10:31AM")
+//                    ]
+//                )
+//            ]
+//       }
         
        
-    }
+//    }
 }

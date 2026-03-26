@@ -186,6 +186,36 @@ final class SuzyUserQuickViewSuzy: UIView {
     
     @objc private func suzyInitiateCallSuzy() {
         suzyOnVideoCallRequestedSuzy?()
+        sendCallmessageAction()
+    }
+    
+    private func sendCallmessageAction() {
+      
+        // 存储消息逻辑
+        
+        let newMessage = SuzyChatDetailRecord(isMine: true, content: .call(duration: "00:00"), time: "Now")
+        
+        if let index = SuzyMessageCacheManager.shared.conversations.firstIndex(where: {
+                $0.userInfo.suzyIdentifierSuzy == suzyEntitySuzy?.suzyIdentifierSuzy
+            }) {
+                
+                // 3. 直接修改原数组中的数据
+                SuzyMessageCacheManager.shared.conversations[index].messages.append(newMessage)
+            let updatedConversation = SuzyMessageCacheManager.shared.conversations.remove(at: index)
+                    SuzyMessageCacheManager.shared.conversations.insert(updatedConversation, at: 0)
+            } else {
+                guard let entity = suzyEntitySuzy else { return }
+                let newConversation = SuzyConversationModel(
+                            userInfo: entity,
+                            unreadCount: 0,
+                            messages: [newMessage]
+                        
+                )
+                        
+                SuzyMessageCacheManager.shared.conversations.insert(newConversation, at: 0)
+            }
+       
+       
     }
     
     @objc private func suzyHideQuickViewSuzy() {

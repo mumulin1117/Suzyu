@@ -8,17 +8,76 @@
 import UIKit
 
 class SuzyInformationViewController: UIViewController {
-
+    private lazy var suzyEmptyViewSuzy: UIView = {
+        let view = UIView()
+        view.isHidden = true // 默认隐藏
+        
+        // 占位图标 (可以使用系统图标或你的自定义图)
+        let icon = UIImageView(image: UIImage(systemName: "message.circle"))
+        icon.tintColor = .darkGray
+        icon.contentMode = .scaleAspectFit
+        
+        // 提示文字
+        let label = UILabel()
+        label.text = "No Messages"
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 16)
+        label.textAlignment = .center
+        
+        [icon, label].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+        
+        NSLayoutConstraint.activate([
+            icon.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            icon.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
+            icon.widthAnchor.constraint(equalToConstant: 80),
+            icon.heightAnchor.constraint(equalToConstant: 80),
+            
+            label.topAnchor.constraint(equalTo: icon.bottomAnchor, constant: 15),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        return view
+    }()
     private let tableView = UITableView()
-    private var dataSource = SuzyMessageCacheManager.shared.conversations
+    private var dataSource :[SuzyConversationModel]  = [SuzyConversationModel]()
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
         suzyBuildReportInterfaceSuzy()
         setupNavigation()
         setupTableView()
+        view.addSubview(suzyEmptyViewSuzy)
+            suzyEmptyViewSuzy.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                suzyEmptyViewSuzy.topAnchor.constraint(equalTo: tableView.topAnchor),
+                suzyEmptyViewSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                suzyEmptyViewSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                suzyEmptyViewSuzy.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            
+            ])
+        NotificationCenter.default.addObserver(self, selector: #selector(suzyRefreshDataStatusSuzy), name: NSNotification.Name("SuzySwitchToReportDetails"), object: nil)
+        suzyRefreshDataStatusSuzy()
     }
-
+    @objc func suzyRefreshDataStatusSuzy() {
+        let isEmpty = SuzyMessageCacheManager.shared.conversations.isEmpty
+        
+        // 如果为空，显示占位图，隐藏列表
+        suzyEmptyViewSuzy.isHidden = !isEmpty
+        tableView.isHidden = isEmpty
+        
+        if !isEmpty {
+            self.dataSource = SuzyMessageCacheManager.shared.conversations
+            tableView.reloadData()
+        }
+    }
+   
+    let shaninfoLabel = UILabel.init()
+    
+    let backBtn = UIButton(type: .custom)
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
         iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
@@ -32,14 +91,17 @@ class SuzyInformationViewController: UIViewController {
     }
 
     private func setupNavigation() {
-        title = "Information"
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        
-        let backBtn = UIButton(type: .custom)
+        shaninfoLabel.text = "Information"
+        shaninfoLabel.textColor = .white
+        shaninfoLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         backBtn.setImage(UIImage(systemName: "arrow.left"), for: .normal)
+        shaninfoLabel.textAlignment = .center
+        shaninfoLabel.translatesAutoresizingMaskIntoConstraints = false
         backBtn.tintColor = .white
         backBtn.addTarget(self, action: #selector(backAction), for: .touchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backBtn)
+        backBtn.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(backBtn)
+        view.addSubview(shaninfoLabel)
     }
 
     private func setupTableView() {
@@ -52,7 +114,14 @@ class SuzyInformationViewController: UIViewController {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            backBtn.widthAnchor.constraint(equalToConstant: 25),
+            backBtn.heightAnchor.constraint(equalToConstant: 30),
+            backBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            
+            shaninfoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            shaninfoLabel.centerYAnchor.constraint(equalTo: backBtn.centerYAnchor),
+            tableView.topAnchor.constraint(equalTo: backBtn.bottomAnchor,constant: 30),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -76,18 +145,14 @@ extension SuzyInformationViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90 // 根据 UI 比例适配
+        return 90
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 1. 清除本地未读数
-        SuzyMessageCacheManager.shared.conversations[indexPath.row].unreadCount = 0
-        dataSource = SuzyMessageCacheManager.shared.conversations
-        tableView.reloadRows(at: [indexPath], with: .none)
-        
-        // 2. 跳转至详情页（此处需实现详情页控制器）
+      
         let detailVC = SuzyChatDetailViewController()
-        detailVC.conversation = dataSource[indexPath.row]
+        detailVC.targetUser = dataSource[indexPath.row].userInfo
+        detailVC.chatHistory = dataSource[indexPath.row].messages
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }

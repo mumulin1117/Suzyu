@@ -58,7 +58,7 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
         iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
         iv.contentMode = .scaleAspectFill
-        iv.isHidden = true
+       
         return iv
     }()
     private func suzyInitializeCanvasSuzy() {

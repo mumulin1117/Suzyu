@@ -131,7 +131,8 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         suzyMatchedUserInfoSuzy.setImage(UIImage(named: "exclamationmark"), for: .normal)
         suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
       
-            suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+            
+        suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
 
         [suzyCameraSwitchBtnSuzy, suzyCameraToggleBtnSuzy, suzyMatchedUserInfoSuzy].forEach {
             $0.tintColor = .white

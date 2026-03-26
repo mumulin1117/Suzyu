@@ -34,7 +34,7 @@ class SuzyMessageListCell: UITableViewCell {
         nameLabel.textColor = .white
         nameLabel.font = .systemFont(ofSize: 18, weight: .bold)
         
-        lastMsgLabel.textColor = .systemPink // 默认色，如果有未读
+        lastMsgLabel.textColor = .systemPink
         lastMsgLabel.font = .systemFont(ofSize: 15)
         
         timeLabel.textColor = .darkGray
@@ -47,8 +47,8 @@ class SuzyMessageListCell: UITableViewCell {
         unreadBadge.layer.cornerRadius = 10
         unreadBadge.clipsToBounds = true
         
-        callIcon.image = UIImage(systemName: "phone.circle.fill")
-        callIcon.tintColor = .systemGreen
+        callIcon.image = UIImage(named: "phone.circle")
+   
         callIcon.isHidden = true
 
         [avatarImageView, nameLabel, lastMsgLabel, timeLabel, unreadBadge, callIcon].forEach {
@@ -95,7 +95,11 @@ class SuzyMessageListCell: UITableViewCell {
         } else {
             callIcon.isHidden = true
             lastMsgLabel.isHidden = false
-            lastMsgLabel.text = model.lastMessage
+            if case .text(let t) = model.messages.last?.content{ lastMsgLabel.text = t }
+            
+            
+            
+            
             lastMsgLabel.textColor = model.unreadCount > 0 ? .systemPink : .gray
         }
         
