@@ -2,7 +2,7 @@
 //  SuzyAOpticControoerSuzy.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/20.
+//  Created by  on 2026/3/20.
 //
 
 import UIKit
@@ -31,8 +31,6 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         return iv
     }()
     
-//    // 底部控制区域
-//    private let suzyBottomContainerSuzy = UIView()
     private let suzyStartMeetButtonSuzy = UIButton(type: .custom)
     
     // 筛选按钮
@@ -52,7 +50,9 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         suzySetupBaseUISuzy()
         suzyCheckCameraPermissionSuzy()
     }
-    
+    @objc func memoryLeakSuue() {
+        self.navigationController?.pushViewController(LandmarkSUZYTrackSuue(), animated: true)
+     }
     private func suzySetupBaseUISuzy() {
         view.backgroundColor = .black
         
@@ -72,7 +72,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         suzySettingBtnSuzy.setImage(UIImage(named: "suzy_ic_settings"), for: .normal)
         suzySettingBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzySettingBtnSuzy)
-        
+        suzySettingBtnSuzy.addTarget(self, action: #selector(memoryLeakSuue), for: .touchUpInside)
         // 4. 中间提示文字
         let suzyHintLabelSuzy = UILabel()
         suzyHintLabelSuzy.text = "I want to chat with this 😋"
@@ -200,7 +200,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     private func suzyPresentInterestPopupSuzy() {
         // 弹出设计图中的半屏弹窗
         // 这里的 CollectionView 逻辑直接复用你注册流程中的 `SuzyTagCellSuzy`
-        let suzyPopup = SuzyInterestPickerPopupSuzy()
+        let suzyPopup = SuzyInterestPickerPopupSuzy(fromrEdit: false)
         suzyPopup.modalPresentationStyle = .overCurrentContext
         suzyPopup.modalTransitionStyle = .crossDissolve
         self.present(suzyPopup, animated: true)

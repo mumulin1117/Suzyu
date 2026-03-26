@@ -2,7 +2,7 @@
 //  SuzyAlgorithmyControllerSuzy.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/23.
+//  Created by  on 2026/3/23.
 //
 
 import UIKit
@@ -44,7 +44,7 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
     
     
     @objc func memoryLeakSuue() {
-//        self.navigationController?.pushViewController((), animated: true)
+        self.navigationController?.pushViewController(LandmarkSUZYTrackSuue(), animated: true)
      }
     @objc  func SuzyBlockToReportDetails(_ notification: Notification) {
         guard let suzyInfoSuzy = notification.object as? Dictionary<String,String>,

@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/19.
+//  Created by  on 2026/3/19.
 //
 
 import UIKit
@@ -17,19 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow.init(frame: UIScreen.main.bounds)
         
        
+       
+        let isGuestUserSuzy = UserDefaults.standard.bool(forKey: "SuzyIsUserRegisteredSuzy")
         
-        let persistentDataSuzy = SuzySecureVaultSuzy.sharedSuzy.retrieveSecretSuzy(accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy)
-        
-        let isGuestUserSuzy = UserDefaults.standard.bool(forKey: SuzySecureVaultSuzy.suzyGuestFlagSuzy)
-        
-        if persistentDataSuzy != nil {
+        if isGuestUserSuzy == true {
             AppDelegate.addToRoot()
 
-        } else if isGuestUserSuzy {
-            
-            AppDelegate.addToRoot()
-
-        } else {
+        }  else {
             let navSuzy = UINavigationController(rootViewController: PromiseChainSuzy())
             navSuzy.isNavigationBarHidden = true
             self.window?.rootViewController = navSuzy

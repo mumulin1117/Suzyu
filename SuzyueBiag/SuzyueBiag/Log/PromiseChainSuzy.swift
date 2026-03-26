@@ -2,7 +2,7 @@
 //  PromiseChainSuzy.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/19.
+//  Created by  on 2026/3/19.
 //
 
 import UIKit
@@ -110,14 +110,7 @@ final class PromiseChainSuzy: UIViewController {
         return btnSuzy
     }()
     
-    private let bypassButtonSuzy: UIButton = {
-        let btnSuzy = UIButton(type: .system)
-        btnSuzy.setTitle("Skip for now", for: .normal)
-        btnSuzy.setTitleColor(.white, for: .normal)
-        btnSuzy.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
-        btnSuzy.translatesAutoresizingMaskIntoConstraints = false
-        return btnSuzy
-    }()
+    
     
     // MARK: - LifecycleSuzy
     override func viewDidLoad() {
@@ -143,8 +136,7 @@ final class PromiseChainSuzy: UIViewController {
         
           
         mainStackSuzy.addArrangedSubview(appleAuthButtonSuzy)
-        mainStackSuzy.addArrangedSubview(bypassButtonSuzy)
-       
+     
         agreementStackSuzy.addArrangedSubview(checkmarkButtonSuzy)
         agreementStackSuzy.addArrangedSubview(legalTextLabelSuzy)
         setupLegalClickableTextSuzy()
@@ -162,7 +154,7 @@ final class PromiseChainSuzy: UIViewController {
             visualEffectViewSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             appleAuthButtonSuzy.heightAnchor.constraint(equalToConstant: 52),
-            bypassButtonSuzy.heightAnchor.constraint(equalToConstant: 32),
+           
             agreementStackSuzy.heightAnchor.constraint(equalToConstant: 40),
             
             mainStackSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
@@ -267,7 +259,7 @@ final class PromiseChainSuzy: UIViewController {
     
     private func bindSuzyInteractionsSuzy() {
         appleAuthButtonSuzy.addTarget(self, action: #selector(triggerAppleAuthSuzy), for: .touchUpInside)
-        bypassButtonSuzy.addTarget(self, action: #selector(triggerBypassSuzy), for: .touchUpInside)
+        
     }
     
     @objc private func triggerAppleAuthSuzy() {
@@ -288,8 +280,7 @@ final class PromiseChainSuzy: UIViewController {
          
             print("Suzy: Recognized returning user. Navigating to Dashboard.")
             
-            UserDefaults.standard.set(false, forKey: SuzySecureVaultSuzy.suzyGuestFlagSuzy)
-            
+             
             DispatchQueue.main.async {
                 self.suzyNavigateToMainDashboardSuzy()
             }
@@ -302,7 +293,6 @@ final class PromiseChainSuzy: UIViewController {
                 SuzySecureVaultSuzy.sharedSuzy.storeSecretSuzy(dataSuzy: suzyDataToStoreSuzy, accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy)
             }
             
-            UserDefaults.standard.set(false, forKey: SuzySecureVaultSuzy.suzyGuestFlagSuzy)
             
             DispatchQueue.main.async {
                 self.suzyNavigateToProfileCreationSuzy()
@@ -321,11 +311,7 @@ final class PromiseChainSuzy: UIViewController {
       
     }
     
-    @objc private func triggerBypassSuzy() {
-    
-        UserDefaults.standard.set(true, forKey: SuzySecureVaultSuzy.suzyGuestFlagSuzy)
-        suzyNavigateToMainDashboardSuzy()
-    }
+  
     
    
 }
@@ -374,8 +360,7 @@ extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
                 print("Suzy: Recognized returning user. Navigating to Dashboard.")
                 
                 // 更新登录状态
-                UserDefaults.standard.set(false, forKey: SuzySecureVaultSuzy.suzyGuestFlagSuzy)
-                
+                 
                 DispatchQueue.main.async {
                     self.suzyNavigateToMainDashboardSuzy()
                 }
@@ -391,8 +376,7 @@ extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
                     SuzySecureVaultSuzy.sharedSuzy.storeSecretSuzy(dataSuzy: suzyDataToStoreSuzy, accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy)
                 }
                 
-                UserDefaults.standard.set(false, forKey: SuzySecureVaultSuzy.suzyGuestFlagSuzy)
-                
+                 
                 DispatchQueue.main.async {
                     self.suzyNavigateToProfileCreationSuzy()
                 }

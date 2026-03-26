@@ -2,7 +2,7 @@
 //  SuzyGoldShopVCSuzy.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/25.
+//  Created by  on 2026/3/25.
 //
 
 import UIKit
@@ -19,7 +19,7 @@ final class SuzyGoldShopVCSuzy: UIViewController {
         SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 400, suzyPriceLabelSuzy: "$0.99", suzyProductIDSuzy: "uzdgfrfuzpjotjyy"),
         SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 800, suzyPriceLabelSuzy: "$1.99", suzyProductIDSuzy: "acsgeadxlbysvowz"),
         SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 2450, suzyPriceLabelSuzy: "$4.99", suzyProductIDSuzy: "noumfmlrqxxvsuox"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 3650, suzyPriceLabelSuzy: "$6.99", suzyProductIDSuzy: "naksbfuhssxvsurg"),
+        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 2850, suzyPriceLabelSuzy: "$5.99", suzyProductIDSuzy: "naksbfuhssxvsurg"),
         SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 5150, suzyPriceLabelSuzy: "$9.99", suzyProductIDSuzy: "zwylcqfbzaasysqi"),
         SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 10800, suzyPriceLabelSuzy: "$19.99", suzyProductIDSuzy: "bmwlhteruwffzbfe"),
         SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 29400, suzyPriceLabelSuzy: "$49.99", suzyProductIDSuzy: "pmyojytfhxnjamxh"),

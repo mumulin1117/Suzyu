@@ -2,7 +2,7 @@
 //  SuzySecureVaultSuzy.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/19.
+//  Created by  on 2026/3/19.
 //
 
 import UIKit
@@ -13,9 +13,11 @@ import Foundation
 
 struct SuzyUserProfileSuzy: Codable {
     let suzyUidSuzy: String           // 不可变
-    let suzyGenderSuzy: String        // 不可变
+    var suzyGenderSuzy: Int
     let suzyAgeSuzy: Int              // 不可变
        // 可变
+    var suzyUsername:String 
+    
     var suzyTagsSuzy: [String]        // 可变
     var suzyBioSuzy: String       //about self
     var suzyCoinsSuzy: Int            // 可变 (新增金币字段)
@@ -29,7 +31,7 @@ import Security
 final class SuzySecureVaultSuzy {
     static let sharedSuzy = SuzySecureVaultSuzy()
     static let suzyProfileKeySuzy = "com.suzy.auth.identifierSuzy"
-    static let suzyGuestFlagSuzy = "com.suzy.status.isGuestSuzy"
+    
     // --- 初始注册永久存储 ---
     func suzyInitializeIdentitySuzy(profileSuzy: SuzyUserProfileSuzy) {
         do {
@@ -49,13 +51,14 @@ final class SuzySecureVaultSuzy {
     }
     
     // --- 更新可变信息 (金币/Bio/Tags) ---
-    func suzyUpdateMutableAttributesSuzy(newBioSuzy: String? = nil, newTagsSuzy: [String]? = nil, deltaCoinsSuzy: Int = 0) {
+    func suzyUpdateMutableAttributesSuzy(newBioSuzy: String? = nil, newTagsSuzy: [String]? = nil, deltaCoinsSuzy: Int = 0,gender:Int = 0,usersuzyName:String? = nil) {
         guard var suzyCurrentSuzy = suzyFetchCurrentProfileSuzy() else { return }
         
         // 仅修改允许变动的字段
         if let bioSuzy = newBioSuzy { suzyCurrentSuzy.suzyBioSuzy = bioSuzy }
         if let tagsSuzy = newTagsSuzy { suzyCurrentSuzy.suzyTagsSuzy = tagsSuzy }
-        
+        if let nameSuzy = usersuzyName { suzyCurrentSuzy.suzyUsername = nameSuzy  }
+        suzyCurrentSuzy.suzyGenderSuzy = gender
         // 金币增减逻辑
         suzyCurrentSuzy.suzyCoinsSuzy += deltaCoinsSuzy
         
@@ -90,34 +93,44 @@ final class SuzySecureVaultSuzy {
     
     // MARK: - Account Destruction & Logout Suzy
         
-        /// 退出登录：彻底清除 Keychain 存储和本地注册标记
-    func suzyDeconstructAccountSuzy(completionSuzy: (() -> Void)? = nil) {
-        // 1. 定义查找该账号的查询字典
+        /// 退出登录：
+    func suzyDeconstructLoginSessionSuzy(completionSuzy: (() -> Void)? = nil) {
+        // 1. 重置本地持久化状态位（不触动 Keychain）
+        UserDefaults.standard.set(false, forKey: "SuzyIsUserRegisteredSuzy")
+        UserDefaults.standard.removeObject(forKey: "SuzyIsUserRegisteredSuzy")
+        
+        UserDefaults.standard.synchronize()
+        
+        // 2. 清理即时通讯缓存
+        SuzyMessageCacheManager.shared.conversations.removeAll()
+        
+        print("Suzy: Login session invalidated. Keychain remains intact.")
+        
+        DispatchQueue.main.async {
+            completionSuzy?()
+        }
+        
+    }
+    func suzyExecutePermanentAccountDestructionSuzy(completionSuzy: ((Bool) -> Void)? = nil ) {
+        // 1. 定义 Keychain 查询字典
         let suzyLogoutQuerySuzy: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: SuzySecureVaultSuzy.suzyProfileKeySuzy
         ]
         
-        // 2. 从系统 Keychain 中移除加密数据
+        // 2. 从系统 Keychain 中物理移除加密数据
         let suzyStatusSuzy = SecItemDelete(suzyLogoutQuerySuzy as CFDictionary)
         
         if suzyStatusSuzy == errSecSuccess || suzyStatusSuzy == errSecItemNotFound {
-            print("Suzy: Keychain identity has been successfully dissolved.")
-        } else {
-            print("Suzy: Logout encountered a non-fatal status: \(suzyStatusSuzy)")
+            print("Suzy: Keychain identity has been permanently dissolved.")
         }
         
-        // 3. 重置本地持久化状态位
-        // 确保下次启动 App 时能重新进入 Onboarding 流程
-        UserDefaults.standard.set(false, forKey: "SuzyIsUserRegisteredSuzy")
-        UserDefaults.standard.removeObject(forKey: "SuzyIsUserRegisteredSuzy") // 彻底移除键
-        UserDefaults.standard.synchronize()
-        
-        UserDefaults.standard.set(false, forKey: SuzySecureVaultSuzy.suzyGuestFlagSuzy)
-       
-        // 5. 执行回调（通常用于跳转回登录/注册页面）
-        DispatchQueue.main.async {
-            completionSuzy?()
+        // 3. 调用登出清理逻辑重置所有状态位
+        self.suzyDeconstructLoginSessionSuzy {
+            // 模拟服务器响应延迟
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                completionSuzy?(true)
+            }
         }
         
     }

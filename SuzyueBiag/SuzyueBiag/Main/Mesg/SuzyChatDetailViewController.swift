@@ -2,7 +2,7 @@
 //  SuzyChatDetailViewController.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/25.
+//  Created by  on 2026/3/25.
 //
 
 import UIKit
@@ -100,7 +100,17 @@ class SuzyChatDetailViewController: UIViewController {
     }
     
     @objc func funcbuildCafff()  {
-        
+        guard let target = self.targetUser else {
+            return
+        }
+        let calddvc = SuzyCallSessionVCSuzy.init(suzyMatchSuzy: target)
+        calddvc.protrShow = {
+            let vc = SuzyGoldShopVCSuzy()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
+        calddvc.modalPresentationStyle = .fullScreen
+        self.present(calddvc, animated: true)
     }
 
     private func setupTableView() {

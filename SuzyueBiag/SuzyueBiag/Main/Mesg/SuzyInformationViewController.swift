@@ -2,7 +2,7 @@
 //  SuzyInformationViewController.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/25.
+//  Created by  on 2026/3/25.
 //
 
 import UIKit
@@ -94,9 +94,10 @@ class SuzyInformationViewController: UIViewController {
         shaninfoLabel.text = "Information"
         shaninfoLabel.textColor = .white
         shaninfoLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        backBtn.setImage(UIImage(systemName: "arrow.left"), for: .normal)
+        
         shaninfoLabel.textAlignment = .center
         shaninfoLabel.translatesAutoresizingMaskIntoConstraints = false
+        backBtn.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         backBtn.tintColor = .white
         backBtn.addTarget(self, action: #selector(backAction), for: .touchUpInside)
         backBtn.translatesAutoresizingMaskIntoConstraints = false

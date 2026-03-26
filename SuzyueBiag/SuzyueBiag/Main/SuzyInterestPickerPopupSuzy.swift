@@ -2,14 +2,26 @@
 //  SuzyInterestPickerPopupSuzy.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/20.
+//  Created by  on 2026/3/20.
 //
 
 import UIKit
 
 final class SuzyInterestPickerPopupSuzy: UIViewController {
+    var fromrEdit:Bool = false
+    init(fromrEdit: Bool) {
+        self.fromrEdit = fromrEdit
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var suzyProfileDataSuzy = SuzyUserDraftProfileSuzy()
      
+    var suzySelectCompleteSuzy:(([String])->(Void))?
+    
     // MARK: - UI Components Suzy
     private let suzyDimmedBgViewSuzy = UIView()
     private let suzyContainerViewSuzy: UIView = {
@@ -50,14 +62,26 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
         return suzyCVSuzy
     }()
    
-    private let suzyDoneButtonSuzy: UIButton = {
+     private lazy var suzyDoneButtonSuzy: UIButton = {
         let btnSuzy = UIButton(type: .custom)
         btnSuzy.layer.cornerRadius = 25
         btnSuzy.clipsToBounds = true
         btnSuzy.translatesAutoresizingMaskIntoConstraints = false
+         btnSuzy.addTarget(self, action:#selector(suzyDoneButtonSuzyotup), for: .touchUpInside)
         return btnSuzy
     }()
 
+    
+    @objc func suzyDoneButtonSuzyotup()  {
+        
+        if fromrEdit == true {
+            suzySelectCompleteSuzy?(suzySelectedInterestsSuzy)
+            self.dismiss(animated: true)
+        }else{
+            suzyOnDoneClickedSuzy()
+        }
+        
+    }
     // MARK: - Properties Suzy
     private var suzySelectedInterestsSuzy: [String] = []
     // 兴趣数据源（可复用注册流程的数据）
@@ -126,8 +150,13 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
             .font: UIFont.systemFont(ofSize: 18, weight: .bold),
             .foregroundColor: UIColor.white
         ]))
-        suzyDoneButtonSuzy.setAttributedTitle(suzyBtnTitleSuzy, for: .normal)
-
+        
+        if fromrEdit {
+            suzyDoneButtonSuzy.setTitle("Sure", for: .normal)
+        }else{
+            suzyDoneButtonSuzy.setAttributedTitle( suzyBtnTitleSuzy, for: .normal)
+        }
+        
         NSLayoutConstraint.activate([
             suzyContainerViewSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             suzyContainerViewSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -151,7 +180,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
         // 点击背景关闭
         let tapSuzy = UITapGestureRecognizer(target: self, action: #selector(suzyDismissPopupSuzy))
         suzyDimmedBgViewSuzy.addGestureRecognizer(tapSuzy)
-        suzyDoneButtonSuzy.addTarget(self, action: #selector(suzyOnDoneClickedSuzy), for: .touchUpInside)
+       
     }
 
     private func suzyApplyDoneButtonGradientSuzy() {
@@ -164,6 +193,10 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
     }
 
     @objc private func suzyDismissPopupSuzy() {
+        if fromrEdit == true {
+            suzySelectCompleteSuzy?(suzySelectedInterestsSuzy)
+           
+        }
         self.dismiss(animated: true)
     }
 
@@ -171,6 +204,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
         // 模拟扣费逻辑（用于规避审核，体现 App 业务完整性）
         SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: -20)
         self.dismiss(animated: true)
+        
     }
 }
 

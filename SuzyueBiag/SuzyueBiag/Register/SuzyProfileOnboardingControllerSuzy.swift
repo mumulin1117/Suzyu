@@ -2,7 +2,7 @@
 //  SuzyProfileOnboardingControllerSuzy.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/20.
+//  Created by  on 2026/3/20.
 //
 
 import UIKit
@@ -602,8 +602,8 @@ extension SuzyProfileOnboardingControllerSuzy{
         // 构造初始模型 (初始金币设为 0 或 赠送值)
         let suzyNewProfileSuzy = SuzyUserProfileSuzy(
             suzyUidSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy,
-            suzyGenderSuzy: suzyProfileDataSuzy.suzyGenderSuzy ?? "Unknown",
-            suzyAgeSuzy: suzyProfileDataSuzy.suzyAgeSuzy,
+            suzyGenderSuzy: suzyProfileDataSuzy.suzyGenderSuzy == "Women" ? 1 : 0 ,
+            suzyAgeSuzy: suzyProfileDataSuzy.suzyAgeSuzy, suzyUsername: "",
             suzyTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy,
             suzyBioSuzy: suzyProfileDataSuzy.suzyBioSuzy ?? "",
             suzyCoinsSuzy: 50, // 初始赠送 50 金币
