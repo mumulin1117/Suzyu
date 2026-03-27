@@ -255,7 +255,7 @@ final class SuzyLegalReaderControllerSuzy: UIViewController {
 struct SuzyLegalContentVaultSuzy {
     
     // Effective Date common to both
-    static let suzyEffectiveDateSuzy = "[2025-05-01]"
+    static let suzyEffectiveDateSuzy = "[2026-03-01]"
     
     // MARK: - Terms of Service ContentSuzy
     static let suzyTermsHeaderSuzy = "Suzyu Service Agreement"

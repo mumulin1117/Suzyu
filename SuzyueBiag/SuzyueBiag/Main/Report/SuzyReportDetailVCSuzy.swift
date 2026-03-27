@@ -37,7 +37,7 @@ final class SuzyReportDetailVCSuzy: UIViewController {
     private func suzyBuildReportInterfaceSuzy() {
         view.addSubview(suzyFallbackBgImageViewSuzy)
         let suzyScreenHeightSuzy = UIScreen.main.bounds.height
-        
+        suzyAddKeyboardObserversSuzy()
         // 1. 返回按钮
         suzyBackActionBtnSuzy.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         suzyBackActionBtnSuzy.tintColor = .white
@@ -108,6 +108,7 @@ final class SuzyReportDetailVCSuzy: UIViewController {
             suzyConfirmActionBtnSuzy.heightAnchor.constraint(equalToConstant: 55)
         ])
     }
+   
     
     private func suzyCreateReasonRowSuzy(titleSuzy: String, tagSuzy: Int) -> UIView {
         let suzyContainerSuzy = UIView()
@@ -176,7 +177,8 @@ extension SuzyReportDetailVCSuzy {
     @objc private func suzyPerformConfirmActionSuzy() {
         // 1. 检查是否勾选
         if suzySelectedReasonIdxSuzy == -1 {
-            suzyShowToastSuzy(msg: "Please select a reason.")
+           
+            SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please select a reason.", isSuccess: false)
             return
         }
         
@@ -185,7 +187,8 @@ extension SuzyReportDetailVCSuzy {
         if suzySelectedReasonIdxSuzy == otherIdx {
             let content = suzyReasonInputAreaSuzy.text.trimmingCharacters(in: .whitespacesAndNewlines)
             if content.isEmpty || content == "Enter your reason hers ..." {
-                suzyShowToastSuzy(msg: "Please describe the reason.")
+                
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please describe the reason.", isSuccess: false)
                 return
             }
         }
@@ -195,22 +198,81 @@ extension SuzyReportDetailVCSuzy {
     }
     
     private func suzySubmitSuccessSuzy() {
-        suzyConfirmActionBtnSuzy.isEnabled = false
-        // 模拟网络请求转圈或直接弹出成功
-        let alert = UIAlertController(title: "Success", message: "Thank you for your report. We will review it shortly.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            self.navigationController?.popViewController(animated: true)
-            self.dismiss(animated: true)
-        }))
-        self.present(alert, animated: true)
+        SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: "Uploading Report...")
+       
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
+            SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Report submitted successfully!")
+            
+            if self.navigationController == nil {
+                self.dismiss(animated: true)
+            } else{
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+        }
     }
     
-    private func suzyShowToastSuzy(msg: String) {
-        // 简单的提示逻辑
-        let alert = UIAlertController(title: nil, message: msg, preferredStyle: .alert)
-        self.present(alert, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            alert.dismiss(animated: true)
+  
+}
+extension UIView {
+    func suzyFindFirstResponderSuzy() -> UIView? {
+        if isFirstResponder { return self }
+        for subview in subviews {
+            if let firstResponder = subview.suzyFindFirstResponderSuzy() { return firstResponder }
+        }
+        return nil
+    }
+}
+
+
+extension UIViewController{
+    
+     func suzyAddKeyboardObserversSuzy() {
+        NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(suzyKeyboardWillShowSuzy(_:)),
+                                                   name: UIResponder.keyboardWillShowNotification,
+                                                   object: nil)
+   
+           
+        NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(suzyKeyboardWillHideSuzy(_:)),
+                                                   name: UIResponder.keyboardWillHideNotification,
+                                                   object: nil)
+    }
+    // MARK: - 全局视图位移处理 Suzy
+
+    @objc func suzyKeyboardWillShowSuzy(_ n: Notification) {
+        guard let userInfo = n.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardTop = view.frame.height - keyboardFrame.cgRectValue.height
+        
+        // 找到当前正在输入的那个控件（比如你的 suzyReasonInputAreaSuzy）
+        if let activeView = self.view.suzyFindFirstResponderSuzy() {
+            // 转换坐标系，获取控件底部在屏幕上的位置
+            let frameInWindow = activeView.convert(activeView.bounds, to: self.view)
+            let bottomY = frameInWindow.maxY
+            
+            // 如果控件底部被键盘挡住了
+            if bottomY > keyboardTop {
+                let offset = bottomY - keyboardTop + 20 // 多留 20 像素的间距
+                UIView.animate(withDuration: 0.3) {
+                    self.view.frame.origin.y = -offset
+                }
+            }
+        }
+    }
+
+    @objc func suzyKeyboardWillHideSuzy(_ n: Notification) {
+        guard let userInfo = n.userInfo,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        
+       
+        if self.view.frame.origin.y != 0 {
+            UIView.animate(withDuration: duration) {
+                self.view.frame.origin.y = 0
+            }
         }
     }
 }

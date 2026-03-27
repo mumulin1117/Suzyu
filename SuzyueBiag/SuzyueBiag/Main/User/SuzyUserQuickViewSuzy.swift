@@ -15,7 +15,7 @@ final class SuzyUserQuickViewSuzy: UIView {
     private let suzyAvatarOutlineSuzy = UIView()
     private let suzyUserAvatarSuzy = UIImageView()
     private let suzyDisplayNameSuzy = UILabel()
-    private let suzyMessageIconSuzy = UIImageView()
+    private let suzyMessageIconSuzy = UIButton()
     private let suzyBioLabelSuzy = UILabel()
     private let suzyTagFlowStackSuzy = UIStackView()
     private let suzyCallActionBtnSuzy = UIButton(type: .custom)
@@ -25,6 +25,8 @@ final class SuzyUserQuickViewSuzy: UIView {
     private var suzyEntitySuzy: SuzyMatchEntitySuzy?
     var suzyOnVideoCallRequestedSuzy: (() -> Void)?
 
+    var suzyOnMessagesendRequestedSuzy: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         suzyBuildInterfaceSuzy()
@@ -67,9 +69,11 @@ final class SuzyUserQuickViewSuzy: UIView {
         suzyDisplayNameSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyCardContainerSuzy.addSubview(suzyDisplayNameSuzy)
         
-        suzyMessageIconSuzy.image = UIImage(systemName: "bubble.left.fill")
+        suzyMessageIconSuzy.setImage(UIImage(systemName: "bubble.left.fill"), for: .normal)
         suzyMessageIconSuzy.tintColor = .white
+        suzyMessageIconSuzy.addTarget(self, action: #selector(sendNormalusermessageAction), for: .touchUpInside)
         suzyMessageIconSuzy.translatesAutoresizingMaskIntoConstraints = false
+        
         suzyCardContainerSuzy.addSubview(suzyMessageIconSuzy)
         
         // 简介
@@ -129,8 +133,8 @@ final class SuzyUserQuickViewSuzy: UIView {
             suzyMessageIconSuzy.widthAnchor.constraint(equalToConstant: 30),
             suzyMessageIconSuzy.heightAnchor.constraint(equalToConstant: 30),
             
-            suzyBioLabelSuzy.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            suzyBioLabelSuzy.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            suzyBioLabelSuzy.leadingAnchor.constraint(equalTo: suzyCardContainerSuzy.leadingAnchor, constant: 10),
+            suzyBioLabelSuzy.trailingAnchor.constraint(equalTo: suzyCardContainerSuzy.trailingAnchor, constant: -10),
             suzyBioLabelSuzy.topAnchor.constraint(equalTo: suzyDisplayNameSuzy.bottomAnchor, constant: 10),
             suzyBioLabelSuzy.centerXAnchor.constraint(equalTo: suzyCardContainerSuzy.centerXAnchor),
             
@@ -218,6 +222,10 @@ final class SuzyUserQuickViewSuzy: UIView {
             }
        
        
+    }
+    
+    @objc func sendNormalusermessageAction() {
+        suzyOnMessagesendRequestedSuzy?()
     }
     
     @objc private func suzyHideQuickViewSuzy() {

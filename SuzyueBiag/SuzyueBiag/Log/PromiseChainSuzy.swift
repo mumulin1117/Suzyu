@@ -265,7 +265,7 @@ final class PromiseChainSuzy: UIViewController {
     @objc private func triggerAppleAuthSuzy() {
         // Double check for suzy safety (in case interaction wasn't disabled)
         guard suzyIsAgreedSuzy else {
-           
+            SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please read and agree to our ELUA and User Terms first", isSuccess: false)
             return
         }
        
@@ -298,11 +298,13 @@ final class PromiseChainSuzy: UIViewController {
                 self.suzyNavigateToProfileCreationSuzy()
             }
         }
+        
 //        #else
+  //      SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: "Log in....")
 //        let providerSuzy = ASAuthorizationAppleIDProvider()
 //        let requestSuzy = providerSuzy.createRequest()
 //        requestSuzy.requestedScopes = [.fullName, .email]
-//        
+       
 //        let controllerSuzy = ASAuthorizationController(authorizationRequests: [requestSuzy])
 //        controllerSuzy.delegate = self
 //        controllerSuzy.presentationContextProvider = self
@@ -342,6 +344,9 @@ extension UITapGestureRecognizer {
 // MARK: - Delegate Extension Suzie (保持原样)
 extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        DispatchQueue.main.async {
+            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
+        }
         
         if let appleIDCredentialSuzy = authorization.credential as? ASAuthorizationAppleIDCredential {
             
@@ -362,6 +367,7 @@ extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
                 // 更新登录状态
                  
                 DispatchQueue.main.async {
+                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Log in successfully", isSuccess: true)
                     self.suzyNavigateToMainDashboardSuzy()
                 }
                 
@@ -378,6 +384,7 @@ extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
                 
                  
                 DispatchQueue.main.async {
+                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Registered successfully", isSuccess: true)
                     self.suzyNavigateToProfileCreationSuzy()
                 }
             }

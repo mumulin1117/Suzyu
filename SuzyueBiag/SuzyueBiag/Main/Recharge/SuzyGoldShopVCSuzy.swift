@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import StoreKit
 final class SuzyGoldShopVCSuzy: UIViewController {
     
     private let suzyHeaderPanelSuzy = UIView()
@@ -153,18 +153,23 @@ extension SuzyGoldShopVCSuzy: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     private func suzyTriggerPurchaseWorkflowSuzy(product: SuzyPurchaseItemSuzy) {
-        // Trigger payment processing...
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            // On success callback
-            SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: product.suzyCoinAmountSuzy)
-            self?.suzyRefreshCurrentGoldSuzy()
-            self?.suzyShowSuccessToastSuzy(amount: product.suzyCoinAmountSuzy)
-        }
+        SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: "Processing Payment...")
+        ZompassHeadingSuzy.shared.regionLocaleSuue(calendarDateSuue: product.suzyProductIDSuzy) { [weak self] ler in
+                DispatchQueue.main.async {
+                    SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
+                    
+                    switch ler {
+                    case .success(let success):
+                        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: product.suzyCoinAmountSuzy)
+                        self?.suzyRefreshCurrentGoldSuzy()
+                        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Gained \(product.suzyCoinAmountSuzy) Coins", isSuccess: true)
+                    case .failure(let failure):
+                        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Payment Canceled", isSuccess: false)
+                    }
+                    
+                }
+            }
+
     }
-    
-    private func suzyShowSuccessToastSuzy(amount: Int) {
-        let alert = UIAlertController(title: "Success", message: "Gained \(amount) Coins", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        self.present(alert, animated: true)
-    }
+   
 }

@@ -8,13 +8,13 @@
 import UIKit
 
 class SuzyChatDetailViewController: UIViewController {
-    
+    private var suzyInputBarBottomConstraintSuzy: NSLayoutConstraint!
     // 数据源
     var targetUser: SuzyMatchEntitySuzy?
     var chatHistory: [SuzyChatDetailRecord] = []
     
     // UI 组件
-    private let tableView = UITableView()
+    private let suzyChatTableSuzy = UITableView()
     private let inputBar = UIView()
     private let textField = UITextField()
     private let sendButton = UIButton()
@@ -27,7 +27,6 @@ class SuzyChatDetailViewController: UIViewController {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
         iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
         iv.contentMode = .scaleAspectFill
-       
         return iv
     }()
     override func viewDidLoad() {
@@ -114,19 +113,23 @@ class SuzyChatDetailViewController: UIViewController {
     }
 
     private func setupTableView() {
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(SuzyChatBubbleCell.self, forCellReuseIdentifier: "BubbleCell")
+        suzyChatTableSuzy.backgroundColor = .clear
+        suzyChatTableSuzy.separatorStyle = .none
+        suzyChatTableSuzy.delegate = self
+        suzyChatTableSuzy.dataSource = self
+        suzyChatTableSuzy.register(SuzyChatBubbleCell.self, forCellReuseIdentifier: "BubbleCell")
+        suzyChatTableSuzy.keyboardDismissMode = .interactive
+        let suzyTapToDismissSuzy = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+            suzyTapToDismissSuzy.cancelsTouchesInView = false // 确保不影响 Cell 点击
+            view.addGestureRecognizer(suzyTapToDismissSuzy)
         
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(suzyChatTableSuzy)
+        suzyChatTableSuzy.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: suzyControlWrapperSuzy.bottomAnchor,constant: 42),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70)
+            suzyChatTableSuzy.topAnchor.constraint(equalTo: suzyControlWrapperSuzy.bottomAnchor,constant: 42),
+            suzyChatTableSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            suzyChatTableSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            suzyChatTableSuzy.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70)
         ])
     }
 
@@ -143,7 +146,7 @@ class SuzyChatDetailViewController: UIViewController {
         sendButton.backgroundColor = .systemPurple
         sendButton.layer.cornerRadius = 20
         sendButton.addTarget(self, action: #selector(sendAction), for: .touchUpInside)
-        
+        suzyInputBarBottomConstraintSuzy = inputBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
         view.addSubview(inputBar)
         inputBar.addSubview(textField)
         inputBar.addSubview(sendButton)
@@ -157,7 +160,7 @@ class SuzyChatDetailViewController: UIViewController {
             
             inputBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             inputBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
-            inputBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            suzyInputBarBottomConstraintSuzy,
             inputBar.heightAnchor.constraint(equalToConstant: 50),
             
             textField.leadingAnchor.constraint(equalTo: inputBar.leadingAnchor, constant: 20),
@@ -174,7 +177,10 @@ class SuzyChatDetailViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func sendAction() {
-        guard let text = textField.text, !text.isEmpty else { return }
+        guard let text = textField.text, !text.isEmpty else {
+            SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please enter your message first!", isSuccess: false)
+            return
+        }
         
         // 存储消息逻辑
         let newMessage = SuzyChatDetailRecord(isMine: true, content: .text(text), time: "Now")
@@ -185,13 +191,15 @@ class SuzyChatDetailViewController: UIViewController {
         
         // 刷新 UI
         textField.text = ""
-        tableView.reloadData()
+        suzyChatTableSuzy.reloadData()
         scrollToBottom()
     }
     
     private func updateLocalCache(with msg: SuzyChatDetailRecord) {
         if let index = SuzyMessageCacheManager.shared.conversations.firstIndex(where: { $0.userInfo.suzyIdentifierSuzy == targetUser?.suzyIdentifierSuzy }) {
             SuzyMessageCacheManager.shared.conversations[index].messages.append(msg)
+        }else{
+            
         }
     }
 
@@ -206,13 +214,58 @@ class SuzyChatDetailViewController: UIViewController {
     
     private func scrollToBottom() {
         if chatHistory.count > 0 {
-            tableView.scrollToRow(at: IndexPath(row: chatHistory.count - 1, section: 0), at: .bottom, animated: true)
+            suzyChatTableSuzy.scrollToRow(at: IndexPath(row: chatHistory.count - 1, section: 0), at: .bottom, animated: true)
         }
     }
     
-    // 键盘处理 (略...)
-    @objc func keyboardWillShow(n: Notification) { /* 调整 inputBar 约束 */ }
-    @objc func keyboardWillHide(n: Notification) { /* 还原 inputBar 约束 */ }
+    // MARK: - Keyboard Handling Suzy
+
+    @objc func keyboardWillShow(n: Notification) {
+        // 1. 获取键盘高度和动画曲线
+        guard let userInfo = n.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+              let curveValue = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int else { return }
+        
+        let keyboardHeight = keyboardFrame.cgRectValue.height
+        let suzySafeBottom = view.safeAreaInsets.bottom // 减去安全区域高度，防止间距过大
+        
+        // 2. 更新约束：底部间距 = 键盘高度 - 安全区域
+        suzyInputBarBottomConstraintSuzy.constant = -(keyboardHeight - suzySafeBottom)
+        
+        // 3. 执行动画
+        let curve = UIView.AnimationOptions(rawValue: UInt(curveValue << 16))
+        UIView.animate(withDuration: duration, delay: 0, options: [curve, .beginFromCurrentState], animations: {
+            self.view.layoutIfNeeded()
+            // 4. 让聊天列表同步滚动到最后一条
+            self.suzyScrollToBottomSuzy(animated: false)
+        }, completion: nil)
+    }
+
+    @objc func keyboardWillHide(n: Notification) {
+        guard let userInfo = n.userInfo,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+              let curveValue = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int else { return }
+        
+        // 1. 还原约束为 0
+        suzyInputBarBottomConstraintSuzy.constant = -5
+        
+        // 2. 执行动画
+        let curve = UIView.AnimationOptions(rawValue: UInt(curveValue << 16))
+            UIView.animate(withDuration: duration, delay: 0, options: [curve, .beginFromCurrentState], animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+    }
+
+    // MARK: - Helper Methods
+    private func suzyScrollToBottomSuzy(animated: Bool) {
+        // 假设你的 TableView 叫 suzyChatTableSuzy
+        let rowCount = suzyChatTableSuzy.numberOfRows(inSection: 0)
+        if rowCount > 0 {
+            let indexPath = IndexPath(row: rowCount - 1, section: 0)
+            suzyChatTableSuzy.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+        }
+    }
 }
 
 // MARK: - TableView Delegate

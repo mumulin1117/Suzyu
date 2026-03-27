@@ -6,10 +6,11 @@
 //
 
 import UIKit
-键盘问题
-loading问题
-静态混淆问题
-支付内购问题
+
+
+//静态混淆问题
+
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -18,9 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 //        SuzySecureVaultSuzy.sharedSuzy.suzyDeconstructAccountSuzy()
         self.window = UIWindow.init(frame: UIScreen.main.bounds)
-        
-       
-       
         let isGuestUserSuzy = UserDefaults.standard.bool(forKey: "SuzyIsUserRegisteredSuzy")
         
         if isGuestUserSuzy == true {

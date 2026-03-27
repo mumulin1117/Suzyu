@@ -203,8 +203,8 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
             
             // 如果启动后需要更新 UI（比如隐藏加载菊花），必须回到主线程
             DispatchQueue.main.async {
-                print("Suzy: Camera session is now active.")
-                // self.suzyLoadingIndicatorSuzy.stopAnimating()
+             
+//                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Camera session is now active.",isSuccess: false)
             }
         }
     }
@@ -228,35 +228,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         suzyPopup.modalTransitionStyle = .crossDissolve
         self.present(suzyPopup, animated: true)
     }
-    private func suzyShowPermissionAlertSuzy() {
-        let suzyAlertSuzy = UIAlertController(
-            title: "Camera Access Required",
-            message: "To start a meet and verify your identity, please enable camera access in your device settings.",
-            preferredStyle: .alert
-        )
-        
-        // “去设置” 动作：直接跳转到当前 App 的系统设置页面
-        let suzySettingsActionSuzy = UIAlertAction(title: "Go to Settings", style: .default) { _ in
-            guard let suzySettingsUrlSuzy = URL(string: UIApplication.openSettingsURLString) else { return }
-            if UIApplication.shared.canOpenURL(suzySettingsUrlSuzy) {
-                UIApplication.shared.open(suzySettingsUrlSuzy, options: [:], completionHandler: nil)
-            }
-        }
-        
-        // “取消” 动作
-        let suzyCancelActionSuzy = UIAlertAction(title: "Maybe Later", style: .cancel, handler: nil)
-        
-        suzyAlertSuzy.addAction(suzySettingsActionSuzy)
-        suzyAlertSuzy.addAction(suzyCancelActionSuzy)
-       
-        if let suzyPopoverSuzy = suzyAlertSuzy.popoverPresentationController {
-            suzyPopoverSuzy.sourceView = self.view
-            suzyPopoverSuzy.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            suzyPopoverSuzy.permittedArrowDirections = []
-        }
-        
-        self.present(suzyAlertSuzy, animated: true, completion: nil)
-    }
+   
     
     
     //MARK: - Start meet
@@ -409,5 +381,37 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
             
             suzyOverlaySuzy?.removeFromSuperview()
         }
+    }
+}
+
+extension UIViewController{
+     func suzyShowPermissionAlertSuzy() {
+        let suzyAlertSuzy = UIAlertController(
+            title: "Camera Access Required",
+            message: "To start a meet and verify your identity, please enable camera access in your device settings.",
+            preferredStyle: .alert
+        )
+        
+        // “去设置” 动作：直接跳转到当前 App 的系统设置页面
+        let suzySettingsActionSuzy = UIAlertAction(title: "Go to Settings", style: .default) { _ in
+            guard let suzySettingsUrlSuzy = URL(string: UIApplication.openSettingsURLString) else { return }
+            if UIApplication.shared.canOpenURL(suzySettingsUrlSuzy) {
+                UIApplication.shared.open(suzySettingsUrlSuzy, options: [:], completionHandler: nil)
+            }
+        }
+        
+        // “取消” 动作
+        let suzyCancelActionSuzy = UIAlertAction(title: "Maybe Later", style: .cancel, handler: nil)
+        
+        suzyAlertSuzy.addAction(suzySettingsActionSuzy)
+        suzyAlertSuzy.addAction(suzyCancelActionSuzy)
+       
+        if let suzyPopoverSuzy = suzyAlertSuzy.popoverPresentationController {
+            suzyPopoverSuzy.sourceView = self.view
+            suzyPopoverSuzy.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            suzyPopoverSuzy.permittedArrowDirections = []
+        }
+        
+        self.present(suzyAlertSuzy, animated: true, completion: nil)
     }
 }

@@ -160,6 +160,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        suzyAddKeyboardObserversSuzy()
         let imageViewSuzy = UIImageView.init(frame: self.view.bounds)
         imageViewSuzy.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
         imageViewSuzy.contentMode = .scaleAspectFill
@@ -401,14 +402,16 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         switch suzyCurrentStateSuzy {
         case .suzyGenderSelectSuzy:
             guard suzyProfileDataSuzy.suzyGenderSuzy != nil else {
-                suzyShowAlertSuzy(messageSuzy: "Please select your gender to proceed.")
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please select your gender to proceed.",isSuccess: false)
+               
                 return
             }
             
         case .suzyAgePickerSuzy:
             // 年龄在 Picker 中通常有默认值，但需确保已确认
             guard suzyProfileDataSuzy.suzyAgeSuzy >= 18 else {
-                suzyShowAlertSuzy(messageSuzy: "You must be at least 18 years old.")
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "You must be at least 18 years old.",isSuccess: false)
+                
                 return
             }
             
@@ -440,10 +443,12 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             let suzyRandomProbabilitySuzy = Float.random(in: 0.0...1.0)
             if suzyRandomProbabilitySuzy > 0.1 { // 90% 成功率
                 self.suzyHasLivenessVerifiedSuzy = true
-                print("Suzy: Local engine sensed liveness successfully.")
+                
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Local engine sensed liveness successfully.", isSuccess: true)
                 self.suzyAdvanceToNextStateSuzy()
             } else {
-                self.suzyShowAlertSuzy(messageSuzy: "Identity verification failed. Please try again.")
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Identity verification failed. Please try again.", isSuccess: false)
+                
             }
         }
     }
@@ -564,9 +569,10 @@ extension SuzyProfileOnboardingControllerSuzy {
     //MARK: - about self
     private func suzyInjectBioInputSuzy() {
         let tvSuzy = UITextView()
-        tvSuzy.backgroundColor = UIColor.white.withAlphaComponent(0.1)
+        tvSuzy.backgroundColor = UIColor.white.withAlphaComponent(0.3)
         tvSuzy.layer.cornerRadius = 12
         tvSuzy.textColor = .white
+        tvSuzy.contentInset = UIEdgeInsets.init(top: 15, left: 15, bottom: 10, right: 15)
         tvSuzy.font = .systemFont(ofSize: 16)
         tvSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyContainerViewSuzy.addSubview(tvSuzy)
@@ -620,11 +626,11 @@ extension SuzyProfileOnboardingControllerSuzy{
         self.navigationController?.pushViewController(compltedvc, animated: true)
     }
     // 通用提示弹窗
-    private func suzyShowAlertSuzy(messageSuzy: String) {
-        let alertSuzy = UIAlertController(title: "Notice", message: messageSuzy, preferredStyle: .alert)
-        alertSuzy.addAction(UIAlertAction(title: "OK", style: .default))
-        self.present(alertSuzy, animated: true)
-    }
+//    private func suzyShowAlertSuzy(messageSuzy: String) {
+//        let alertSuzy = UIAlertController(title: "Notice", message: messageSuzy, preferredStyle: .alert)
+//        alertSuzy.addAction(UIAlertAction(title: "OK", style: .default))
+//        self.present(alertSuzy, animated: true)
+//    }
     
     
 }
@@ -745,27 +751,7 @@ extension SuzyProfileOnboardingControllerSuzy: UICollectionViewDelegate, UIColle
      
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
-//        
-//        // 限制最多选择 5 个
-//        if suzyProfileDataSuzy.suzyTagsSuzy.count < 5 {
-//            suzyProfileDataSuzy.suzyTagsSuzy.append(suzyTagSuzy)
-//            let suzyImpactSuzy = UISelectionFeedbackGenerator()
-//            suzyImpactSuzy.selectionChanged()
-//        } else {
-//            collectionView.deselectItem(at: indexPath, animated: true)
-//            // 提示用户超出上限
-//        }
-//        collectionView.reloadItems(at: [indexPath])
-//    }
-    
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        let suzyTagSuzy = suzyAllInterestsSuzy[indexPath.item]
-//        suzyProfileDataSuzy.suzyTagsSuzy.removeAll { $0 == suzyTagSuzy }
-//        collectionView.reloadItems(at: [indexPath])
-//    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let suzyTextSuzy = suzyAllInterestsSuzy[indexPath.item]
       

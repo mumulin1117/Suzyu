@@ -55,7 +55,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
     private let suzyRemoteContainerSuzy = UIView()
     
     // MARK: - UI Components Suzy
-    private let suzyStatusAlertSuzy = UILabel()
+//    private let suzyStatusAlertSuzy = UILabel()
     private let suzyControlWrapperSuzy = UIStackView()
     private let suzyCameraSwitchBtnSuzy = UIButton(type: .custom)
     private let suzyCameraToggleBtnSuzy = UIButton(type: .custom)
@@ -75,7 +75,9 @@ final class SuzyCallSessionVCSuzy: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(suzyFallbackBgImageViewSuzy)
+        
         suzyBuildCallCanvasSuzy()
+        
         suzyRequestHardwarePermsSuzy()
         NotificationCenter.default.addObserver(self, selector: #selector(suzyPerformHangupActionSuzy), name: NSNotification.Name("SuzySwitchToReportDetails"), object: nil)
     }
@@ -157,14 +159,14 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         view.addSubview(suzyEndCallActionBtnSuzy)
         
         // 5. 状态提示框（顶部）
-        suzyStatusAlertSuzy.textColor = .white
-        suzyStatusAlertSuzy.backgroundColor = UIColor(white: 0.1, alpha: 0.8)
-        suzyStatusAlertSuzy.font = .systemFont(ofSize: 18, weight: .semibold)
-        suzyStatusAlertSuzy.textAlignment = .center
-        suzyStatusAlertSuzy.layer.cornerRadius = 15
-        suzyStatusAlertSuzy.layer.masksToBounds = true
-        suzyStatusAlertSuzy.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(suzyStatusAlertSuzy)
+//        suzyStatusAlertSuzy.textColor = .white
+//        suzyStatusAlertSuzy.backgroundColor = UIColor(white: 0.1, alpha: 0.8)
+//        suzyStatusAlertSuzy.font = .systemFont(ofSize: 18, weight: .semibold)
+//        suzyStatusAlertSuzy.textAlignment = .center
+//        suzyStatusAlertSuzy.layer.cornerRadius = 15
+//        suzyStatusAlertSuzy.layer.masksToBounds = true
+//        suzyStatusAlertSuzy.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(suzyStatusAlertSuzy)
         
         NSLayoutConstraint.activate([
             suzyCameraSwitchBtnSuzy.widthAnchor.constraint(equalToConstant: 40),
@@ -189,11 +191,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
             suzyEndCallActionBtnSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             suzyEndCallActionBtnSuzy.widthAnchor.constraint(equalToConstant: 80),
             suzyEndCallActionBtnSuzy.heightAnchor.constraint(equalToConstant: 80),
-            
-            suzyStatusAlertSuzy.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-            suzyStatusAlertSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            suzyStatusAlertSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            suzyStatusAlertSuzy.heightAnchor.constraint(equalToConstant: 60)
+
         ])
         
     }
@@ -211,20 +209,20 @@ extension SuzyCallSessionVCSuzy {
     
     // MARK: - Hardware Perms Suzy
     private func suzyRequestHardwarePermsSuzy() {
+        DispatchQueue.main.async {
+            SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: " Connecting... ",ifhaveLoading: false)
+        }
         
         AVCaptureDevice.requestAccess(for: .video) { suzyVidSuzy in
             
             DispatchQueue.main.async {
-                // 逻辑：必须开权限，且 suzy_w 校验通过才展示 Camera Layer
+            
                 if suzyVidSuzy{
                     self.suzySetupSelfCamSessionSuzy()
-                    // 根据开关决定是否隐藏
-                        
-//                        self.suzyUserPlaceholderSuzy.isHidden = (suzyWStrSuzy != "suzy_w_approved")
+                   
                 } else {
-                    
-                    "开启摄像头权限"
-
+                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please enable camera permissions",isSuccess: false)
+                  
                 }
                 
                 
@@ -236,8 +234,7 @@ extension SuzyCallSessionVCSuzy {
         
         AVCaptureDevice.requestAccess(for: .audio) { suzyAudSuzy in
             if suzyAudSuzy == false{
-               
-                "开启摄像头权限"
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please enable microphone permission",isSuccess: false)
             }
             
         }
@@ -246,18 +243,18 @@ extension SuzyCallSessionVCSuzy {
     // MARK: - State Machine Suzy
     private func suzyInitiateCallStateMachineSuzy() {
         self.suzyCallStateSuzy = .suzyConnectingSuzy
-        suzyStatusAlertSuzy.text = " Connecting... "
-        suzyStatusAlertSuzy.isHidden = false
         
+       
         // 1. 检查这个特定用户是否已经拨打过并接通
         let suzyCalledIdsSuzy = UserDefaults.standard.stringArray(forKey: "suzy_called_success_ids") ?? []
         
         // 延迟 2.5 秒模拟拨号过程，增加真实感
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
             guard let self = self else { return }
-            
+            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
             if suzyCalledIdsSuzy.contains(self.suzyCurrentMatchSuzy.suzyIdentifierSuzy) {
                 // 如果该 ID 之前接通成功过，直接显示离开
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "User is busy now", isSuccess: false)
                 self.suzyHandleUserUnavailableSuzy(reason: "User is busy now")
             } else {
                 // 如果是新用户，尝试分配视频资产
@@ -279,7 +276,9 @@ extension SuzyCallSessionVCSuzy {
         
         guard let suzyTargetVidSuzy = suzyAvailableVidsSuzy.first else {
             // 如果该性别的 2 个视频都用完了，即便没打过这个 ID 也显示离开
+            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
             self.suzyHandleUserUnavailableSuzy(reason: "User left the match")
+            SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "User left the match", isSuccess: false)
             return
         }
         
@@ -294,7 +293,7 @@ extension SuzyCallSessionVCSuzy {
         UserDefaults.standard.set(suzyPlayedVidsSuzy, forKey: "suzy_played_vids")
         
         // 4. 视频播放逻辑
-        self.suzyStatusAlertSuzy.isHidden = true
+//        self.suzyStatusAlertSuzy.isHidden = true
         guard let suzyPathSuzy = Bundle.main.path(forResource: suzyTargetVidSuzy, ofType: "mp4") else { return }
         let suzyVidURLSuzy = URL(fileURLWithPath: suzyPathSuzy)
         
@@ -310,40 +309,42 @@ extension SuzyCallSessionVCSuzy {
         suzyPlaybackEndedObserverSuzy = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: suzyRemoteVidPlayerSuzy?.currentItem, queue: nil) { [weak self] _ in
             DispatchQueue.main.async {
                 self?.suzyHandleUserUnavailableSuzy(reason: "The user has left")
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "The user has left", isSuccess: false)
             }
         }
     }
 
     // MARK: - Helper Suzy
     private func suzyHandleUserUnavailableSuzy(reason: String) {
-        self.suzyStatusAlertSuzy.text = " \(reason) "
-        self.suzyStatusAlertSuzy.isHidden = false
-        
+//        self.suzyStatusAlertSuzy.text = " \(reason) "
+//        self.suzyStatusAlertSuzy.isHidden = false
+//
+        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: reason, isSuccess: false)
         // 确保提示框在最前，且停止视频展示
-        view.bringSubviewToFront(suzyStatusAlertSuzy)
+//        view.bringSubviewToFront(suzyStatusAlertSuzy)
         suzyRemoteVidPlayerSuzy?.pause()
         suzyRemotePreviewLayerSuzy?.opacity = 0
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) { [weak self] in
-           
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
             self?.suzyPerformHangupActionSuzy()
         }
     }
 
     private func suzyHandleUserUnavailableSuzy() {
         // 确保 UI 提示在最上层
-        view.bringSubviewToFront(suzyStatusAlertSuzy)
-        suzyStatusAlertSuzy.text = " User is no longer online "
-        suzyStatusAlertSuzy.isHidden = false
-        
+//        view.bringSubviewToFront(suzyStatusAlertSuzy)
+//        suzyStatusAlertSuzy.text = " User is no longer online "
+//        suzyStatusAlertSuzy.isHidden = false
+        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: " User is no longer online ", isSuccess: false)
         // 停止任何可能正在播放的残余视频
         suzyRemoteVidPlayerSuzy?.pause()
         suzyRemotePreviewLayerSuzy?.opacity = 0
         
         // 延迟 2 秒后挂断返回，模拟真实的“断开”感
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
            
-            
+            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
             self?.suzyPerformHangupActionSuzy()
         }
     }
@@ -364,10 +365,10 @@ extension SuzyCallSessionVCSuzy {
             self.suzyCapSessionSuzy?.startRunning()
             
             // 如果启动后需要更新 UI（比如隐藏加载菊花），必须回到主线程
-            DispatchQueue.main.async {
-                print("Suzy: Camera session is now active.")
-                // self.suzyLoadingIndicatorSuzy.stopAnimating()
-            }
+//            DispatchQueue.main.async {
+//               
+//                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Camera session is now active.",isSuccess: false)
+//            }
         }
     }
     private func suzySetupSelfCamSessionSuzy() {
