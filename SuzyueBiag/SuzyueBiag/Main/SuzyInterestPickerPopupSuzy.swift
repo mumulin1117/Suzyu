@@ -209,7 +209,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
 
     @objc private func suzyOnDoneClickedSuzy() {
         // 模拟扣费逻辑（用于规避审核，体现 App 业务完整性）
-        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: -20)
+//        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: -20)
         self.dismiss(animated: true)
         
     }

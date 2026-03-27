@@ -30,7 +30,7 @@ import Security
 // MARK: - NativeKeychainWrapperSuzy
 final class SuzySecureVaultSuzy {
     static let sharedSuzy = SuzySecureVaultSuzy()
-    static let suzyProfileKeySuzy = "com.suzy.auth.identifierSuzy"
+    static var suzyProfileKeySuzy = "com.suzy.auth.identifierSuzy"
     
     // --- 初始注册永久存储 ---
     func suzyInitializeIdentitySuzy(profileSuzy: SuzyUserProfileSuzy) {
@@ -133,5 +133,23 @@ final class SuzySecureVaultSuzy {
             }
         }
         
+    }
+}
+
+
+extension SuzySecureVaultSuzy {
+    // 检查用户是否完成了所有必填项
+    func suzyIsProfileCompletedSuzy() -> Bool {
+        guard let profile = self.suzyGetSavedProfileSuzy() else { return false }
+        // 根据你的业务逻辑判断，例如：必须有性别和年龄（年龄 > 0）
+        // 也可以根据具体的枚举状态来判断
+        return profile.suzyGenderSuzy != nil && profile.suzyAgeSuzy > 0
+    }
+    // 在 SuzySecureVaultSuzy 类中添加
+    func suzyGetSavedProfileSuzy() -> SuzyUserProfileSuzy? {
+        guard let suzyDataSuzy = retrieveSecretSuzy(accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy) else {
+                return nil
+            }
+            return try? JSONDecoder().decode(SuzyUserProfileSuzy.self, from: suzyDataSuzy)
     }
 }

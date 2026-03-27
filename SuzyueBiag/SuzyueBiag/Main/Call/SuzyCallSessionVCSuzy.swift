@@ -325,7 +325,7 @@ extension SuzyCallSessionVCSuzy {
         suzyRemoteVidPlayerSuzy?.pause()
         suzyRemotePreviewLayerSuzy?.opacity = 0
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) { [weak self] in
             SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
             self?.suzyPerformHangupActionSuzy()
         }
@@ -342,7 +342,7 @@ extension SuzyCallSessionVCSuzy {
         suzyRemotePreviewLayerSuzy?.opacity = 0
         
         // 延迟 2 秒后挂断返回，模拟真实的“断开”感
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) { [weak self] in
            
             SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
             self?.suzyPerformHangupActionSuzy()
@@ -439,7 +439,7 @@ extension SuzyCallSessionVCSuzy {
 
 //MARK: - 破冰问题
 extension SuzyCallSessionVCSuzy {
-    // 8条预设问题
+  
     private static let suzyPoolSuzy = [
         "If you could travel anywhere right now, where would it be? ✈️",
         "What’s the most rebellious thing you’ve ever done? 😎",
@@ -551,9 +551,12 @@ extension SuzyCallSessionVCSuzy {
             if isEnough {
                 self.suzyShowFinalQuestionsSuzy()
             } else {
-                
+                let vc = SuzyGoldShopVCSuzy()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
                 if self.protrShow != nil {
-                    (self.protrShow)
+                    self.protrShow?()
+                   
                 }
                 
             }
@@ -573,7 +576,7 @@ extension SuzyCallSessionVCSuzy {
        
       
        
-        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: 20)
+        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: -20)
         
       
         

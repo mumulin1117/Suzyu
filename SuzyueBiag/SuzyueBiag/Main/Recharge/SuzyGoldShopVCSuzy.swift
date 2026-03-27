@@ -164,7 +164,7 @@ extension SuzyGoldShopVCSuzy: UICollectionViewDataSource, UICollectionViewDelega
                         self?.suzyRefreshCurrentGoldSuzy()
                         SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Gained \(product.suzyCoinAmountSuzy) Coins", isSuccess: true)
                     case .failure(let failure):
-                        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Payment Canceled", isSuccess: false)
+                        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: failure.localizedDescription, isSuccess: false)
                     }
                     
                 }

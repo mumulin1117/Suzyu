@@ -18,7 +18,9 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     private let suzyNavWrapperSuzy = UIView()
         private let suzyBackActionBtnSuzy = UIButton(type: .custom)
         private let suzyNotifyIconBtnSuzy = UIButton(type: .custom)
@@ -237,9 +239,14 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegate, UICollectionVi
                  detailVC.targetUser = suzyTargetUserSuzy
                  detailVC.chatHistory = firstcv.messages
                  self?.navigationController?.pushViewController(detailVC, animated: true)
+             }else{
+                 let detailVC = SuzyChatDetailViewController()
+                 detailVC.targetUser = suzyTargetUserSuzy
+                 detailVC.chatHistory = [SuzyChatDetailRecord]()
+                 self?.navigationController?.pushViewController(detailVC, animated: true)
              }
              
-             
+          
              
         }
         // 交互逻辑：点击视频通话跳转
@@ -248,16 +255,16 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegate, UICollectionVi
             // 这里可以跳转到视频通话虚假页面
             // 权限检查
             guard AVCaptureDevice.authorizationStatus(for: .video) == .authorized else {
-                self?.suzyShowPermissionAlertSuzy()
+                SuzyPermissionManagerSuzy.shared.suzyShowCameraDeniedAlertSuzy(on: self!)
                 return
             }
             
             let calddvc = SuzyCallSessionVCSuzy.init(suzyMatchSuzy: suzyTargetUserSuzy)
-            calddvc.protrShow = {
-                let vc = SuzyGoldShopVCSuzy()
-                vc.modalPresentationStyle = .fullScreen
-                self?.present(vc, animated: true)
-            }
+//            calddvc.protrShow = {
+//                let vc = SuzyGoldShopVCSuzy()
+//                vc.modalPresentationStyle = .fullScreen
+//                self?.present(vc, animated: true)
+//            }
             calddvc.modalPresentationStyle = .fullScreen
             self?.present(calddvc, animated: true)
            

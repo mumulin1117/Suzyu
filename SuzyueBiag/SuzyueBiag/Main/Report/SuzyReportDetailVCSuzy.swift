@@ -8,7 +8,9 @@
 import UIKit
 
 final class SuzyReportDetailVCSuzy: UIViewController {
-
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     private let suzyBackActionBtnSuzy = UIButton(type: .custom)
     private let suzyTitleHeaderSuzy = UILabel()
     

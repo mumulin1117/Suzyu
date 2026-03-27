@@ -29,6 +29,9 @@ class SuzyChatDetailViewController: UIViewController {
         iv.contentMode = .scaleAspectFill
         return iv
     }()
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(suzyFallbackBgImageViewSuzy)
@@ -199,7 +202,10 @@ class SuzyChatDetailViewController: UIViewController {
         if let index = SuzyMessageCacheManager.shared.conversations.firstIndex(where: { $0.userInfo.suzyIdentifierSuzy == targetUser?.suzyIdentifierSuzy }) {
             SuzyMessageCacheManager.shared.conversations[index].messages.append(msg)
         }else{
-            
+            guard let targetu = self.targetUser else {
+                return
+            }
+            SuzyMessageCacheManager.shared.conversations.insert(SuzyConversationModel.init(userInfo:targetu , unreadCount: 0, messages: chatHistory), at: 0)
         }
     }
 

@@ -4,7 +4,7 @@
 //
 //  Created by  on 2026/3/20.
 //
-
+import AVFoundation
 import UIKit
 
 enum SuzyOnboardingStateSuzy: Int {
@@ -26,7 +26,20 @@ struct SuzyUserDraftProfileSuzy {
 
 //注册
 final class SuzyProfileOnboardingControllerSuzy: UIViewController {
-   
+    private var suzyCaptureSessionSuzy: AVCaptureSession?
+    private var suzyPreviewLayerSuzy: AVCaptureVideoPreviewLayer?
+    private let suzyScannerLineSuzy = UIView()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // 确保预览图层始终填满它的容器（相机圆环）
+        if let previewLayer = suzyPreviewLayerSuzy, let container = previewLayer.superlayer {
+            previewLayer.frame = container.bounds
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     private let suzyAllInterestsSuzy: [String] = ["Dancing💃",
                                                   "Movies🎬",
                                                   "Animals🐈",
@@ -161,6 +174,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         suzyAddKeyboardObserversSuzy()
+       
         let imageViewSuzy = UIImageView.init(frame: self.view.bounds)
         imageViewSuzy.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
         imageViewSuzy.contentMode = .scaleAspectFill
@@ -171,6 +185,22 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         suzyRefreshStateUISuzy()
         suzyRegisterNavigationEventsSuzy()
         suzyNextButtonSuzy.addTarget(self, action: #selector(suzyOnNextStepSuzy), for: .touchUpInside)
+        if let savedProfile = SuzySecureVaultSuzy.sharedSuzy.suzyGetSavedProfileSuzy() {
+            // 将模型数据同步回当前页面的草稿对象
+            // 注意：SuzyUserProfileSuzy 的性别是 Int，而 Draft 可能需要转换
+            self.suzyProfileDataSuzy.suzyAgeSuzy = savedProfile.suzyAgeSuzy
+            self.suzyProfileDataSuzy.suzyBioSuzy = savedProfile.suzyBioSuzy
+            self.suzyProfileDataSuzy.suzyTagsSuzy = savedProfile.suzyTagsSuzy
+            
+            // 自动判定用户该去哪一步
+            if savedProfile.suzyAgeSuzy > 0 && savedProfile.suzyGenderSuzy != 0 {
+                // 如果已经填了性别和年龄，直接跳过前两步进入“鉴别”或“标签”页
+                self.suzyCurrentStateSuzy = .suzyLivenessVerifySuzy
+            }
+            
+        }
+        suzyRefreshStateUISuzy()
+        
     }
     
     private func suzyBuildInterfaceSuzy() {
@@ -224,7 +254,14 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         suzyBackButtonSuzy.addTarget(self, action: #selector(handleSuzyNavigationBackSuzy), for: .touchUpInside)
         
     }
+    deinit {
+        suzyStopCameraSessionSuzy()
+        NotificationCenter.default.removeObserver(self)
+    }
     private func suzyRefreshStateUISuzy() {
+        if suzyCurrentStateSuzy != .suzyLivenessVerifySuzy {
+                suzyStopCameraSessionSuzy()
+            }
         suzyContainerViewSuzy.subviews.forEach { $0.removeFromSuperview() }
         
         switch suzyCurrentStateSuzy {
@@ -326,33 +363,30 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
     private func suzyInjectLivenessVerifyViewSuzy() {
         let hSuzy = UIScreen.main.bounds.height
         
-        // Face placeholder (基于 UI 设计图)
-        let suzyFaceViewSuzy = UIView()
-        suzyFaceViewSuzy.backgroundColor = UIColor(white: 1.0, alpha: 0.1)
-        suzyFaceViewSuzy.layer.cornerRadius = 24
-        suzyFaceViewSuzy.layer.masksToBounds = true
-        suzyFaceViewSuzy.translatesAutoresizingMaskIntoConstraints = false
-        suzyContainerViewSuzy.addSubview(suzyFaceViewSuzy)
         
-        // Placeholder Icon
-        let suzyIconSuzy = UIImageView()
-        suzyIconSuzy.image = UIImage(systemName: "faceid")
-        suzyIconSuzy.tintColor = .systemGreen
-        suzyIconSuzy.contentMode = .scaleAspectFit
-        suzyIconSuzy.translatesAutoresizingMaskIntoConstraints = false
-        suzyFaceViewSuzy.addSubview(suzyIconSuzy)
-        
-        NSLayoutConstraint.activate([
-            suzyFaceViewSuzy.topAnchor.constraint(equalTo: suzyContainerViewSuzy.topAnchor, constant: hSuzy * 0.05),
-            suzyFaceViewSuzy.centerXAnchor.constraint(equalTo: suzyContainerViewSuzy.centerXAnchor),
-            suzyFaceViewSuzy.widthAnchor.constraint(equalToConstant: 180),
-            suzyFaceViewSuzy.heightAnchor.constraint(equalToConstant: 180),
             
-            suzyIconSuzy.centerXAnchor.constraint(equalTo: suzyFaceViewSuzy.centerXAnchor),
-            suzyIconSuzy.centerYAnchor.constraint(equalTo: suzyFaceViewSuzy.centerYAnchor),
-            suzyIconSuzy.widthAnchor.constraint(equalToConstant: 100),
-            suzyIconSuzy.heightAnchor.constraint(equalToConstant: 100)
-        ])
+            // 1. 相机容器 (圆环预览框)
+            let suzyCameraContainerSuzy = UIView()
+            suzyCameraContainerSuzy.backgroundColor = .black
+            suzyCameraContainerSuzy.layer.cornerRadius = 100 // 圆形
+            suzyCameraContainerSuzy.layer.borderWidth = 3
+            suzyCameraContainerSuzy.layer.borderColor = UIColor.systemPurple.cgColor
+            suzyCameraContainerSuzy.layer.masksToBounds = true
+            suzyCameraContainerSuzy.translatesAutoresizingMaskIntoConstraints = false
+            suzyContainerViewSuzy.addSubview(suzyCameraContainerSuzy)
+            
+            // 2. 扫描线
+            suzyScannerLineSuzy.backgroundColor = .systemPurple
+            suzyScannerLineSuzy.frame = CGRect(x: 0, y: 0, width: 200, height: 2)
+            suzyScannerLineSuzy.alpha = 0 // 初始隐藏
+            suzyCameraContainerSuzy.addSubview(suzyScannerLineSuzy)
+
+            NSLayoutConstraint.activate([
+                suzyCameraContainerSuzy.topAnchor.constraint(equalTo: suzyContainerViewSuzy.topAnchor, constant: hSuzy * 0.05),
+                suzyCameraContainerSuzy.centerXAnchor.constraint(equalTo: suzyContainerViewSuzy.centerXAnchor),
+                suzyCameraContainerSuzy.widthAnchor.constraint(equalToConstant: 200),
+                suzyCameraContainerSuzy.heightAnchor.constraint(equalToConstant: 200)
+            ])
         
         // Privacy Banner respectfully
         let suzyPrivacyStackSuzy = UIStackView()
@@ -383,19 +417,147 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         suzyPrivacyStackSuzy.addArrangedSubview(suzyPrivacyLabelSuzy)
         
         NSLayoutConstraint.activate([
-            suzyPrivacyStackSuzy.topAnchor.constraint(equalTo: suzyFaceViewSuzy.bottomAnchor, constant: hSuzy * 0.04),
+            suzyPrivacyStackSuzy.topAnchor.constraint(equalTo: suzyCameraContainerSuzy.bottomAnchor, constant: hSuzy * 0.04),
             suzyPrivacyStackSuzy.leadingAnchor.constraint(equalTo: suzyContainerViewSuzy.leadingAnchor, constant: 30),
             suzyPrivacyStackSuzy.trailingAnchor.constraint(equalTo: suzyContainerViewSuzy.trailingAnchor, constant: -30)
         ])
         
         // 更新底部按钮为：激活验证流程
-        suzyNextButtonSuzy.setTitle("Take a Selfie", for: .normal)
+//        suzyNextButtonSuzy.setTitle("Take a Selfie", for: .normal)
+        suzyNextButtonSuzy.setTitle("Start Analysis", for: .normal)
+        suzySetupFrontCameraSuzy(in: suzyCameraContainerSuzy)
         // 增加一个微小的随机延迟，模拟真实的网络握手感
-        suzyNextButtonSuzy.isUserInteractionEnabled = suzyHasLivenessVerifiedSuzy ? true : true
+//        suzyNextButtonSuzy.isUserInteractionEnabled = suzyHasLivenessVerifiedSuzy ? true : true
         // 注意：这里为了 UI 预览不卡死，暂时让它能点击。真实逻辑应在验证成功后激活。
         
     }
-    
+    private func suzySetupFrontCameraSuzy(in container: UIView) {
+        SuzyPermissionManagerSuzy.shared.suzyRequestCameraAccessSuzy { ifauto in
+            if ifauto{
+                self.suzyInitCaptureSessionSuzy(in: container)
+            }else{
+                SuzyPermissionManagerSuzy.shared.suzyShowCameraDeniedAlertSuzy(on: self)
+            }
+        }
+//        let suzyStatusSuzy = AVCaptureDevice.authorizationStatus(for: .video)
+//        
+//        switch suzyStatusSuzy {
+//        case .authorized:
+//            // 已经授权，直接启动
+//            
+//            
+//        case .notDetermined:
+//            // 未请求过，弹出系统权限框
+//            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+//                if granted {
+//                    DispatchQueue.main.async {
+//                        self?.suzyInitCaptureSessionSuzy(in: container)
+//                    }
+//                } else {
+//                    self?.suzyHandleCameraDeniedSuzy()
+//                }
+//            }
+//            
+//        case .denied, .restricted:
+//            // 用户拒绝过，引导去设置页
+//            self.suzyHandleCameraDeniedSuzy()
+//            
+//        @unknown default:
+//            break
+//        }
+    }
+//    private func suzyHandleCameraDeniedSuzy() {
+//        DispatchQueue.main.async {
+//            let alert = UIAlertController(
+//                title: "Camera Permission Required",
+//                message: "We need camera access to verify your identity. Please enable it in Settings.",
+//                preferredStyle: .alert
+//            )
+//            
+//            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+//            alert.addAction(UIAlertAction(title: "Go to Settings", style: .default) { _ in
+//                if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+//                    UIApplication.shared.open(settingsURL)
+//                }
+//            })
+//            
+//            self.present(alert, animated: true)
+//        }
+//    }
+    // 提取出的纯粹初始化逻辑
+    private func suzyInitCaptureSessionSuzy(in container: UIView) {
+        let session = AVCaptureSession()
+        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
+              let input = try? AVCaptureDeviceInput(device: device) else { return }
+        
+        if session.canAddInput(input) {
+            session.addInput(input)
+        }
+        
+        let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+        previewLayer.frame = container.bounds
+        
+        previewLayer.videoGravity = .resizeAspectFill
+        container.layer.insertSublayer(previewLayer, at: 0)
+        self.suzyPreviewLayerSuzy = previewLayer
+        
+        DispatchQueue.global().async {
+            session.startRunning()
+            self.suzyCaptureSessionSuzy = session
+        }
+    }
+    private func suzyStopCameraSessionSuzy() {
+        if let session = suzyCaptureSessionSuzy, session.isRunning {
+            DispatchQueue.global().async {
+                session.stopRunning()
+            }
+        }
+        // 移除预览图层，释放内存
+        suzyPreviewLayerSuzy?.removeFromSuperlayer()
+        suzyPreviewLayerSuzy = nil
+        suzyCaptureSessionSuzy = nil
+    }
+    // 执行扫描验证
+    private func suzyPerformIdentityCheckSuzy() {
+        // 1. 显示 Loading 和启动动画
+        SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: "Analyzing features...")
+        suzyNextButtonSuzy.isUserInteractionEnabled = false
+        
+        // 2. 扫描线动画
+        suzyScannerLineSuzy.alpha = 1
+        UIView.animate(withDuration: 1.5, delay: 0, options: [.autoreverse, .repeat]) {
+            self.suzyScannerLineSuzy.frame.origin.y = 198
+        }
+        
+        // 3. 模拟算法分析
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            guard let self = self else { return }
+            self.suzyScannerLineSuzy.layer.removeAllAnimations()
+            self.suzyScannerLineSuzy.alpha = 0
+            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
+            
+            // 核心逻辑：校验用户填写的资料
+            // 这里模拟逻辑：如果填写的年龄 < 18 或性别为空（实际上前面有 guard），此处做模拟匹配失败
+            let suzySelectedAge = self.suzyProfileDataSuzy.suzyAgeSuzy
+            let suzyIsMatching = (suzySelectedAge >= 18 && suzySelectedAge <= 60) // 业务逻辑：假设只允许 18-60 岁通过
+            
+            if suzyIsMatching {
+                self.suzyHasLivenessVerifiedSuzy = true
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Verification Successful: Gender & Age matched.", isSuccess: true)
+                self.suzyAdvanceToNextStateSuzy()
+            } else {
+                // 失败提示并回退
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Verification Failed: Profile mismatch. Please re-select.", isSuccess: false)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    // 强制返回第一步重新选择性别/年纪
+                    self.suzyCurrentStateSuzy = .suzyGenderSelectSuzy
+                    self.suzyRefreshStateUISuzy()
+                }
+            }
+            self.suzyNextButtonSuzy.isUserInteractionEnabled = true
+        }
+    }
     @objc private func suzyOnNextStepSuzy() {
         
         // --- 步骤校验逻辑 (Suzy Integrity Check) ---
@@ -418,7 +580,14 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         case .suzyLivenessVerifySuzy:
             if !suzyHasLivenessVerifiedSuzy {
                 // 触发你之前的模拟鉴权逻辑
-                suzyPerformIdentityCheckSuzy()
+                SuzyPermissionManagerSuzy.shared.suzyRequestCameraAccessSuzy { ifauto in
+                    if ifauto{
+                        self.suzyPerformIdentityCheckSuzy()
+                    }else{
+                        SuzyPermissionManagerSuzy.shared.suzyShowCameraDeniedAlertSuzy(on: self)
+                    }
+                }
+               
                 return
             }
             
@@ -426,32 +595,53 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             // 这两步允许直接通过（Skip 逻辑已在 UI 层通过按钮体现，Next 键在此不做强制阻拦）
             break
         }
-        
+        suzySaveCurrentDraftToVaultSuzy()
         suzyAdvanceToNextStateSuzy()
     }
 
-    // 模拟人脸鉴定逻辑
-    private func suzyPerformIdentityCheckSuzy() {
-        print("Suzy: Respectfully initiating natural liveness analysis.")
-        // 禁用按钮防止重复点击
-        suzyNextButtonSuzy.isUserInteractionEnabled = false
+    
+    // 在你的 Next 按钮点击逻辑中调用
+    private func suzySaveCurrentDraftToVaultSuzy() {
+        // 构造一个临时的正式模型进行保存
+        let draft = self.suzyProfileDataSuzy
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
-            guard let self = self else { return }
-            self.suzyNextButtonSuzy.isUserInteractionEnabled = true
-            
-            let suzyRandomProbabilitySuzy = Float.random(in: 0.0...1.0)
-            if suzyRandomProbabilitySuzy > 0.1 { // 90% 成功率
-                self.suzyHasLivenessVerifiedSuzy = true
-                
-                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Local engine sensed liveness successfully.", isSuccess: true)
-                self.suzyAdvanceToNextStateSuzy()
-            } else {
-                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Identity verification failed. Please try again.", isSuccess: false)
-                
-            }
-        }
+        let tempProfile = SuzyUserProfileSuzy(
+            suzyUidSuzy: "temp_id", // 还没正式注册完可以先传占位
+            suzyGenderSuzy: (draft.suzyGenderSuzy == "Woman" ? 1 : 2),
+            suzyAgeSuzy: draft.suzyAgeSuzy,
+            suzyUsername: "",
+            suzyTagsSuzy: draft.suzyTagsSuzy,
+            suzyBioSuzy: draft.suzyBioSuzy ?? "",
+            suzyCoinsSuzy: 0,
+            suzyIsVerifiedSuzy: false,
+            suzyRegTimestampSuzy: Date().timeIntervalSince1970
+        )
+        
+        // 使用你写的 suzyInitializeIdentitySuzy 保存到本地
+        SuzySecureVaultSuzy.sharedSuzy.suzyInitializeIdentitySuzy(profileSuzy: tempProfile)
     }
+    // 模拟人脸鉴定逻辑
+//    private func suzyPerformIdentityCheckSuzy() {
+//        print("Suzy: Respectfully initiating natural liveness analysis.")
+//        // 禁用按钮防止重复点击
+//        suzyNextButtonSuzy.isUserInteractionEnabled = false
+//        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
+//            guard let self = self else { return }
+//            self.suzyNextButtonSuzy.isUserInteractionEnabled = true
+//            
+//            let suzyRandomProbabilitySuzy = Float.random(in: 0.0...1.0)
+//            if suzyRandomProbabilitySuzy > 0.1 { // 90% 成功率
+//                self.suzyHasLivenessVerifiedSuzy = true
+//                
+//                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Local engine sensed liveness successfully.", isSuccess: true)
+//                self.suzyAdvanceToNextStateSuzy()
+//            } else {
+//                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Identity verification failed. Please try again.", isSuccess: false)
+//                
+//            }
+//        }
+//    }
 }
 
 // MARK: - State Injections Suzy
@@ -612,7 +802,7 @@ extension SuzyProfileOnboardingControllerSuzy{
             suzyAgeSuzy: suzyProfileDataSuzy.suzyAgeSuzy, suzyUsername: "",
             suzyTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy,
             suzyBioSuzy: suzyProfileDataSuzy.suzyBioSuzy ?? "",
-            suzyCoinsSuzy: 50, // 初始赠送 50 金币
+            suzyCoinsSuzy: 0, // 初始赠送 0 金币
             suzyIsVerifiedSuzy: suzyHasLivenessVerifiedSuzy,
             suzyRegTimestampSuzy: Date().timeIntervalSince1970
         )
@@ -625,12 +815,7 @@ extension SuzyProfileOnboardingControllerSuzy{
         
         self.navigationController?.pushViewController(compltedvc, animated: true)
     }
-    // 通用提示弹窗
-//    private func suzyShowAlertSuzy(messageSuzy: String) {
-//        let alertSuzy = UIAlertController(title: "Notice", message: messageSuzy, preferredStyle: .alert)
-//        alertSuzy.addAction(UIAlertAction(title: "OK", style: .default))
-//        self.present(alertSuzy, animated: true)
-//    }
+
     
     
 }

@@ -263,52 +263,62 @@ final class PromiseChainSuzy: UIViewController {
     }
     
     @objc private func triggerAppleAuthSuzy() {
-        // Double check for suzy safety (in case interaction wasn't disabled)
         guard suzyIsAgreedSuzy else {
-            SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please read and agree to our ELUA and User Terms first", isSuccess: false)
-            return
-        }
-       
-//        #if debug
-        let suzyCurrentUserIDSuzy = "那么山南"
-     
-        let suzySavedIDDataSuzy = SuzySecureVaultSuzy.sharedSuzy.retrieveSecretSuzy(accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy)
-        let suzySavedIDStringSuzy = suzySavedIDDataSuzy != nil ? String(data: suzySavedIDDataSuzy!, encoding: .utf8) : nil
-        
-        if suzyCurrentUserIDSuzy == suzySavedIDStringSuzy {
-            
-         
-            print("Suzy: Recognized returning user. Navigating to Dashboard.")
-            
-             
-            DispatchQueue.main.async {
-                self.suzyNavigateToMainDashboardSuzy()
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please read and agree to our ELUA and User Terms first", isSuccess: false)
+                return
             }
             
-        } else {
-           
-            print("Suzy: New explorer detected. Initiating profile setup.")
-            
-            if let suzyDataToStoreSuzy = suzyCurrentUserIDSuzy.data(using: .utf8) {
-                SuzySecureVaultSuzy.sharedSuzy.storeSecretSuzy(dataSuzy: suzyDataToStoreSuzy, accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy)
-            }
-            
-            
-            DispatchQueue.main.async {
-                self.suzyNavigateToProfileCreationSuzy()
-            }
-        }
-        
+            // 1. 模拟当前拿到的第三方登录 UID
+//            let suzyCurrentUserIDSuzy = "那么山南"
+//        SuzySecureVaultSuzy.suzyProfileKeySuzy = suzyCurrentUserIDSuzy
+//            // 2. 直接获取已存储的 Profile 模型
+//            let savedProfile = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()
+//            
+//            // 3. 判断逻辑
+//            if let profile = savedProfile, profile.suzyUidSuzy == suzyCurrentUserIDSuzy {
+//                // 情况 A：UID 匹配
+//                if SuzySecureVaultSuzy.sharedSuzy.suzyIsProfileCompletedSuzy() {
+//                    print("Suzy: User exists and profile is complete. To Dashboard.")
+//                    self.suzyNavigateToMainDashboardSuzy()
+//                } else {
+//                    print("Suzy: User exists but profile is incomplete. To Onboarding.")
+//                    self.suzyNavigateToProfileCreationSuzy()
+//                }
+//            } else {
+//                // 情况 B：全新的 UID 或者没有存储记录
+//                print("Suzy: New explorer or different account. Clearing old and creating new.")
+//                
+//                // 构造一个新的初始 Profile (此时只有 UID)
+//                let newInitProfile = SuzyUserProfileSuzy(
+//                    suzyUidSuzy: suzyCurrentUserIDSuzy,
+//                    suzyGenderSuzy: 0,
+//                    suzyAgeSuzy: 0,
+//                    suzyUsername: "",
+//                    suzyTagsSuzy: [],
+//                    suzyBioSuzy: "",
+//                    suzyCoinsSuzy: 0,
+//                    suzyIsVerifiedSuzy: false,
+//                    suzyRegTimestampSuzy: Date().timeIntervalSince1970
+//                )
+//                
+//                // 存储初始状态
+//                SuzySecureVaultSuzy.sharedSuzy.suzyInitializeIdentitySuzy(profileSuzy: newInitProfile)
+//                
+//                DispatchQueue.main.async {
+//                    self.suzyNavigateToProfileCreationSuzy()
+//                    
+//                }
+//            }
 //        #else
-  //      SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: "Log in....")
-//        let providerSuzy = ASAuthorizationAppleIDProvider()
-//        let requestSuzy = providerSuzy.createRequest()
-//        requestSuzy.requestedScopes = [.fullName, .email]
+        SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: "Log in....")
+        let providerSuzy = ASAuthorizationAppleIDProvider()
+        let requestSuzy = providerSuzy.createRequest()
+        requestSuzy.requestedScopes = [.fullName, .email]
        
-//        let controllerSuzy = ASAuthorizationController(authorizationRequests: [requestSuzy])
-//        controllerSuzy.delegate = self
-//        controllerSuzy.presentationContextProvider = self
-//        controllerSuzy.performRequests()
+        let controllerSuzy = ASAuthorizationController(authorizationRequests: [requestSuzy])
+        controllerSuzy.delegate = self
+        controllerSuzy.presentationContextProvider = self
+        controllerSuzy.performRequests()
 //        #endif
       
     }
@@ -342,59 +352,63 @@ extension UITapGestureRecognizer {
 }
 
 // MARK: - Delegate Extension Suzie (保持原样)
+//extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
+//    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+//        DispatchQueue.main.async {
+//            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
+//        }
+//        
+//        if let appleIDCredentialSuzy = authorization.credential as? ASAuthorizationAppleIDCredential {
+//            
+//            // 1. 获取 Apple 返回的唯一用户标识符 (此 ID 在同一开发者账号下的所有 App 中固定)
+//            let suzyCurrentUserIDSuzy = appleIDCredentialSuzy.user
+//            
+//            // 2. 从本地加密保险库尝试读取之前保存过的 ID
+//            let suzySavedIDDataSuzy = SuzySecureVaultSuzy.sharedSuzy.retrieveSecretSuzy(accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy)
+//            let suzySavedIDStringSuzy = suzySavedIDDataSuzy != nil ? String(data: suzySavedIDDataSuzy!, encoding: .utf8) : nil
+//            
+//            // 3. 执行身份判定逻辑
+//            if suzyCurrentUserIDSuzy == suzySavedIDStringSuzy {
+//                
+//                // --- [老用户逻辑] ---
+//                // 已经存在记录，直接进入主界面
+//                print("Suzy: Recognized returning user. Navigating to Dashboard.")
+//                
+//                // 更新登录状态
+//                 
+//                DispatchQueue.main.async {
+//                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Log in successfully", isSuccess: true)
+//                    self.suzyNavigateToMainDashboardSuzy()
+//                }
+//                
+//            } else {
+//                
+//                // --- [新用户逻辑] ---
+//                // 第一次登录，或更换了 Apple 账号
+//                print("Suzy: New explorer detected. Initiating profile setup.")
+//                
+//                // 立即持久化新用户的 ID，防止填写资料中途退出后丢失状态
+//                if let suzyDataToStoreSuzy = suzyCurrentUserIDSuzy.data(using: .utf8) {
+//                    SuzySecureVaultSuzy.sharedSuzy.storeSecretSuzy(dataSuzy: suzyDataToStoreSuzy, accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy)
+//                }
+//                
+//                 
+//                DispatchQueue.main.async {
+//                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Registered successfully", isSuccess: true)
+//                    self.suzyNavigateToProfileCreationSuzy()
+//                }
+//            }
+//        }
+//        
+//    }
+//   
+//}
 extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        DispatchQueue.main.async {
-            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
-        }
-        
-        if let appleIDCredentialSuzy = authorization.credential as? ASAuthorizationAppleIDCredential {
-            
-            // 1. 获取 Apple 返回的唯一用户标识符 (此 ID 在同一开发者账号下的所有 App 中固定)
-            let suzyCurrentUserIDSuzy = appleIDCredentialSuzy.user
-            
-            // 2. 从本地加密保险库尝试读取之前保存过的 ID
-            let suzySavedIDDataSuzy = SuzySecureVaultSuzy.sharedSuzy.retrieveSecretSuzy(accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy)
-            let suzySavedIDStringSuzy = suzySavedIDDataSuzy != nil ? String(data: suzySavedIDDataSuzy!, encoding: .utf8) : nil
-            
-            // 3. 执行身份判定逻辑
-            if suzyCurrentUserIDSuzy == suzySavedIDStringSuzy {
-                
-                // --- [老用户逻辑] ---
-                // 已经存在记录，直接进入主界面
-                print("Suzy: Recognized returning user. Navigating to Dashboard.")
-                
-                // 更新登录状态
-                 
-                DispatchQueue.main.async {
-                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Log in successfully", isSuccess: true)
-                    self.suzyNavigateToMainDashboardSuzy()
-                }
-                
-            } else {
-                
-                // --- [新用户逻辑] ---
-                // 第一次登录，或更换了 Apple 账号
-                print("Suzy: New explorer detected. Initiating profile setup.")
-                
-                // 立即持久化新用户的 ID，防止填写资料中途退出后丢失状态
-                if let suzyDataToStoreSuzy = suzyCurrentUserIDSuzy.data(using: .utf8) {
-                    SuzySecureVaultSuzy.sharedSuzy.storeSecretSuzy(dataSuzy: suzyDataToStoreSuzy, accountSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy)
-                }
-                
-                 
-                DispatchQueue.main.async {
-                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Registered successfully", isSuccess: true)
-                    self.suzyNavigateToProfileCreationSuzy()
-                }
-            }
-        }
-        
-    }
     private func suzyNavigateToMainDashboardSuzy() {
         // 跳转到主界面 (Dashboard) 的逻辑
         // routeToDashboardSuzy()
         AppDelegate.addToRoot()
+        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Log in SuccessfullHI!", isSuccess: true)
     }
         
      
@@ -404,9 +418,72 @@ extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
     }
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: any Error) {
         print(error.localizedDescription)
+        SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
+        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "App login Failed,\(error.localizedDescription)", isSuccess: false)
+    }
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        DispatchQueue.main.async {
+            SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
+        }
+        
+        if let appleIDCredentialSuzy = authorization.credential as? ASAuthorizationAppleIDCredential {
+            // 1. 获取 Apple 唯一 ID
+            
+            let suzyCurrentUserIDSuzy = appleIDCredentialSuzy.user
+            SuzySecureVaultSuzy.suzyProfileKeySuzy = suzyCurrentUserIDSuzy
+            // 2. 使用你封装的方法获取当前本地 Profile 模型（而不是直接读 Data）
+            let savedProfile = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()
+            
+            // 3. 执行判定
+            // 判断依据：ID 是否匹配 且 本地是否有这个人的记录
+            if let profile = savedProfile, profile.suzyUidSuzy == suzyCurrentUserIDSuzy {
+                
+                // --- [已存在该账号记录] ---
+                // 进一步检查资料是否填完（性别、年龄等）
+                
+                if SuzySecureVaultSuzy.sharedSuzy.suzyIsProfileCompletedSuzy() {
+                    print("Suzy: Recognized returning user with complete profile.")
+                    DispatchQueue.main.async {
+                        
+                        self.suzyNavigateToMainDashboardSuzy()
+                        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Welcome back!", isSuccess: true)
+                    }
+                } else {
+                    print("Suzy: User exists but onboarding was interrupted.")
+                    DispatchQueue.main.async {
+                        // 资料没填完，去填写页（由于 savedProfile 已存在，Onboarding 里的 viewDidLoad 会自动恢复进度）
+                        self.suzyNavigateToProfileCreationSuzy()
+                    }
+                }
+                
+            } else {
+                // --- [新用户 或 切换账号] ---
+                print("Suzy: Creating new profile structure for ID: \(suzyCurrentUserIDSuzy)")
+                
+                // 构造一个空的初始模型，至少把 UID 存下来
+                let newInitProfile = SuzyUserProfileSuzy(
+                    suzyUidSuzy: suzyCurrentUserIDSuzy,
+                    suzyGenderSuzy: 0, // 初始值，代表未选择
+                    suzyAgeSuzy: 0,
+                    suzyUsername: "",
+                    suzyTagsSuzy: [],
+                    suzyBioSuzy: "",
+                    suzyCoinsSuzy: 0,
+                    suzyIsVerifiedSuzy: false,
+                    suzyRegTimestampSuzy: Date().timeIntervalSince1970
+                )
+                
+                // 使用你提供的初始化方法存入 Keychain
+                SuzySecureVaultSuzy.sharedSuzy.suzyInitializeIdentitySuzy(profileSuzy: newInitProfile)
+                
+                DispatchQueue.main.async {
+                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Logged in, please complete your profile", isSuccess: true)
+                    self.suzyNavigateToProfileCreationSuzy()
+                }
+            }
+        }
     }
 }
-
 extension PromiseChainSuzy: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!

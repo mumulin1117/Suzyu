@@ -36,7 +36,14 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     // 筛选按钮
     private let suzyAllFilterBtnSuzy = UIButton()
     private let suzyInterestFilterBtnSuzy = UIButton()
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UserDefaults.standard.bool(forKey: "showeingsafety") == false ||  UserDefaults.standard.bool(forKey: "showeingsafety") == nil{
+            showeingsafety()
+            UserDefaults.standard.set(true, forKey: "showeingsafety")
+        }
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         suzyAllFilterBtnSuzy.setImage(UIImage.init(named: "suzyAllFilterBtnSuzy"), for: .normal)
@@ -147,19 +154,26 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     
     
     private func suzyCheckCameraPermissionSuzy() {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            suzyInitializeCameraSuzy()
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
-                DispatchQueue.main.async {
-                    if granted { self?.suzyInitializeCameraSuzy() }
-                    else { self?.suzyShowPermissionDeniedStateSuzy() }
-                }
+        SuzyPermissionManagerSuzy.shared.suzyRequestCameraAccessSuzy { ifauto in
+            if ifauto{
+                self.suzyInitializeCameraSuzy()
+            }else{
+                self.suzyShowPermissionDeniedStateSuzy()
             }
-        default:
-            suzyShowPermissionDeniedStateSuzy()
         }
+//        switch AVCaptureDevice.authorizationStatus(for: .video) {
+//        case .authorized:
+//            suzyInitializeCameraSuzy()
+//        case .notDetermined:
+//            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+//                DispatchQueue.main.async {
+//                    if granted { self?.suzyInitializeCameraSuzy() }
+//                    else { self?.suzyShowPermissionDeniedStateSuzy() }
+//                }
+//            }
+//        default:
+//            suzyShowPermissionDeniedStateSuzy()
+//        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -186,7 +200,8 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
 
     private func suzyShowPermissionDeniedStateSuzy() {
         suzyFallbackBgImageViewSuzy.isHidden = false
-        suzyShowPermissionAlertSuzy()
+        SuzyPermissionManagerSuzy.shared.suzyShowCameraDeniedAlertSuzy(on: self)
+        
     }
     private let suzyCaptureQueueSuzy = DispatchQueue(label: "com.suzy.camera.running.queue.suzy")
 
@@ -360,14 +375,16 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         actionBtn.addAction(UIAction(handler: { [weak self] _ in
             guard let self = self else { return }
             suzyOverlaySuzy.removeFromSuperview()
-            if isEnough {
+            if isEnough && isFreenAlert{
                 SuzyMatchManagerSuzy.shared.suzyIncrementMatchCountSuzy()
                 self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyFilteredSuzy), animated: true)
-            } else {
+            } else  if isEnough && isFreenAlert == false{
+                SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: -20)
+                self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyFilteredSuzy), animated: true)
+            }else{
                 let vc = SuzyGoldShopVCSuzy()
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
-                
             }
         }), for: .touchUpInside)
     }
@@ -382,36 +399,61 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
             suzyOverlaySuzy?.removeFromSuperview()
         }
     }
+    
+    private func showeingsafety() {
+        let eulaVcSuzy = SuzyLegalReaderControllerSuzy(suzyTypeSuzy: .suzyLegal)
+        
+        // 1. 必须使用 pageSheet 才能支持半屏属性
+        eulaVcSuzy.modalPresentationStyle = .pageSheet
+        
+        // 2. 配置半屏控制器 (仅支持 iOS 15+)
+        if let suzySheetSuzy = eulaVcSuzy.sheetPresentationController {
+            // 设置支持的高度：.medium() 是半屏，.large() 是全屏
+            // 用户可以手动在半屏和全屏之间切换
+            suzySheetSuzy.detents = [.medium(), .large()]
+            
+            // 是否显示顶部的指示条（那个小横杠）
+            suzySheetSuzy.prefersGrabberVisible = true
+            
+            // 弹出时的圆角大小
+            suzySheetSuzy.preferredCornerRadius = 24
+            
+            // 弹出时，背景是否可以交互（设为 true 则点击背景不会收起）
+            suzySheetSuzy.prefersScrollingExpandsWhenScrolledToEdge = false
+        }
+        
+        self.present(eulaVcSuzy, animated: true)
+    }
 }
 
 extension UIViewController{
-     func suzyShowPermissionAlertSuzy() {
-        let suzyAlertSuzy = UIAlertController(
-            title: "Camera Access Required",
-            message: "To start a meet and verify your identity, please enable camera access in your device settings.",
-            preferredStyle: .alert
-        )
-        
-        // “去设置” 动作：直接跳转到当前 App 的系统设置页面
-        let suzySettingsActionSuzy = UIAlertAction(title: "Go to Settings", style: .default) { _ in
-            guard let suzySettingsUrlSuzy = URL(string: UIApplication.openSettingsURLString) else { return }
-            if UIApplication.shared.canOpenURL(suzySettingsUrlSuzy) {
-                UIApplication.shared.open(suzySettingsUrlSuzy, options: [:], completionHandler: nil)
-            }
-        }
-        
-        // “取消” 动作
-        let suzyCancelActionSuzy = UIAlertAction(title: "Maybe Later", style: .cancel, handler: nil)
-        
-        suzyAlertSuzy.addAction(suzySettingsActionSuzy)
-        suzyAlertSuzy.addAction(suzyCancelActionSuzy)
-       
-        if let suzyPopoverSuzy = suzyAlertSuzy.popoverPresentationController {
-            suzyPopoverSuzy.sourceView = self.view
-            suzyPopoverSuzy.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            suzyPopoverSuzy.permittedArrowDirections = []
-        }
-        
-        self.present(suzyAlertSuzy, animated: true, completion: nil)
-    }
+//     func suzyShowPermissionAlertSuzy() {
+//        let suzyAlertSuzy = UIAlertController(
+//            title: "Camera Access Required",
+//            message: "To start a meet and verify your identity, please enable camera access in your device settings.",
+//            preferredStyle: .alert
+//        )
+//        
+//        // “去设置” 动作：直接跳转到当前 App 的系统设置页面
+//        let suzySettingsActionSuzy = UIAlertAction(title: "Go to Settings", style: .default) { _ in
+//            guard let suzySettingsUrlSuzy = URL(string: UIApplication.openSettingsURLString) else { return }
+//            if UIApplication.shared.canOpenURL(suzySettingsUrlSuzy) {
+//                UIApplication.shared.open(suzySettingsUrlSuzy, options: [:], completionHandler: nil)
+//            }
+//        }
+//        
+//        // “取消” 动作
+//        let suzyCancelActionSuzy = UIAlertAction(title: "Maybe Later", style: .cancel, handler: nil)
+//        
+//        suzyAlertSuzy.addAction(suzySettingsActionSuzy)
+//        suzyAlertSuzy.addAction(suzyCancelActionSuzy)
+//       
+//        if let suzyPopoverSuzy = suzyAlertSuzy.popoverPresentationController {
+//            suzyPopoverSuzy.sourceView = self.view
+//            suzyPopoverSuzy.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+//            suzyPopoverSuzy.permittedArrowDirections = []
+//        }
+//        
+//        self.present(suzyAlertSuzy, animated: true, completion: nil)
+//    }
 }

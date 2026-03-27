@@ -450,6 +450,7 @@ extension LandmarkSUZYTrackSuue {
     @objc private func suzyTriggerSocialShareActionSuzy() {
         // 1. 准备分享的内容：通常包括一段文案和一个 App Store 下载链接
         let suzyShareTextSuzy = "Hey! Check out this amazing app. It's really cool!"
+       // appid
         let suzyAppStoreLinkSuzy = URL(string: "https://apps.apple.com/app/id1234567890")!
         
         let suzyItemsToShareSuzy: [Any] = [suzyShareTextSuzy, suzyAppStoreLinkSuzy]
