@@ -87,11 +87,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         suzyHintLabelSuzy.font = .systemFont(ofSize: 18, weight: .medium)
         suzyHintLabelSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyHintLabelSuzy)
-        
-        // 5. 底部筛选区域容器 (带渐变或阴影)
-//        suzyBottomContainerSuzy.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(suzyBottomContainerSuzy)
-        
+
         suzyAllFilterBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyInterestFilterBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyAllFilterBtnSuzy)
@@ -126,11 +122,8 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
             suzyStartMeetButtonSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             suzyStartMeetButtonSuzy.heightAnchor.constraint(equalToConstant: 56),
             
-//            // 筛选按钮容器
-//            suzyBottomContainerSuzy.bottomAnchor.constraint(equalTo: suzyStartMeetButtonSuzy.topAnchor, constant: -30),
-//            suzyBottomContainerSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            suzyBottomContainerSuzy.heightAnchor.constraint(equalToConstant: 60),
-//
+
+
             suzyAllFilterBtnSuzy.heightAnchor.constraint(equalToConstant: 66),
             suzyAllFilterBtnSuzy.widthAnchor.constraint(equalToConstant: 109),
             suzyAllFilterBtnSuzy.leadingAnchor.constraint(equalTo: suzyStartMeetButtonSuzy.leadingAnchor),
@@ -161,19 +154,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
                 self.suzyShowPermissionDeniedStateSuzy()
             }
         }
-//        switch AVCaptureDevice.authorizationStatus(for: .video) {
-//        case .authorized:
-//            suzyInitializeCameraSuzy()
-//        case .notDetermined:
-//            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
-//                DispatchQueue.main.async {
-//                    if granted { self?.suzyInitializeCameraSuzy() }
-//                    else { self?.suzyShowPermissionDeniedStateSuzy() }
-//                }
-//            }
-//        default:
-//            suzyShowPermissionDeniedStateSuzy()
-//        }
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -426,34 +407,3 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     }
 }
 
-extension UIViewController{
-//     func suzyShowPermissionAlertSuzy() {
-//        let suzyAlertSuzy = UIAlertController(
-//            title: "Camera Access Required",
-//            message: "To start a meet and verify your identity, please enable camera access in your device settings.",
-//            preferredStyle: .alert
-//        )
-//        
-//        // “去设置” 动作：直接跳转到当前 App 的系统设置页面
-//        let suzySettingsActionSuzy = UIAlertAction(title: "Go to Settings", style: .default) { _ in
-//            guard let suzySettingsUrlSuzy = URL(string: UIApplication.openSettingsURLString) else { return }
-//            if UIApplication.shared.canOpenURL(suzySettingsUrlSuzy) {
-//                UIApplication.shared.open(suzySettingsUrlSuzy, options: [:], completionHandler: nil)
-//            }
-//        }
-//        
-//        // “取消” 动作
-//        let suzyCancelActionSuzy = UIAlertAction(title: "Maybe Later", style: .cancel, handler: nil)
-//        
-//        suzyAlertSuzy.addAction(suzySettingsActionSuzy)
-//        suzyAlertSuzy.addAction(suzyCancelActionSuzy)
-//       
-//        if let suzyPopoverSuzy = suzyAlertSuzy.popoverPresentationController {
-//            suzyPopoverSuzy.sourceView = self.view
-//            suzyPopoverSuzy.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-//            suzyPopoverSuzy.permittedArrowDirections = []
-//        }
-//        
-//        self.present(suzyAlertSuzy, animated: true, completion: nil)
-//    }
-}

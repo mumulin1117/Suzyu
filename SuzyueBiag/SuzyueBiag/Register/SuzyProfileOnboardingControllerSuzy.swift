@@ -423,12 +423,9 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         ])
         
         // 更新底部按钮为：激活验证流程
-//        suzyNextButtonSuzy.setTitle("Take a Selfie", for: .normal)
         suzyNextButtonSuzy.setTitle("Start Analysis", for: .normal)
         suzySetupFrontCameraSuzy(in: suzyCameraContainerSuzy)
-        // 增加一个微小的随机延迟，模拟真实的网络握手感
-//        suzyNextButtonSuzy.isUserInteractionEnabled = suzyHasLivenessVerifiedSuzy ? true : true
-        // 注意：这里为了 UI 预览不卡死，暂时让它能点击。真实逻辑应在验证成功后激活。
+
         
     }
     private func suzySetupFrontCameraSuzy(in container: UIView) {
@@ -439,51 +436,9 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
                 SuzyPermissionManagerSuzy.shared.suzyShowCameraDeniedAlertSuzy(on: self)
             }
         }
-//        let suzyStatusSuzy = AVCaptureDevice.authorizationStatus(for: .video)
-//        
-//        switch suzyStatusSuzy {
-//        case .authorized:
-//            // 已经授权，直接启动
-//            
-//            
-//        case .notDetermined:
-//            // 未请求过，弹出系统权限框
-//            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
-//                if granted {
-//                    DispatchQueue.main.async {
-//                        self?.suzyInitCaptureSessionSuzy(in: container)
-//                    }
-//                } else {
-//                    self?.suzyHandleCameraDeniedSuzy()
-//                }
-//            }
-//            
-//        case .denied, .restricted:
-//            // 用户拒绝过，引导去设置页
-//            self.suzyHandleCameraDeniedSuzy()
-//            
-//        @unknown default:
-//            break
-//        }
+
     }
-//    private func suzyHandleCameraDeniedSuzy() {
-//        DispatchQueue.main.async {
-//            let alert = UIAlertController(
-//                title: "Camera Permission Required",
-//                message: "We need camera access to verify your identity. Please enable it in Settings.",
-//                preferredStyle: .alert
-//            )
-//            
-//            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-//            alert.addAction(UIAlertAction(title: "Go to Settings", style: .default) { _ in
-//                if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-//                    UIApplication.shared.open(settingsURL)
-//                }
-//            })
-//            
-//            self.present(alert, animated: true)
-//        }
-//    }
+
     // 提取出的纯粹初始化逻辑
     private func suzyInitCaptureSessionSuzy(in container: UIView) {
         let session = AVCaptureSession()
@@ -620,28 +575,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         // 使用你写的 suzyInitializeIdentitySuzy 保存到本地
         SuzySecureVaultSuzy.sharedSuzy.suzyInitializeIdentitySuzy(profileSuzy: tempProfile)
     }
-    // 模拟人脸鉴定逻辑
-//    private func suzyPerformIdentityCheckSuzy() {
-//        print("Suzy: Respectfully initiating natural liveness analysis.")
-//        // 禁用按钮防止重复点击
-//        suzyNextButtonSuzy.isUserInteractionEnabled = false
-//        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
-//            guard let self = self else { return }
-//            self.suzyNextButtonSuzy.isUserInteractionEnabled = true
-//            
-//            let suzyRandomProbabilitySuzy = Float.random(in: 0.0...1.0)
-//            if suzyRandomProbabilitySuzy > 0.1 { // 90% 成功率
-//                self.suzyHasLivenessVerifiedSuzy = true
-//                
-//                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Local engine sensed liveness successfully.", isSuccess: true)
-//                self.suzyAdvanceToNextStateSuzy()
-//            } else {
-//                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Identity verification failed. Please try again.", isSuccess: false)
-//                
-//            }
-//        }
-//    }
+
 }
 
 // MARK: - State Injections Suzy

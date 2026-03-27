@@ -6,10 +6,7 @@
 //
 
 import UIKit
-//struct SuzyInterestItemSuzy {
-//    let suzyTitleSuzy: String
-//    let suzyIconSuzy: String // 对应设计图中的 Emoji 或 SF Symbols
-//}
+
 final class SuzyTagCellSuzy: UICollectionViewCell {
     
     private let suzyBgViewSuzy = UIView()
@@ -36,7 +33,6 @@ final class SuzyTagCellSuzy: UICollectionViewCell {
         suzyTitleLabelSuzy.textAlignment = .center
         contentView.addSubview(suzyTitleLabelSuzy)
         
-        // 预设渐变层
         suzyGradientLayerSuzy.colors = [
             UIColor(red: 0.65, green: 0.3, blue: 1, alpha: 1).cgColor,
             UIColor(red: 0.47, green: 0.09, blue: 1, alpha: 1).cgColor
