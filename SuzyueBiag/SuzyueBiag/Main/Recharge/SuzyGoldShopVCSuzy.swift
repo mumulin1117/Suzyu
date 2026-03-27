@@ -52,7 +52,7 @@ final class SuzyGoldShopVCSuzy: UIViewController {
     
       private let suzyFallbackBgImageViewSuzy: UIImageView = {
           let iv = UIImageView.init(frame: UIScreen.main.bounds)
-          iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
+          iv.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
           iv.contentMode = .scaleAspectFill
          
           return iv
@@ -74,7 +74,7 @@ final class SuzyGoldShopVCSuzy: UIViewController {
         suzyBalanceLabelSuzy.font = .systemFont(ofSize: 28, weight: .heavy)
         suzyHeaderPanelSuzy.addSubview(suzyBalanceLabelSuzy)
         
-        suzyCoinPreviewSuzy.image = UIImage(named: "suzy_coin_glow")
+        suzyCoinPreviewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_coin_glow")
         suzyHeaderPanelSuzy.addSubview(suzyCoinPreviewSuzy)
         
         view.addSubview(suzyGridViewSuzy)

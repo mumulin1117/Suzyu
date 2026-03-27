@@ -34,7 +34,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
      var protrShow:(()->(Void))?
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
-        iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
+        iv.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
         iv.contentMode = .scaleAspectFill
         
         return iv
@@ -113,7 +113,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         suzyControlWrapperSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyControlWrapperSuzy)
       
-        suzyCameraSwitchBtnSuzy.setImage(UIImage(named: "camerarotateSuzi"), for: .normal)
+        suzyCameraSwitchBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "camerarotateSuzi"), for: .normal)
         suzyCameraSwitchBtnSuzy.addTarget(self, action: #selector(suzyPerformCamSwitchSuzy), for: .touchUpInside)
         suzyCameraToggleBtnSuzy.setTitle(" Camera on", for: .normal)
         suzyCameraToggleBtnSuzy.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
@@ -132,7 +132,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12)
         suzyMatchedUserInfoSuzy.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2500)
         suzyMatchedUserInfoSuzy.layer.cornerRadius = 10
-        suzyMatchedUserInfoSuzy.setImage(UIImage(named: "exclamationmark"), for: .normal)
+        suzyMatchedUserInfoSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "exclamationmark"), for: .normal)
         suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
       
             
@@ -146,7 +146,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         }
         
         suzyCoinIndicatorBtnSuzy.addTarget(self, action: #selector(suzyHandleIcebreakerTapSuzy), for: .touchUpInside)
-        suzyCoinIndicatorBtnSuzy.setBackgroundImage(UIImage.init(named: "suzIndicatorBtnSuzy"), for: .normal)
+        suzyCoinIndicatorBtnSuzy.setBackgroundImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzIndicatorBtnSuzy"), for: .normal)
         suzyCoinIndicatorBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyCoinIndicatorBtnSuzy)
         
@@ -463,7 +463,7 @@ extension SuzyCallSessionVCSuzy {
         suzyOverlaySuzy.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         suzyOverlaySuzy.tag = 999
         
-        let suzyAlertViewSuzy = UIImageView(image:  UIImage(named: "suzyCardContainerSuzy"))
+        let suzyAlertViewSuzy = UIImageView(image:  SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyCardContainerSuzy"))
         suzyAlertViewSuzy.isUserInteractionEnabled = true
         suzyAlertViewSuzy.contentMode = .scaleToFill
         suzyAlertViewSuzy.translatesAutoresizingMaskIntoConstraints = false
@@ -471,7 +471,7 @@ extension SuzyCallSessionVCSuzy {
         suzyOverlaySuzy.addSubview(suzyAlertViewSuzy)
         
         let suzyMessageIconSuzy = UIImageView()
-        suzyMessageIconSuzy.image = UIImage(named: "bubbleacall")
+        suzyMessageIconSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "bubbleacall")
         suzyMessageIconSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyOverlaySuzy.addSubview(suzyMessageIconSuzy)
         

@@ -62,7 +62,7 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
     // 底部人物素材图片 (基于 UI 设计图)
     private let suzyPersonImageViewSuzy: UIImageView = {
         let ivSuzy = UIImageView()
-        ivSuzy.image = UIImage(named: "Tnahakdio") // 需导入对应人物素材
+        ivSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "Tnahakdio") // 需导入对应人物素材
         ivSuzy.contentMode = .scaleAspectFit
         ivSuzy.translatesAutoresizingMaskIntoConstraints = false
         return ivSuzy
@@ -72,7 +72,7 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
     private let suzyAcceptButtonSuzy: UIButton = {
         let btnSuzy = UIButton(type: .custom)
         // 这里建议使用图片资源，包含绿色箭头和 ">"
-        btnSuzy.setImage(UIImage(named: "completerdNiu"), for: .normal)
+        btnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "completerdNiu"), for: .normal)
         btnSuzy.contentMode = .scaleAspectFit
         btnSuzy.translatesAutoresizingMaskIntoConstraints = false
         return btnSuzy
@@ -97,7 +97,7 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
     
     private func suzyBuildBackgroundViewSuzy() {
         let imageViewSuzy = UIImageView(frame: self.view.bounds)
-        imageViewSuzy.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@") // 使用你提供的背景资源
+        imageViewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA") // 使用你提供的背景资源
         imageViewSuzy.contentMode = .scaleAspectFill
         imageViewSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageViewSuzy)
@@ -180,7 +180,7 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
         
         // 绿色箭头 Icon
         let arrowIconSuzy = UIImageView()
-        arrowIconSuzy.image = UIImage(named: "Vectorgreen") // 需导入绿色箭头素材
+        arrowIconSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "Vectorgreen") // 需导入绿色箭头素材
         arrowIconSuzy.tintColor = .systemGreen
         arrowIconSuzy.contentMode = .scaleAspectFit
         arrowIconSuzy.translatesAutoresizingMaskIntoConstraints = false

@@ -17,7 +17,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
   
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
+        iv.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
         iv.contentMode = .scaleAspectFill
         iv.isHidden = true
         return iv
@@ -25,7 +25,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     
     private let suzyFFullCoverImageViewSuzy: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "SuzyDefaultDashboardBgSuzy@")
+        iv.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyDefaultDashboardBgSuzy@")
         iv.contentMode = .scaleAspectFill
        
         return iv
@@ -46,11 +46,11 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        suzyAllFilterBtnSuzy.setImage(UIImage.init(named: "suzyAllFilterBtnSuzy"), for: .normal)
-        suzyAllFilterBtnSuzy.setImage(UIImage.init(named: "suzyAllFilterBtnSuzysel@"), for: .selected)
+        suzyAllFilterBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyAllFilterBtnSuzy"), for: .normal)
+        suzyAllFilterBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyAllFilterBtnSuzysel@"), for: .selected)
         
-        suzyInterestFilterBtnSuzy.setImage(UIImage.init(named: "suzyInterestFilterBtnSuzy"), for: .normal)
-        suzyInterestFilterBtnSuzy.setImage(UIImage.init(named: "suzyInterestFilterBtnSuzysel"), for: .selected)
+        suzyInterestFilterBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyInterestFilterBtnSuzy"), for: .normal)
+        suzyInterestFilterBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyInterestFilterBtnSuzysel"), for: .selected)
         
         suzyAllFilterBtnSuzy.isSelected = true
         
@@ -76,7 +76,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         
         // 3. 设置按钮 (右上角齿轮)
         let suzySettingBtnSuzy = UIButton(type: .custom)
-        suzySettingBtnSuzy.setImage(UIImage(named: "suzy_ic_settings"), for: .normal)
+        suzySettingBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_ic_settings"), for: .normal)
         suzySettingBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzySettingBtnSuzy)
         suzySettingBtnSuzy.addTarget(self, action: #selector(memoryLeakSuue), for: .touchUpInside)
@@ -265,7 +265,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         suzyOverlaySuzy.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         suzyOverlaySuzy.tag = 999
         
-        let suzyAlertViewSuzy = UIImageView(image:  UIImage(named: "suzyCardContainerSuzy"))
+        let suzyAlertViewSuzy = UIImageView(image:  SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyCardContainerSuzy"))
         suzyAlertViewSuzy.isUserInteractionEnabled = true
         suzyAlertViewSuzy.contentMode = .scaleToFill
         suzyAlertViewSuzy.translatesAutoresizingMaskIntoConstraints = false
@@ -273,7 +273,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         suzyOverlaySuzy.addSubview(suzyAlertViewSuzy)
         
         let suzyMessageIconSuzy = UIImageView()
-        suzyMessageIconSuzy.image = UIImage(named: "bubbleacall")
+        suzyMessageIconSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "bubbleacall")
         suzyMessageIconSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyOverlaySuzy.addSubview(suzyMessageIconSuzy)
         

@@ -143,7 +143,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
             .foregroundColor: UIColor.white
         ])
         let suzyCoinAttachmentSuzy = NSTextAttachment()
-        suzyCoinAttachmentSuzy.image = UIImage(named: "suzy_ic_coin_small") // 需准备金币图标
+        suzyCoinAttachmentSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_ic_coin_small") // 需准备金币图标
         suzyCoinAttachmentSuzy.bounds = CGRect(x: 0, y: -4, width: 20, height: 20)
         suzyBtnTitleSuzy.append(NSAttributedString(attachment: suzyCoinAttachmentSuzy))
         suzyBtnTitleSuzy.append(NSAttributedString(string: " 20", attributes: [

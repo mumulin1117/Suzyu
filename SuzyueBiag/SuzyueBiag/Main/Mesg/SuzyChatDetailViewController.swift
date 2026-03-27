@@ -25,7 +25,7 @@ class SuzyChatDetailViewController: UIViewController {
     private let suzyMatchedUserInfoSuzy = UIButton(type: .custom)
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
-        iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
+        iv.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
         iv.contentMode = .scaleAspectFill
         return iv
     }()
@@ -63,7 +63,7 @@ class SuzyChatDetailViewController: UIViewController {
         let suzySpacerSuzy = UIView()
             suzySpacerSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzySpacerSuzy.setContentHuggingPriority(.init(1), for: .horizontal)
-        suzyCameraSwitchBtnSuzy.setImage(UIImage(named: "calcaremaifl"), for: .normal)
+        suzyCameraSwitchBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "calcaremaifl"), for: .normal)
         suzyCameraSwitchBtnSuzy.addTarget(self, action: #selector(funcbuildCafff), for: .touchUpInside)
         
         suzyMatchedUserInfoSuzy.addTarget(self, action: #selector(showReportMenu), for: .touchUpInside)
@@ -71,7 +71,7 @@ class SuzyChatDetailViewController: UIViewController {
         suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12)
         suzyMatchedUserInfoSuzy.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2500)
         suzyMatchedUserInfoSuzy.layer.cornerRadius = 10
-        suzyMatchedUserInfoSuzy.setImage(UIImage(named: "exclamationmark"), for: .normal)
+        suzyMatchedUserInfoSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "exclamationmark"), for: .normal)
         suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
       
             

@@ -101,7 +101,7 @@ final class SuzyEulaPopupControllerSuzy: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let imageViewSuzy = UIImageView.init(frame: self.view.bounds)
-        imageViewSuzy.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
+        imageViewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
         imageViewSuzy.contentMode = .scaleAspectFill
         imageViewSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageViewSuzy)

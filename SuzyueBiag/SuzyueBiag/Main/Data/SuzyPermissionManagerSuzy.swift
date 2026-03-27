@@ -2,7 +2,7 @@
 //  SuzyPermissionManagerSuzy.swift
 //  SuzyueBiag
 //
-//  Created by mumu on 2026/3/27.
+//  Created by SuzyueBiag on 2026/3/27.
 //
 
 import AVFoundation

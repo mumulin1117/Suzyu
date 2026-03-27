@@ -176,7 +176,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         suzyAddKeyboardObserversSuzy()
        
         let imageViewSuzy = UIImageView.init(frame: self.view.bounds)
-        imageViewSuzy.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
+        imageViewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
         imageViewSuzy.contentMode = .scaleAspectFill
         imageViewSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageViewSuzy)
@@ -598,7 +598,7 @@ extension SuzyProfileOnboardingControllerSuzy {
         ])
         
         let imageViewSuzy = UIImageView.init(frame: self.view.bounds)
-        imageViewSuzy.image = UIImage(named: "gegnderpickong")
+        imageViewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "gegnderpickong")
         imageViewSuzy.contentMode = .scaleAspectFit
         imageViewSuzy.translatesAutoresizingMaskIntoConstraints = false
         imageViewSuzy.heightAnchor.constraint(equalToConstant: 184).isActive = true

@@ -8,7 +8,7 @@
 import UIKit
 
 final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
-    private let suzyMainContainerSuzy = UIImageView.init(image: UIImage.init(named: "bMainContainerg"))
+    private let suzyMainContainerSuzy = UIImageView.init(image: SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "bMainContainerg"))
     private let suzyCoinIconSuzy = UIImageView()
     private let suzyAmountLabelSuzy = UILabel()
     private let suzyPurchaseBtnSuzy = UILabel()
@@ -24,7 +24,7 @@ final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
   
         contentView.addSubview(suzyMainContainerSuzy)
         
-        suzyCoinIconSuzy.image = UIImage(named: "bubbleacall")
+        suzyCoinIconSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "bubbleacall")
         suzyCoinIconSuzy.contentMode = .scaleAspectFit
         suzyMainContainerSuzy.addSubview(suzyCoinIconSuzy)
         

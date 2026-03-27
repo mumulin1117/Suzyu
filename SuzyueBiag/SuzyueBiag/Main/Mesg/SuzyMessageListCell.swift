@@ -47,7 +47,7 @@ class SuzyMessageListCell: UITableViewCell {
         unreadBadge.layer.cornerRadius = 10
         unreadBadge.clipsToBounds = true
         
-        callIcon.image = UIImage(named: "phone.circle")
+        callIcon.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "phone.circle")
    
         callIcon.isHidden = true
 
@@ -84,7 +84,7 @@ class SuzyMessageListCell: UITableViewCell {
     }
 
     func configure(with model: SuzyConversationModel) {
-        avatarImageView.image = UIImage(named: (model.userInfo.suzyGenderSuzy == 0 ? "respectfulSpaceSuzy" : "confidentUserSuue"))
+        avatarImageView.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: (model.userInfo.suzyGenderSuzy == 0 ? "respectfulSpaceSuzy" : "confidentUserSuue"))
         nameLabel.text = model.userInfo.suzyUsernameSuzy
         timeLabel.text = model.lastTime
         

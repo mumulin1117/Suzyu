@@ -26,7 +26,7 @@ class LandmarkSUZYTrackSuue: UIViewController {
     }
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
-        iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
+        iv.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
         iv.contentMode = .scaleAspectFill
        
         return iv
@@ -34,7 +34,7 @@ class LandmarkSUZYTrackSuue: UIViewController {
     
     lazy var contentSafetySuzy: UIButton = {
         let jdjjj = UIButton()
-        jdjjj.setImage(UIImage.init(named: "suzy_ic_coin_small"), for: .normal)
+        jdjjj.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_ic_coin_small"), for: .normal)
         jdjjj.setTitle(" \(SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.suzyCoinsSuzy ?? 0)", for: .normal)
         jdjjj.translatesAutoresizingMaskIntoConstraints = false
         jdjjj.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -216,7 +216,7 @@ class LandmarkSUZYTrackSuue: UIViewController {
 
     private func suzySyncProfileDataSuzy() {
         let suzyTargetAvatarSuzy = (userinfomation?.suzyGenderSuzy == 0) ? "respectfulSpaceSuzy" : "confidentUserSuue"
-        suzyHeaderImageSuzy.image = UIImage(named: suzyTargetAvatarSuzy)
+        suzyHeaderImageSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: suzyTargetAvatarSuzy)
     }
 
     @objc private func suzyTriggerModifierSuzy(_ sender: UITapGestureRecognizer) {

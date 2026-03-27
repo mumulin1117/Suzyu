@@ -46,7 +46,7 @@ final class SuzyUserQuickViewSuzy: UIView {
         addSubview(suzyBlurEffectSuzy)
         
         // 卡片主体
-        suzyCardContainerSuzy.image = UIImage(named: "suzyCardContainerSuzy")
+        suzyCardContainerSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyCardContainerSuzy")
         suzyCardContainerSuzy.contentMode = .scaleToFill
         suzyCardContainerSuzy.translatesAutoresizingMaskIntoConstraints = false
         addSubview(suzyCardContainerSuzy)
@@ -102,7 +102,7 @@ final class SuzyUserQuickViewSuzy: UIView {
         suzyCardContainerSuzy.addSubview(suzyCallActionBtnSuzy)
         suzyApplyGradientToButtonSuzy(suzyTargetButtonSuzy: suzyCallActionBtnSuzy)
         // 关闭按钮
-        suzyDismissBtnSuzy.setImage(UIImage(named: "huntinniuclose"), for: .normal)
+        suzyDismissBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "huntinniuclose"), for: .normal)
         suzyDismissBtnSuzy.tintColor = UIColor(white: 1.0, alpha: 0.5)
         suzyDismissBtnSuzy.addTarget(self, action: #selector(suzyHideQuickViewSuzy), for: .touchUpInside)
         suzyDismissBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
@@ -158,7 +158,7 @@ final class SuzyUserQuickViewSuzy: UIView {
         self.suzyEntitySuzy = suzyItemSuzy
         suzyDisplayNameSuzy.text = suzyItemSuzy.suzyUsernameSuzy
         suzyBioLabelSuzy.text = suzyItemSuzy.suzyBioSuzy
-        suzyUserAvatarSuzy.image = suzyItemSuzy.suzyGenderSuzy == 0 ? UIImage(named: "respectfulSpaceSuzy") : UIImage(named: "confidentUserSuue")
+        suzyUserAvatarSuzy.image = suzyItemSuzy.suzyGenderSuzy == 0 ? SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "respectfulSpaceSuzy") : SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "confidentUserSuue")
         
         // 动态生成标签行
         suzyTagFlowStackSuzy.arrangedSubviews.forEach { $0.removeFromSuperview() }

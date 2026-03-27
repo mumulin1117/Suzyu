@@ -98,7 +98,7 @@ final class SuzyAlgorithmGridSuzy: UICollectionViewCell {
     
     func suzyUpdateLayoutModeSuzy(suzyItemSuzy: SuzyMatchEntitySuzy, suzyModeSuzy: SuzyMatchLogicTypeSuzy) {
             suzyNameLabelSuzy.text = suzyItemSuzy.suzyUsernameSuzy
-            suzyAvatarImageViewSuzy.image = suzyItemSuzy.suzyGenderSuzy == 0 ? UIImage(named: "respectfulSpaceSuzy") : UIImage(named: "confidentUserSuue")
+            suzyAvatarImageViewSuzy.image = suzyItemSuzy.suzyGenderSuzy == 0 ? SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "respectfulSpaceSuzy") : SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "confidentUserSuue")
             
             // 处理标签布局显示逻辑
             if suzyModeSuzy == .suzyAllSuzy  {

@@ -60,7 +60,7 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
     }
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
-        iv.image = UIImage(named: "SuzyWelcomeBgSuzyELUA@")
+        iv.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
         iv.contentMode = .scaleAspectFill
        
         return iv
@@ -170,14 +170,14 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
             view.addSubview(suzyNavWrapperSuzy)
             
             // 返回按钮
-            suzyBackActionBtnSuzy.setImage(UIImage(named: "shaderCodeSuzy"), for: .normal)
+            suzyBackActionBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "shaderCodeSuzy"), for: .normal)
             suzyBackActionBtnSuzy.addTarget(self, action: #selector(suzyHandleBackEventSuzy), for: .touchUpInside)
             suzyBackActionBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
             suzyNavWrapperSuzy.addSubview(suzyBackActionBtnSuzy)
             
             // 通知与设置按钮
-            suzyNotifyIconBtnSuzy.setImage(UIImage(named: "hardwareAccelSuzy"), for: .normal)
-            suzySettingsIconBtnSuzy.setImage(UIImage(named: "textureMappingSuue"), for: .normal)
+            suzyNotifyIconBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "hardwareAccelSuzy"), for: .normal)
+            suzySettingsIconBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "textureMappingSuue"), for: .normal)
             
             let suzyRightStackSuzy = UIStackView(arrangedSubviews: [suzyNotifyIconBtnSuzy, suzySettingsIconBtnSuzy])
             suzyRightStackSuzy.axis = .horizontal

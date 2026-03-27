@@ -27,7 +27,7 @@ class SuzyChatBubbleCell: UITableViewCell {
     private func setupUI() {
         backgroundColor = .clear
         selectionStyle = .none
-        callIcon.image = UIImage(named: "phone.circle")
+        callIcon.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "phone.circle")
    
         callIcon.isHidden = true
         avatarImg.layer.cornerRadius = 15
@@ -89,7 +89,7 @@ class SuzyChatBubbleCell: UITableViewCell {
             // 左侧（对方）
             trailingAboutcallIconConstraint.isActive = false
             avatarImg.isHidden = false
-            avatarImg.image = UIImage(named: genderImg ?? "")
+            avatarImg.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: genderImg ?? "")
             bubbleView.backgroundColor = UIColor(red: 0.3, green: 0.2, blue: 0.5, alpha: 1)
             contentLabel.textColor = .white
             leadingConstraint.isActive = true
