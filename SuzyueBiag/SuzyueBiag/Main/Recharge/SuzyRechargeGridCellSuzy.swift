@@ -70,6 +70,6 @@ final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
     
     func suzyUpdateCellSuzy(item: SuzyPurchaseItemSuzy) {
         suzyAmountLabelSuzy.text = "\(item.suzyCoinAmountSuzy)"
-        suzyPurchaseBtnSuzy.text = item.suzyPriceLabelSuzy
+        suzyPurchaseBtnSuzy.text = SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: item.suzyPriceLabelSuzy) 
     }
 }

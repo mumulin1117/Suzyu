@@ -27,7 +27,7 @@ class ZompassHeadingSuzy: NSObject {
             DispatchQueue.main.async {
                 timestampSuzy(.failure(NSError(domain: "",
                                             code: -1,
-                                                      userInfo: [NSLocalizedDescriptionKey: "In-App Purchases are disabled on this device."])))
+                                                      userInfo: [NSLocalizedDescriptionKey: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "OOcUtCjNFmLtBu1fjQrsH1eJjx4eSsAEr8l1pX2e2sT0wMQkkVOAtHalwd3Zs4p1p0N5m3NiK60Zmxm95YBYIsapDZQOm6XAtosb0RQ=")])))
             }
             
             return
@@ -43,14 +43,13 @@ class ZompassHeadingSuzy: NSObject {
 
 }
 
-// MARK: - 产品请求
 extension ZompassHeadingSuzy: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         guard let p = response.products.first else {
             DispatchQueue.main.async {
                 self.antialiasingSuue?(.failure(NSError(domain: "",
                                              code: -2,
-                                             userInfo: [NSLocalizedDescriptionKey: "No valid product found."])))
+                                             userInfo: [NSLocalizedDescriptionKey: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "Z0SIJtMlnRfYvE+JAbNbJBWpPudZhw8znZKIGSBrMRsMP52rT+79lsbQx/F28h9qTpZ8RWm+KQ==")])))
                 self.antialiasingSuue = nil
             }
             
@@ -68,7 +67,6 @@ extension ZompassHeadingSuzy: SKProductsRequestDelegate {
     }
 }
 
-// MARK: - 交易回调
 extension ZompassHeadingSuzy: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for countdownSuzy in transactions {
@@ -85,8 +83,8 @@ extension ZompassHeadingSuzy: SKPaymentTransactionObserver {
             case .failed:
                 SKPaymentQueue.default().finishTransaction(countdownSuzy)
                 let workerThreadSuue = (countdownSuzy.error as? SKError)?.code == .paymentCancelled
-                ? NSError(domain: "", code: -999, userInfo: [NSLocalizedDescriptionKey: "Payment cancelled"])
-                : (countdownSuzy.error ?? NSError(domain: "", code: -3, userInfo: [NSLocalizedDescriptionKey: "Transaction failed."]))
+                ? NSError(domain: "", code: -999, userInfo: [NSLocalizedDescriptionKey:SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "GyvaacgDHigpvC+NHko5rjVsdRuNSW6RT2xcJToChRbRrvD/9JQCNAc+OLgPlyv9Kg==") ])
+                : (countdownSuzy.error ?? NSError(domain: "", code: -3, userInfo: [NSLocalizedDescriptionKey: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "3yuU1N7RoFNTuXaiGUi+CUA5OFYIzCLnYMLrfWfHeXLzkQbiXc6wXvq/9O1afgmSWeJQ")]))
                 DispatchQueue.main.async {
                     self.antialiasingSuue?(.failure(workerThreadSuue))
                     self.antialiasingSuue = nil

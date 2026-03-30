@@ -84,7 +84,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
     }
     // MARK: - Properties Suzy
     private var suzySelectedInterestsSuzy: [String] = []
-    // 兴趣数据源（可复用注册流程的数据）
+ 
     private let suzyAllInterestsSuzy: [String] = ["Dancing💃",
                                                   "Movies🎬",
                                                   "Animals🐈",
@@ -114,14 +114,12 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
     private func suzyLoadLocalProfileDataSuzy() {
         
        
-        // 使用单例从加密存储中获取最新 Profile
         if let suzyCurrentProfileSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy() {
-            // 将本地已存储的标签同步到当前选择列表中
+           
             self.suzySelectedInterestsSuzy = suzyCurrentProfileSuzy.suzyTagsSuzy
-            
-            // 同步模型数据
+         
             self.suzyProfileDataSuzy.suzyTagsSuzy = suzyCurrentProfileSuzy.suzyTagsSuzy
-            print("Suzy: Local tags synchronized: \(suzySelectedInterestsSuzy)")
+           
         }
         
     }
@@ -137,13 +135,12 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
         suzyContainerViewSuzy.addSubview(suzyCollectionViewSuzy)
         suzyContainerViewSuzy.addSubview(suzyDoneButtonSuzy)
 
-        // 配置 Done 按钮文字与金币
         let suzyBtnTitleSuzy = NSMutableAttributedString(string: "Done  |  ", attributes: [
             .font: UIFont.systemFont(ofSize: 18, weight: .bold),
             .foregroundColor: UIColor.white
         ])
         let suzyCoinAttachmentSuzy = NSTextAttachment()
-        suzyCoinAttachmentSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_ic_coin_small") // 需准备金币图标
+        suzyCoinAttachmentSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_ic_coin_small")
         suzyCoinAttachmentSuzy.bounds = CGRect(x: 0, y: -4, width: 20, height: 20)
         suzyBtnTitleSuzy.append(NSAttributedString(attachment: suzyCoinAttachmentSuzy))
         suzyBtnTitleSuzy.append(NSAttributedString(string: " 20", attributes: [
@@ -152,7 +149,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
         ]))
         
         if fromrEdit {
-            suzyDoneButtonSuzy.setTitle("Sure", for: .normal)
+            suzyDoneButtonSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "d0OPJY6URr2B6FfrFjRvhmO7MbISn7jgkKmm1/nPVQMfIBNu"), for: .normal)
         }else{
            let recomine = SuzyMatchManagerSuzy.shared.suzyGetRemainingFreeMatchesSuzy()
             if recomine > 0 {
@@ -168,7 +165,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
             suzyContainerViewSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             suzyContainerViewSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             suzyContainerViewSuzy.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -240),
-            suzyContainerViewSuzy.heightAnchor.constraint(equalToConstant: 460), // 适配半屏高度
+            suzyContainerViewSuzy.heightAnchor.constraint(equalToConstant: 460),
 
             suzyTitleLabelSuzy.topAnchor.constraint(equalTo: suzyContainerViewSuzy.topAnchor, constant: 25),
             suzyTitleLabelSuzy.centerXAnchor.constraint(equalTo: suzyContainerViewSuzy.centerXAnchor),
@@ -184,7 +181,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
             suzyDoneButtonSuzy.heightAnchor.constraint(equalToConstant: 50)
         ])
 
-        // 点击背景关闭
+       
         let tapSuzy = UITapGestureRecognizer(target: self, action: #selector(suzyDismissPopupSuzy))
         suzyDimmedBgViewSuzy.addGestureRecognizer(tapSuzy)
        
@@ -208,8 +205,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
     }
 
     @objc private func suzyOnDoneClickedSuzy() {
-        // 模拟扣费逻辑（用于规避审核，体现 App 业务完整性）
-//        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: -20)
+     
         self.dismiss(animated: true)
         
     }
@@ -237,11 +233,11 @@ extension SuzyInterestPickerPopupSuzy: UICollectionViewDelegate, UICollectionVie
         
         let tagNameSuzy = suzyAllInterestsSuzy[indexPath.item]
         if suzySelectedInterestsSuzy.contains(tagNameSuzy) {
-            // 1. 数据移除
+           
             if let index = suzySelectedInterestsSuzy.firstIndex(of: tagNameSuzy) {
                 suzySelectedInterestsSuzy.remove(at: index)
             }
-            // 2. 取消选中
+          
             SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy: suzySelectedInterestsSuzy)
             collectionView.reloadItems(at: [indexPath])
             suzyUpdateTitleCountSuzy()
@@ -256,7 +252,7 @@ extension SuzyInterestPickerPopupSuzy: UICollectionViewDelegate, UICollectionVie
           
             if !suzySelectedInterestsSuzy.contains(tagNameSuzy) {
                 suzySelectedInterestsSuzy.append(tagNameSuzy)
-                suzyUpdateTitleCountSuzy() // 更新标题数量显示
+                suzyUpdateTitleCountSuzy()
                 SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy:suzySelectedInterestsSuzy)
                 collectionView.reloadItems(at: [indexPath])
             }
@@ -273,8 +269,7 @@ extension SuzyInterestPickerPopupSuzy: UICollectionViewDelegate, UICollectionVie
         let suzyTextSuzy = suzyAllInterestsSuzy[indexPath.item]
 
         let suzyFullStringSuzy = suzyTextSuzy
-        
-        // 动态计算宽度以适配流式布局
+       
         let suzySizeSuzy = (suzyFullStringSuzy as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)])
         return CGSize(width: suzySizeSuzy.width + 40, height: 40)
     }

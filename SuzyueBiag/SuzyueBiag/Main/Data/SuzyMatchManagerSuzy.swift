@@ -12,20 +12,19 @@ final class SuzyMatchManagerSuzy {
     private let suzyLimitKeySuzy = "suzy_daily_match_count_key"
     private let suzyDateKeySuzy = "suzy_last_match_date_key"
     
-    // 获取今日剩余免费次数
+    
     func suzyGetRemainingFreeMatchesSuzy() -> Int {
         suzyCheckAndResetDailyCountSuzy()
         let used = UserDefaults.standard.integer(forKey: suzyLimitKeySuzy)
         return max(0, 3 - used)
     }
-    
-    // 记录一次匹配
+   
     func suzyIncrementMatchCountSuzy() {
         let current = UserDefaults.standard.integer(forKey: suzyLimitKeySuzy)
         UserDefaults.standard.set(current + 1, forKey: suzyLimitKeySuzy)
     }
     
-    // 跨天重置逻辑
+  
     private func suzyCheckAndResetDailyCountSuzy() {
         let today = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
         let lastDate = UserDefaults.standard.string(forKey: suzyDateKeySuzy) ?? ""
@@ -40,11 +39,11 @@ extension SuzyMatchManagerSuzy {
     func suzyGetCurrentMatchTipSuzy() -> String {
         let remaining = suzyGetRemainingFreeMatchesSuzy()
         if remaining > 0 {
-            // 还有免费次数
-            return "\(remaining) free daily Interest matches left. Then 20 coins each."
+           
+            return "\(remaining)" + SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "Qacl8GVluE3e+NC779grcIcyMTLYV3YSXCd15SsoKVALKHOih3OMOI3odW6O3WYLH1SatH5RjBpm4k41Bmc94reVvSrHRix4lWp8uVhU+A2AHGe6SQ0=")
         } else {
-            // 免费已耗尽
-            return "0 free left. 20 coins to match.Are you sure to consume?"
+            
+            return SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "XVeVjpYtnoxP96qYlT4WuztLJPNk6IdGi/ZGtndg3kmZELMq0ScDWjtBWvBt0MO9z0OrpCkxhP11AMWs4SflRlZ+JwHxhwPH7ZguhRjooZqVUcEAK9xG")
         }
     }
 }

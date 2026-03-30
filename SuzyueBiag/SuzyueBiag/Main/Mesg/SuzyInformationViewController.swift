@@ -10,16 +10,14 @@ import UIKit
 class SuzyInformationViewController: UIViewController {
     private lazy var suzyEmptyViewSuzy: UIView = {
         let view = UIView()
-        view.isHidden = true // 默认隐藏
-        
-        // 占位图标 (可以使用系统图标或你的自定义图)
+        view.isHidden = true
+      
         let icon = UIImageView(image: UIImage(systemName: "message.circle"))
         icon.tintColor = .darkGray
         icon.contentMode = .scaleAspectFit
         
-        // 提示文字
         let label = UILabel()
-        label.text = "No Messages"
+        label.text = SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "5jWwFIO2Zz1yzBFxIIaty4OAW0WT7BVFyhSFRtTTEvHn3aclihe4TXGLxA==")
         label.textColor = .gray
         label.font = .systemFont(ofSize: 16)
         label.textAlignment = .center

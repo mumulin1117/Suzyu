@@ -167,10 +167,10 @@ final class PromiseChainSuzy: UIViewController {
     
     // MARK: - LegalTextSetupSuzy
     private func setupLegalClickableTextSuzy() {
-        let baseTextSuzy = "By using our app, you'll agree with us "
-        let termsTextSuzy = "Terms of Service"
-        let andTextSuzy = " and "
-        let eulaTextSuzy = "EULA"
+        let baseTextSuzy = SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "lAm1ya7LivB5uyFgijbxK57weq1iP1yjoa6d8xJAilQzy/uaqzj/RGMWZdXSs3sE0L9DUh8FXDnGgLgHK18pSOnLg2NStb4=")
+        let termsTextSuzy = SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "A4qHMSB+p42V36bAdYEVIUHU8xRt2CvBOlhHtviQt0akYpTC5uL5Z3oa9ZJWS24e")
+        let andTextSuzy = SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "S8C9fZbpECIqVlDvwYfZm+n72m6nWkRyjiAK1xBOck1gn1YNiQ==")
+        let eulaTextSuzy = SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "7rIhfRC6wZYCnTtfw4TL5NqWIIIXhoDg+X8JTSI1zbelpssMZzQ=")
         
         let fullStringSuzy = "\(baseTextSuzy)\(termsTextSuzy)\(andTextSuzy)\(eulaTextSuzy)"
         let attributedStringSuzy = NSMutableAttributedString(string: fullStringSuzy)
@@ -179,7 +179,6 @@ final class PromiseChainSuzy: UIViewController {
         let linkColorSuzy = UIColor.systemPink
         let fontSuzy = UIFont.systemFont(ofSize: 11)
         
-        // Ranges Suzie
         let fullRangeSuzy = NSRange(location: 0, length: fullStringSuzy.count)
         let termsRangeSuzy = (fullStringSuzy as NSString).range(of: termsTextSuzy)
         let eulaRangeSuzy = (fullStringSuzy as NSString).range(of: eulaTextSuzy)
@@ -187,7 +186,6 @@ final class PromiseChainSuzy: UIViewController {
         attributedStringSuzy.addAttribute(.foregroundColor, value: baseColorSuzy, range: fullRangeSuzy)
         attributedStringSuzy.addAttribute(.font, value: fontSuzy, range: fullRangeSuzy)
         
-        // Link Suzie
         attributedStringSuzy.addAttribute(.foregroundColor, value: linkColorSuzy, range: termsRangeSuzy)
         attributedStringSuzy.addAttribute(.font, value: UIFont.systemFont(ofSize: 11, weight: .bold), range: termsRangeSuzy)
         
@@ -196,7 +194,7 @@ final class PromiseChainSuzy: UIViewController {
         
         legalTextLabelSuzy.attributedText = attributedStringSuzy
         legalTextLabelSuzy.numberOfLines = 2
-        // Tap Suzie
+        
         let tapSuzy = UITapGestureRecognizer(target: self, action: #selector(handleLegalTapSuzy(_:)))
         legalTextLabelSuzy.addGestureRecognizer(tapSuzy)
     }
@@ -205,12 +203,12 @@ final class PromiseChainSuzy: UIViewController {
     @objc private func handleLegalTapSuzy(_ gestureSuzy: UITapGestureRecognizer) {
         let textSuzy = (legalTextLabelSuzy.attributedText?.string ?? "") as NSString
         
-        let termsRangeSuzy = textSuzy.range(of: "Terms of Service")
-        let eulaRangeSuzy = textSuzy.range(of: "EULA")
+        let termsRangeSuzy = textSuzy.range(of: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "vtAv5BRpOEVizCQo7Rwwstfp2xXdKiSNDOPPkgDSB65vOJI2Xxtzt70EafWzAQOeMs4="))
+        let eulaRangeSuzy = textSuzy.range(of: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "qM849NXLndgoDDyWSRvKxWb7gU1Fq/vDF7o9RqRej+ggk/e3"))
         
         let tapLocationSuzy = gestureSuzy.location(in: legalTextLabelSuzy)
         
-        // A distinct local logic: instead of opening web, simulate a local quick-preview
+        
         if gestureSuzy.didTapAttributedTextInLabelSuzy(label: legalTextLabelSuzy, inRange: termsRangeSuzy, tapLocation: tapLocationSuzy) {
             
             let eulaVcSuzy = SuzyLegalReaderControllerSuzy(suzyTypeSuzy: .suzyTermsOfServiceSuzy)
@@ -226,7 +224,6 @@ final class PromiseChainSuzy: UIViewController {
         eulaVcSuzy.modalPresentationStyle = .overFullScreen
         eulaVcSuzy.modalTransitionStyle = .crossDissolve
         
-        // 核心逻辑：弹窗回调更新主页面选中状态
         eulaVcSuzy.suzyActionCallbackSuzy = { [weak self] didAcceptSuzy in
             guard let self = self else { return }
             self.suzyIsAgreedSuzy = didAcceptSuzy
@@ -264,12 +261,12 @@ final class PromiseChainSuzy: UIViewController {
     
     @objc private func triggerAppleAuthSuzy() {
         guard suzyIsAgreedSuzy else {
-                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please read and agree to our ELUA and User Terms first", isSuccess: false)
+                SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "pMwTGrJstuQUPRRkTuYj6afDrye0TWn+rGg9lqNKjjloZfsyVSdI2W1SoUTxBeDXWaSqVZiBxhT5IsVvPEM01upSRUOaiIRtq8GtfapcAlXAihfCw18="), isSuccess: false)
                 return
             }
             
 
-        SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: "Log in....")
+        SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "qC6c9KpnoZDYQdUuDXKv3/LxXbCqUy+6swK7CvArpT2vDEQst6pgc26A"))
         let providerSuzy = ASAuthorizationAppleIDProvider()
         let requestSuzy = providerSuzy.createRequest()
         requestSuzy.requestedScopes = [.fullName, .email]
@@ -278,7 +275,7 @@ final class PromiseChainSuzy: UIViewController {
         controllerSuzy.delegate = self
         controllerSuzy.presentationContextProvider = self
         controllerSuzy.performRequests()
-//        #endif
+
       
     }
     
@@ -287,7 +284,6 @@ final class PromiseChainSuzy: UIViewController {
    
 }
 
-// MARK: - UITapGestureRecognizer Extension Suzy (Distinct local math)
 extension UITapGestureRecognizer {
     func didTapAttributedTextInLabelSuzy(label: UILabel, inRange targetRange: NSRange, tapLocation: CGPoint) -> Bool {
         guard let attributedTextSuzy = label.attributedText else { return false }
@@ -310,14 +306,13 @@ extension UITapGestureRecognizer {
     }
 }
 
-// MARK: - Delegate Extension Suzie (保持原样)
+
 
 extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
     private func suzyNavigateToMainDashboardSuzy() {
-        // 跳转到主界面 (Dashboard) 的逻辑
-        // routeToDashboardSuzy()
+       
         AppDelegate.addToRoot()
-        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Log in SuccessfullHI!", isSuccess: true)
+        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "xBoOGLEI5RyGSX1DWcX+tgjODLLqC14hSRED3xg8B+d/pJtHwg9mOxiTMQnEOdcWcXWV2w=="), isSuccess: true)
     }
         
      
@@ -336,43 +331,36 @@ extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
         }
         
         if let appleIDCredentialSuzy = authorization.credential as? ASAuthorizationAppleIDCredential {
-            // 1. 获取 Apple 唯一 ID
-            
+           
             let suzyCurrentUserIDSuzy = appleIDCredentialSuzy.user
             SuzySecureVaultSuzy.suzyProfileKeySuzy = suzyCurrentUserIDSuzy
-            // 2. 使用你封装的方法获取当前本地 Profile 模型（而不是直接读 Data）
+           
             let savedProfile = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()
-            
-            // 3. 执行判定
-            // 判断依据：ID 是否匹配 且 本地是否有这个人的记录
+          
             if let profile = savedProfile, profile.suzyUidSuzy == suzyCurrentUserIDSuzy {
                 
-                // --- [已存在该账号记录] ---
-                // 进一步检查资料是否填完（性别、年龄等）
+             
                 
                 if SuzySecureVaultSuzy.sharedSuzy.suzyIsProfileCompletedSuzy() {
-                    print("Suzy: Recognized returning user with complete profile.")
+                   
                     DispatchQueue.main.async {
                         
                         self.suzyNavigateToMainDashboardSuzy()
                         SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Welcome back!", isSuccess: true)
                     }
                 } else {
-                    print("Suzy: User exists but onboarding was interrupted.")
+                   
                     DispatchQueue.main.async {
-                        // 资料没填完，去填写页（由于 savedProfile 已存在，Onboarding 里的 viewDidLoad 会自动恢复进度）
+                     
                         self.suzyNavigateToProfileCreationSuzy()
                     }
                 }
                 
             } else {
-                // --- [新用户 或 切换账号] ---
-                print("Suzy: Creating new profile structure for ID: \(suzyCurrentUserIDSuzy)")
-                
-                // 构造一个空的初始模型，至少把 UID 存下来
+               
                 let newInitProfile = SuzyUserProfileSuzy(
                     suzyUidSuzy: suzyCurrentUserIDSuzy,
-                    suzyGenderSuzy: 0, // 初始值，代表未选择
+                    suzyGenderSuzy: 0,
                     suzyAgeSuzy: 0,
                     suzyUsername: "",
                     suzyTagsSuzy: [],
@@ -382,11 +370,11 @@ extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
                     suzyRegTimestampSuzy: Date().timeIntervalSince1970
                 )
                 
-                // 使用你提供的初始化方法存入 Keychain
+             
                 SuzySecureVaultSuzy.sharedSuzy.suzyInitializeIdentitySuzy(profileSuzy: newInitProfile)
                 
                 DispatchQueue.main.async {
-                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Logged in, please complete your profile", isSuccess: true)
+                    SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "yFbicJTiDDIqtaYJ1rQP3TzCJunsajPrnVQPfeQEGhwZbubAcUFxbj0Qk5VxZE6cQAFigzQEo87o1wKKtHTfGjOvBmfLhII="), isSuccess: true)
                     self.suzyNavigateToProfileCreationSuzy()
                 }
             }

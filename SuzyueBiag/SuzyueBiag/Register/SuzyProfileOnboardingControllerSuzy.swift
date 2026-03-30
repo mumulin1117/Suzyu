@@ -78,7 +78,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         
         suzyContainerViewSuzy.addSubview(suzyCVSuzy)
         self.suzyInterestCollectionSuzy = suzyCVSuzy
-        suzyNextButtonSuzy.setTitle("Next", for: .normal)
+        suzyNextButtonSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "oB6PypDPZIKgK357DadYPrnRON/BlDkRVohQ9yFJpIty6OoC"), for: .normal)
         NSLayoutConstraint.activate([
             suzyCVSuzy.topAnchor.constraint(equalTo: suzySubLabelSuzy.bottomAnchor, constant: 20),
             suzyCVSuzy.leadingAnchor.constraint(equalTo: suzyContainerViewSuzy.leadingAnchor),
@@ -354,8 +354,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             
             
         default:
-            // 对于 Gender、Age、Identity 阶段，理论上 Skip 应该是隐藏的
-            // 但为了代码健壮性，这里做一个保护
+          
             print("Suzy: Skip is not permitted for mandatory verification steps.")
             break
         }
@@ -363,22 +362,18 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
     private func suzyInjectLivenessVerifyViewSuzy() {
         let hSuzy = UIScreen.main.bounds.height
         
-        
-            
-            // 1. 相机容器 (圆环预览框)
             let suzyCameraContainerSuzy = UIView()
             suzyCameraContainerSuzy.backgroundColor = .black
-            suzyCameraContainerSuzy.layer.cornerRadius = 100 // 圆形
+            suzyCameraContainerSuzy.layer.cornerRadius = 100
             suzyCameraContainerSuzy.layer.borderWidth = 3
             suzyCameraContainerSuzy.layer.borderColor = UIColor.systemPurple.cgColor
             suzyCameraContainerSuzy.layer.masksToBounds = true
             suzyCameraContainerSuzy.translatesAutoresizingMaskIntoConstraints = false
             suzyContainerViewSuzy.addSubview(suzyCameraContainerSuzy)
             
-            // 2. 扫描线
             suzyScannerLineSuzy.backgroundColor = .systemPurple
             suzyScannerLineSuzy.frame = CGRect(x: 0, y: 0, width: 200, height: 2)
-            suzyScannerLineSuzy.alpha = 0 // 初始隐藏
+            suzyScannerLineSuzy.alpha = 0
             suzyCameraContainerSuzy.addSubview(suzyScannerLineSuzy)
 
             NSLayoutConstraint.activate([
@@ -422,7 +417,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             suzyPrivacyStackSuzy.trailingAnchor.constraint(equalTo: suzyContainerViewSuzy.trailingAnchor, constant: -30)
         ])
         
-        // 更新底部按钮为：激活验证流程
+  
         suzyNextButtonSuzy.setTitle("Start Analysis", for: .normal)
         suzySetupFrontCameraSuzy(in: suzyCameraContainerSuzy)
 
@@ -439,7 +434,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
 
     }
 
-    // 提取出的纯粹初始化逻辑
+   
     private func suzyInitCaptureSessionSuzy(in container: UIView) {
         let session = AVCaptureSession()
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
@@ -472,29 +467,28 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         suzyPreviewLayerSuzy = nil
         suzyCaptureSessionSuzy = nil
     }
-    // 执行扫描验证
+  
     private func suzyPerformIdentityCheckSuzy() {
-        // 1. 显示 Loading 和启动动画
+    
         SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: "Analyzing features...")
         suzyNextButtonSuzy.isUserInteractionEnabled = false
         
-        // 2. 扫描线动画
+       
         suzyScannerLineSuzy.alpha = 1
         UIView.animate(withDuration: 1.5, delay: 0, options: [.autoreverse, .repeat]) {
             self.suzyScannerLineSuzy.frame.origin.y = 198
         }
         
-        // 3. 模拟算法分析
+       
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
             guard let self = self else { return }
             self.suzyScannerLineSuzy.layer.removeAllAnimations()
             self.suzyScannerLineSuzy.alpha = 0
             SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
             
-            // 核心逻辑：校验用户填写的资料
-            // 这里模拟逻辑：如果填写的年龄 < 18 或性别为空（实际上前面有 guard），此处做模拟匹配失败
+          
             let suzySelectedAge = self.suzyProfileDataSuzy.suzyAgeSuzy
-            let suzyIsMatching = (suzySelectedAge >= 18 && suzySelectedAge <= 60) // 业务逻辑：假设只允许 18-60 岁通过
+            let suzyIsMatching = (suzySelectedAge >= 18 && suzySelectedAge <= 60)
             
             if suzyIsMatching {
                 self.suzyHasLivenessVerifiedSuzy = true
@@ -514,8 +508,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
         }
     }
     @objc private func suzyOnNextStepSuzy() {
-        
-        // --- 步骤校验逻辑 (Suzy Integrity Check) ---
+      
         switch suzyCurrentStateSuzy {
         case .suzyGenderSelectSuzy:
             guard suzyProfileDataSuzy.suzyGenderSuzy != nil else {
@@ -525,7 +518,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             }
             
         case .suzyAgePickerSuzy:
-            // 年龄在 Picker 中通常有默认值，但需确保已确认
+            
             guard suzyProfileDataSuzy.suzyAgeSuzy >= 18 else {
                 SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "You must be at least 18 years old.",isSuccess: false)
                 
@@ -534,7 +527,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             
         case .suzyLivenessVerifySuzy:
             if !suzyHasLivenessVerifiedSuzy {
-                // 触发你之前的模拟鉴权逻辑
+                
                 SuzyPermissionManagerSuzy.shared.suzyRequestCameraAccessSuzy { ifauto in
                     if ifauto{
                         self.suzyPerformIdentityCheckSuzy()
@@ -547,7 +540,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             }
             
         case .suzyBioInputSuzy, .suzyInterestTagSuzy:
-            // 这两步允许直接通过（Skip 逻辑已在 UI 层通过按钮体现，Next 键在此不做强制阻拦）
+            
             break
         }
         suzySaveCurrentDraftToVaultSuzy()
@@ -555,13 +548,12 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
     }
 
     
-    // 在你的 Next 按钮点击逻辑中调用
     private func suzySaveCurrentDraftToVaultSuzy() {
-        // 构造一个临时的正式模型进行保存
+      
         let draft = self.suzyProfileDataSuzy
         
         let tempProfile = SuzyUserProfileSuzy(
-            suzyUidSuzy: "temp_id", // 还没正式注册完可以先传占位
+            suzyUidSuzy: "temp_id",
             suzyGenderSuzy: (draft.suzyGenderSuzy == "Woman" ? 1 : 2),
             suzyAgeSuzy: draft.suzyAgeSuzy,
             suzyUsername: "",
@@ -571,8 +563,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             suzyIsVerifiedSuzy: false,
             suzyRegTimestampSuzy: Date().timeIntervalSince1970
         )
-        
-        // 使用你写的 suzyInitializeIdentitySuzy 保存到本地
+       
         SuzySecureVaultSuzy.sharedSuzy.suzyInitializeIdentitySuzy(profileSuzy: tempProfile)
     }
 
@@ -582,7 +573,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
 extension SuzyProfileOnboardingControllerSuzy {
     //MARK: - Gender
     private func suzyInjectGenderViewSuzy() {
-        let gendersSuzy = ["Woman", "Man", "Other"]
+        let gendersSuzy = ["FvT7RdyteSA27WKwbp3+lth7k7mtb7/iIS0iyw/QXaukAqny/A==", "364nQFAotEspBD/cfY8Ue9h7ggEgXLigYj487gk1hnr9KEw=", "l/O9BiOOCZKbCSo+SBK6BNumkIBtfoYulMa0CG0Yp1V6X1sLTA=="]
         let stackSuzy = UIStackView()
         stackSuzy.axis = .vertical
         stackSuzy.spacing = 15
@@ -606,7 +597,7 @@ extension SuzyProfileOnboardingControllerSuzy {
         
         for gSuzy in gendersSuzy {
             let btnSuzy = UIButton(type: .system)
-            btnSuzy.setTitle(gSuzy, for: .normal)
+            btnSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: gSuzy), for: .normal)
             btnSuzy.setTitleColor(.white, for: .normal)
             btnSuzy.layer.borderWidth = 1
             btnSuzy.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
@@ -657,7 +648,7 @@ extension SuzyProfileOnboardingControllerSuzy {
             suzyPickerSuzy.heightAnchor.constraint(equalToConstant: 250)
         ])
         
-        suzyNextButtonSuzy.setTitle("Continue", for: .normal)
+        suzyNextButtonSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "aORBrkKjz4Ue3c677hrTZqV2tcLHSZPpE6W1xByd6K5etdWVOUuxFQ=="), for: .normal)
         suzyAddCustomSelectionLinesSuzy(to: suzyPickerSuzy)
     }
 
@@ -677,13 +668,12 @@ extension SuzyProfileOnboardingControllerSuzy {
         picker.addSubview(suzyBottomLineSuzy)
         
         NSLayoutConstraint.activate([
-            // 顶部线 (高度约为 45 是标准行高)
+       
             suzyTopLineSuzy.centerXAnchor.constraint(equalTo: picker.centerXAnchor),
             suzyTopLineSuzy.centerYAnchor.constraint(equalTo: picker.centerYAnchor, constant: -25),
-            suzyTopLineSuzy.widthAnchor.constraint(equalToConstant: 120), // 对应设计图短横线长度
+            suzyTopLineSuzy.widthAnchor.constraint(equalToConstant: 120),
             suzyTopLineSuzy.heightAnchor.constraint(equalToConstant: suzyLineHeightSuzy),
             
-            // 底部线
             suzyBottomLineSuzy.centerXAnchor.constraint(equalTo: picker.centerXAnchor),
             suzyBottomLineSuzy.centerYAnchor.constraint(equalTo: picker.centerYAnchor, constant: 25),
             suzyBottomLineSuzy.widthAnchor.constraint(equalToConstant: 120),
@@ -722,26 +712,26 @@ extension SuzyProfileOnboardingControllerSuzy{
                 self.suzyRefreshStateUISuzy()
             }, completion: nil)
         } else {
-            // --- 最终注册完成：执行本地化持久存储 ---
+            
             suzyFinalizeUserRegistrationSuzy()
         }
     }
     
     private func suzyFinalizeUserRegistrationSuzy() {
         
-        // 构造初始模型 (初始金币设为 0 或 赠送值)
+       
         let suzyNewProfileSuzy = SuzyUserProfileSuzy(
             suzyUidSuzy: SuzySecureVaultSuzy.suzyProfileKeySuzy,
             suzyGenderSuzy: suzyProfileDataSuzy.suzyGenderSuzy == "Women" ? 1 : 0 ,
             suzyAgeSuzy: suzyProfileDataSuzy.suzyAgeSuzy, suzyUsername: "",
             suzyTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy,
             suzyBioSuzy: suzyProfileDataSuzy.suzyBioSuzy ?? "",
-            suzyCoinsSuzy: 0, // 初始赠送 0 金币
+            suzyCoinsSuzy: 0,
             suzyIsVerifiedSuzy: suzyHasLivenessVerifiedSuzy,
             suzyRegTimestampSuzy: Date().timeIntervalSince1970
         )
         
-        // 使用 Vault 永久本地化存储
+      
         SuzySecureVaultSuzy.sharedSuzy.suzyInitializeIdentitySuzy(profileSuzy: suzyNewProfileSuzy)
         
         let compltedvc = SuzyAcknowledgePolicyViewControllerSuzy()
@@ -757,25 +747,24 @@ extension SuzyProfileOnboardingControllerSuzy{
 
 extension NSObject{
     func suzyApplyGradientToButtonSuzy(suzyTargetButtonSuzy: UIButton) {
-        // 移除旧的渐变层，防止重复堆叠
+       
         suzyTargetButtonSuzy.layer.sublayers?.filter({ $0 is CAGradientLayer }).forEach({ $0.removeFromSuperlayer() })
         
         let suzyGradientLayerSuzy = CAGradientLayer()
-        // 使用你提供的颜色值
+       
         suzyGradientLayerSuzy.colors = [
             UIColor(red: 0.65, green: 0.3, blue: 1, alpha: 1).cgColor,
             UIColor(red: 0.47, green: 0.09, blue: 1, alpha: 1).cgColor
         ]
         
-        // 设置渐变方向（从左上到右下，增加视觉高级感）
+        
         suzyGradientLayerSuzy.startPoint = CGPoint(x: 0, y: 0)
         suzyGradientLayerSuzy.endPoint = CGPoint(x: 1, y: 1)
-        
-        // 这里的 frame 需要在布局完成后确定，或者在按钮初始化时指定
+       
         suzyGradientLayerSuzy.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 60, height: 60)
         suzyGradientLayerSuzy.cornerRadius = 15
         
-        // 将渐变层插入到最底层，确保不遮挡文字
+       
         suzyTargetButtonSuzy.layer.insertSublayer(suzyGradientLayerSuzy, at: 0)
         suzyTargetButtonSuzy.clipsToBounds = true
         suzyTargetButtonSuzy.layer.borderColor = UIColor.clear.cgColor
@@ -793,15 +782,14 @@ extension SuzyProfileOnboardingControllerSuzy: UIPickerViewDelegate, UIPickerVie
         return suzyAgeRangeSuzy.count
     }
     
-    // 核心：自定义每行视图以实现设计图中的样式
+   
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let suzyLabelSuzy = (view as? UILabel) ?? UILabel()
         suzyLabelSuzy.textAlignment = .center
         
         let suzyAgeValueSuzy = suzyAgeRangeSuzy[row]
         let suzySelectedAgeSuzy = suzyAgeRangeSuzy[pickerView.selectedRow(inComponent: 0)]
-        
-        // 设置字体样式
+       
         if suzyAgeValueSuzy == suzySelectedAgeSuzy {
             suzyLabelSuzy.font = .systemFont(ofSize: 48, weight: .bold) // 中间选中大字
             suzyLabelSuzy.textColor = .white
@@ -815,16 +803,16 @@ extension SuzyProfileOnboardingControllerSuzy: UIPickerViewDelegate, UIPickerVie
     }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 60 // 增加行高以适应大字体
+        return 60
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.suzyProfileDataSuzy.suzyAgeSuzy = suzyAgeRangeSuzy[row]
-        pickerView.reloadAllComponents() // 重新加载以更新字体大小对比效果
+        pickerView.reloadAllComponents()
     }
 }
 
-//MARK: - 兴趣标签
+
 extension SuzyProfileOnboardingControllerSuzy: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -843,14 +831,14 @@ extension SuzyProfileOnboardingControllerSuzy: UICollectionViewDelegate, UIColle
         
         let tagNameSuzy = suzyAllInterestsSuzy[indexPath.item]
         if suzyProfileDataSuzy.suzyTagsSuzy.contains(tagNameSuzy) {
-            // 1. 数据移除
+           
             if let index = suzyProfileDataSuzy.suzyTagsSuzy.firstIndex(of: tagNameSuzy) {
                 suzyProfileDataSuzy.suzyTagsSuzy.remove(at: index)
             }
-            // 2. 取消选中
+         
             SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy)
             collectionView.reloadItems(at: [indexPath])
-//            suzyUpdateTitleCountSuzy()
+
             return
             
         }
@@ -862,7 +850,7 @@ extension SuzyProfileOnboardingControllerSuzy: UICollectionViewDelegate, UIColle
           
             if !suzyProfileDataSuzy.suzyTagsSuzy.contains(tagNameSuzy) {
                 suzyProfileDataSuzy.suzyTagsSuzy.append(tagNameSuzy)
-//                suzyUpdateTitleCountSuzy() // 更新标题数量显示
+
                 SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newTagsSuzy:suzyProfileDataSuzy.suzyTagsSuzy)
                 collectionView.reloadItems(at: [indexPath])
             }
@@ -876,7 +864,6 @@ extension SuzyProfileOnboardingControllerSuzy: UICollectionViewDelegate, UIColle
       
         let suzyFullStringSuzy = suzyTextSuzy
         
-        // 动态计算宽度以适配流式布局
         let suzySizeSuzy = (suzyFullStringSuzy as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)])
         return CGSize(width: suzySizeSuzy.width + 40, height: 40)
     }

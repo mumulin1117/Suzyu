@@ -13,7 +13,7 @@ final class SuzyHudManagerSuzy {
     private var suzyContainerViewSuzy: UIView?
     private var suzyLoadingIndicatorSuzy: UIActivityIndicatorView?
     
-    // MARK: - 展示 Loading (全局阻塞)
+ 
     func suzyShowLoadingSuzy() {
         guard let suzyWindowSuzy = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
         
@@ -44,7 +44,7 @@ final class SuzyHudManagerSuzy {
         suzyContainerViewSuzy = nil
     }
     
-    // MARK: - 提示框 (成功/失败/警告)
+
     func suzyShowToastSuzy(message: String, isSuccess: Bool = true) {
         guard let suzyWindowSuzy = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
         
@@ -52,7 +52,7 @@ final class SuzyHudManagerSuzy {
         suzyToastSuzy.backgroundColor = UIColor(white: 0.15, alpha: 0.95)
         suzyToastSuzy.layer.cornerRadius = 20
         suzyToastSuzy.layer.borderWidth = 1
-        // 成功用紫色/绿色，失败用红色
+     
         suzyToastSuzy.layer.borderColor = isSuccess ? UIColor.systemPurple.cgColor : UIColor.systemRed.cgColor
         suzyToastSuzy.translatesAutoresizingMaskIntoConstraints = false
         
@@ -90,7 +90,7 @@ final class SuzyHudManagerSuzy {
             suzyLabelSuzy.bottomAnchor.constraint(equalTo: suzyToastSuzy.bottomAnchor, constant: -15)
         ])
         
-        // 动画效果
+        
         suzyToastSuzy.alpha = 0
         suzyToastSuzy.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         
@@ -105,25 +105,21 @@ final class SuzyHudManagerSuzy {
             }
         }
     }
-    
-    // MARK: - 只有 Loading + 文字的提示框 (用于有状态的加载)
+
     func suzyShowStatusLoadingSuzy(message: String,ifhaveLoading:Bool = true) {
         guard let suzyWindowSuzy = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
         
-        // 如果已经存在，先移除旧的
         suzyHideLoadingSuzy()
         
         let container = UIView(frame: suzyWindowSuzy.bounds)
         container.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         
-        // 背景毛玻璃面板
         let suzyBlurSuzy = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         suzyBlurSuzy.layer.cornerRadius = 15
         suzyBlurSuzy.clipsToBounds = true
         suzyBlurSuzy.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(suzyBlurSuzy)
-        
-        // 旋转指示器
+  
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.color = UIColor(red: 0.75, green: 0.18, blue: 0.94, alpha: 1.0) // 你的 App 主题紫
         indicator.startAnimating()
@@ -132,8 +128,7 @@ final class SuzyHudManagerSuzy {
             suzyBlurSuzy.contentView.addSubview(indicator)
         }
         
-        
-        // 提示文字
+       
         let suzyLabelSuzy = UILabel()
         suzyLabelSuzy.text = message
         suzyLabelSuzy.textColor = .white
@@ -145,8 +140,7 @@ final class SuzyHudManagerSuzy {
         
         suzyWindowSuzy.addSubview(container)
         self.suzyContainerViewSuzy = container
-        
-        // 布局约束
+     
         if ifhaveLoading  == true {
             NSLayoutConstraint.activate([
                 suzyBlurSuzy.centerXAnchor.constraint(equalTo: container.centerXAnchor),
@@ -171,20 +165,16 @@ final class SuzyHudManagerSuzy {
                 suzyBlurSuzy.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
                 suzyBlurSuzy.widthAnchor.constraint(lessThanOrEqualToConstant: 150),
                 suzyBlurSuzy.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
-               
-//                indicator.topAnchor.constraint(equalTo: suzyBlurSuzy.contentView.topAnchor, constant: 25),
-//                indicator.centerXAnchor.constraint(equalTo: suzyBlurSuzy.contentView.centerXAnchor),
-                
+
                 suzyLabelSuzy.centerYAnchor.constraint(equalTo: suzyBlurSuzy.centerYAnchor),
                 suzyLabelSuzy.leadingAnchor.constraint(equalTo: suzyBlurSuzy.contentView.leadingAnchor, constant: 15),
                 suzyLabelSuzy.trailingAnchor.constraint(equalTo: suzyBlurSuzy.contentView.trailingAnchor, constant: -15),
-//                suzyLabelSuzy.bottomAnchor.constraint(equalTo: suzyBlurSuzy.contentView.bottomAnchor, constant: -20)
+
             ])
             
             
         }
         
-        // 入场动画
         suzyBlurSuzy.alpha = 0
         suzyBlurSuzy.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         UIView.animate(withDuration: 0.25) {

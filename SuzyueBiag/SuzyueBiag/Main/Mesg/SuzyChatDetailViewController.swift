@@ -9,11 +9,11 @@ import UIKit
 
 class SuzyChatDetailViewController: UIViewController {
     private var suzyInputBarBottomConstraintSuzy: NSLayoutConstraint!
-    // 数据源
+   
     var targetUser: SuzyMatchEntitySuzy?
     var chatHistory: [SuzyChatDetailRecord] = []
     
-    // UI 组件
+ 
     private let suzyChatTableSuzy = UITableView()
     private let inputBar = UIView()
     private let textField = UITextField()
@@ -40,7 +40,7 @@ class SuzyChatDetailViewController: UIViewController {
         setupTableView()
         setupInputBar()
         
-        // 监听键盘，防止遮挡输入框
+      
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -53,7 +53,7 @@ class SuzyChatDetailViewController: UIViewController {
         
         suzyControlWrapperSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyControlWrapperSuzy)
-        // 左侧返回
+    
         let backBtn = UIButton(type: .custom)
         backBtn.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         backBtn.tintColor = .white
@@ -177,22 +177,20 @@ class SuzyChatDetailViewController: UIViewController {
         ])
     }
 
-    // MARK: - Actions
-    
+
     @objc private func sendAction() {
         guard let text = textField.text, !text.isEmpty else {
-            SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Please enter your message first!", isSuccess: false)
+            SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "TtzGbekkqYWULNQFmmuv847Twpd28s1LGiRW3PgV3K4ZTrq6kQfUsCS7Huk5WlCS/GlP1S2v0AufNgoWG7ldIQ=="), isSuccess: false)
             return
         }
-        
-        // 存储消息逻辑
-        let newMessage = SuzyChatDetailRecord(isMine: true, content: .text(text), time: "Now")
+      
+        let newMessage = SuzyChatDetailRecord(isMine: true, content: .text(text), time: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "lu3RRG7BBqbR1rRJtMGHqhx8D9QCOCnG+AH4gKnoBGrrw3s="))
         chatHistory.append(newMessage)
         
-        // 更新缓存数据源 (同步回 MessageList)
+      
         updateLocalCache(with: newMessage)
         
-        // 刷新 UI
+      
         textField.text = ""
         suzyChatTableSuzy.reloadData()
         scrollToBottom()
@@ -224,26 +222,24 @@ class SuzyChatDetailViewController: UIViewController {
         }
     }
     
-    // MARK: - Keyboard Handling Suzy
-
+   
     @objc func keyboardWillShow(n: Notification) {
-        // 1. 获取键盘高度和动画曲线
+       
         guard let userInfo = n.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
               let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
               let curveValue = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int else { return }
         
         let keyboardHeight = keyboardFrame.cgRectValue.height
-        let suzySafeBottom = view.safeAreaInsets.bottom // 减去安全区域高度，防止间距过大
-        
-        // 2. 更新约束：底部间距 = 键盘高度 - 安全区域
+        let suzySafeBottom = view.safeAreaInsets.bottom
+     
         suzyInputBarBottomConstraintSuzy.constant = -(keyboardHeight - suzySafeBottom)
         
-        // 3. 执行动画
+      
         let curve = UIView.AnimationOptions(rawValue: UInt(curveValue << 16))
         UIView.animate(withDuration: duration, delay: 0, options: [curve, .beginFromCurrentState], animations: {
             self.view.layoutIfNeeded()
-            // 4. 让聊天列表同步滚动到最后一条
+            
             self.suzyScrollToBottomSuzy(animated: false)
         }, completion: nil)
     }
@@ -253,19 +249,19 @@ class SuzyChatDetailViewController: UIViewController {
               let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
               let curveValue = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int else { return }
         
-        // 1. 还原约束为 0
+  
         suzyInputBarBottomConstraintSuzy.constant = -5
         
-        // 2. 执行动画
+      
         let curve = UIView.AnimationOptions(rawValue: UInt(curveValue << 16))
             UIView.animate(withDuration: duration, delay: 0, options: [curve, .beginFromCurrentState], animations: {
                 self.view.layoutIfNeeded()
             }, completion: nil)
     }
 
-    // MARK: - Helper Methods
+  
     private func suzyScrollToBottomSuzy(animated: Bool) {
-        // 假设你的 TableView 叫 suzyChatTableSuzy
+        
         let rowCount = suzyChatTableSuzy.numberOfRows(inSection: 0)
         if rowCount > 0 {
             let indexPath = IndexPath(row: rowCount - 1, section: 0)
@@ -274,7 +270,7 @@ class SuzyChatDetailViewController: UIViewController {
     }
 }
 
-// MARK: - TableView Delegate
+
 extension SuzyChatDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return chatHistory.count }
     

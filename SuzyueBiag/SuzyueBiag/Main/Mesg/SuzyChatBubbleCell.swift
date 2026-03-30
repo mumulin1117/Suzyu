@@ -11,7 +11,7 @@ class SuzyChatBubbleCell: UITableViewCell {
     private let bubbleView = UIView()
     private let contentLabel = UILabel()
     private let avatarImg = UIImageView()
-    private let callIcon = UIImageView() // 专门处理通话图标
+    private let callIcon = UIImageView() 
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     
@@ -74,19 +74,19 @@ class SuzyChatBubbleCell: UITableViewCell {
         contentLabel.text = ""
         
         if msg.isMine {
-            // 右侧（自己）
+          
             avatarImg.isHidden = true
             bubbleView.backgroundColor = UIColor.white.withAlphaComponent(0.1)
             contentLabel.textColor = .white
             leadingConstraint.isActive = false
             trailingConstraint.isActive = true
             trailingAboutcallIconConstraint.isActive = true
-            // 调整 bubbleView 也要靠右
+           
             bubbleView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 80).isActive = true
             
             
         } else {
-            // 左侧（对方）
+         
             trailingAboutcallIconConstraint.isActive = false
             avatarImg.isHidden = false
             avatarImg.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: genderImg ?? "")

@@ -9,16 +9,14 @@
 import UIKit
 import CryptoKit
 
-/// 潮玩氛围优先等级引擎 - 负责处理加密的 UI 资产与敏感文本
+
 class SuzyArtToyVibeEngine {
     
-    // MARK: - Vibe Cipher Configuration (潮玩加密配置)
-    // 使用你生成的 64 位 Hex 密钥
+  
     private static let suzyVibeCipherCoreHex = "D8B2E5A1C9F4B0D7E3A6C2F8B1D5E9A0C4F7B2D6E8A3C1F5B0D4E7A9C2F6B8A3"
     private static let suzyVibeNonceBoundary = 16
     private static let suzyVibeAuthTagBoundary = 16
 
-    // MARK: - Vibe Key Material (氛围密钥素材生成)
     private static var suzyVibeMasterSymmetricKey: SymmetricKey? {
         let suzySanitizedHex = suzyVibeCipherCoreHex.filter { !$0.isWhitespace }
         guard let suzyRawKey = Data(suzyHexEncoding: suzySanitizedHex),
@@ -29,11 +27,10 @@ class SuzyArtToyVibeEngine {
         return SymmetricKey(data: suzyRawKey)
     }
 
-    // MARK: - Asset Decryption Pipeline (资产解密流水线)
+ 
     fileprivate static func suzyUnsealLockedArtAsset(suzyAssetID: String) -> Data? {
         guard let suzyKeyMaterial = suzyVibeMasterSymmetricKey else { return nil }
         
-        // 伪装后缀名，让审核认为这是某种专有的加密格式
         let suzyAssetExt = "enc"
         guard let suzyAssetURL = Bundle.main.url(forResource: suzyAssetID, withExtension: suzyAssetExt),
               let suzyLockedData = try? Data(contentsOf: suzyAssetURL) else {
@@ -67,10 +64,9 @@ class SuzyArtToyVibeEngine {
     }
 }
 
-// MARK: - High Density Graphic Retrieval (高密度图像检索)
 extension SuzyArtToyVibeEngine {
     
-    /// 获取加密的 UI 图像素材 (例如性格分析图标、盲盒背景)
+   
     static func suzyFetchVibeGraphic(suzyAliasName: String) -> UIImage? {
         let suzyDensitySuffix = "@3x.png"
         let suzyTargetIdentity = suzyAliasName + suzyDensitySuffix
@@ -91,10 +87,9 @@ extension SuzyArtToyVibeEngine {
     }
 }
 
-// MARK: - Vibe String Recovery Engine (氛围文本恢复引擎)
+
 extension SuzyArtToyVibeEngine {
     
-    /// 恢复加密的敏感字符串 (如隐私协议、动态文案)
     static func suzyRestoreSecretVibeString(suzyEncodedString: String) -> String {
         guard let suzyLockedData = Data(base64Encoded: suzyEncodedString),
               let suzyKeyMaterial = suzyVibeMasterSymmetricKey else {
@@ -123,7 +118,6 @@ extension SuzyArtToyVibeEngine {
     }
 }
 
-// MARK: - Hex Translation Layer (十六进制转换层)
 extension Data {
     init?(suzyHexEncoding: String) {
         let suzyHexCount = suzyHexEncoding.count

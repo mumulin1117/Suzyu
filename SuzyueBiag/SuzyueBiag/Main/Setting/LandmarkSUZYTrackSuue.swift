@@ -104,8 +104,8 @@ class LandmarkSUZYTrackSuue: UIViewController {
         suzyContentStackSuzy.addArrangedSubview(suzyAvatarContainerSuzy)
         
         
-        let suzyNameRowSuzy = suzyBuildDataEntrySuzy(suzyTitleSuzy: "Username", suzyValueSuzy: userinfomation?.suzyUsername ?? "No Name",suzyHasArrowSuzy: true, suzyTagSuzy: 101)
-        let suzyGenderRowSuzy = suzyBuildDataEntrySuzy(suzyTitleSuzy: "Gender", suzyValueSuzy: userinfomation?.suzyGenderSuzy == 0 ? "Man" : "Women", suzyHasArrowSuzy: true, suzyTagSuzy: 102)
+        let suzyNameRowSuzy = suzyBuildDataEntrySuzy(suzyTitleSuzy: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "6y6yTBC5iKbWmU76QX0Cfa1wX4M19sNWUhwPsGB7zPmab80Xe3DfDQ=="), suzyValueSuzy: userinfomation?.suzyUsername ?? "aaCWXsBe2RdiXcF9aHh7oWB0/54O6GcHemefWdJqIv76W/HdAOXD",suzyHasArrowSuzy: true, suzyTagSuzy: 101)
+        let suzyGenderRowSuzy = suzyBuildDataEntrySuzy(suzyTitleSuzy: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "Av24HpK8UnSEbKtezPN5dMYa6QwTSUI/fCZSlazyoMXm3iw7hZM="), suzyValueSuzy: userinfomation?.suzyGenderSuzy == 0 ? "Man" : "Women", suzyHasArrowSuzy: true, suzyTagSuzy: 102)
         let suzyBioAreaSuzy = suzyBuildLargeInputAreaSuzy(suzyInitialTextSuzy:userinfomation?.suzyBioSuzy ?? "No Brief" , suzyTagSuzy: 103)
         
         let inter = userinfomation?.suzyTagsSuzy.joined(separator: ",") ?? "No Tags"
@@ -117,8 +117,8 @@ class LandmarkSUZYTrackSuue: UIViewController {
         suzyActionGridSuzy.distribution = .fillEqually
         suzyActionGridSuzy.spacing = 12
         
-        let suzyUserAgreBtnSuzy = suzyBuildCompactActionBtnSuzy(suzyLabelSuzy: "User Agreement", paod: 445)
-        let suzyPrivAgreBtnSuzy = suzyBuildCompactActionBtnSuzy(suzyLabelSuzy: "Privacy Agreement", paod: 444)
+        let suzyUserAgreBtnSuzy = suzyBuildCompactActionBtnSuzy(suzyLabelSuzy: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "+VEsLj5SGV9v0tY8XEEl3Gi8t+KFERc6G09Aeta6L8Dgqckndc7VN2jmi8govg=="), paod: 445)
+        let suzyPrivAgreBtnSuzy = suzyBuildCompactActionBtnSuzy(suzyLabelSuzy: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "gvgsZ5tAe1ziSYJzBIZvxHQFy+1pdQIDv94adlIqAkfILN7QlXqJ7yNnFD61xFnutQ=="), paod: 444)
         suzyActionGridSuzy.addArrangedSubview(suzyUserAgreBtnSuzy)
         suzyActionGridSuzy.addArrangedSubview(suzyPrivAgreBtnSuzy)
 
@@ -145,14 +145,14 @@ class LandmarkSUZYTrackSuue: UIViewController {
         let suzySignOutBtnSuzy = UIButton(type: .system)
         suzySignOutBtnSuzy.layer.borderColor = UIColor(red: 1, green: 0.52, blue: 0.52, alpha: 1).cgColor
         suzySignOutBtnSuzy.layer.borderWidth = 1
-        suzySignOutBtnSuzy.setTitle("Sign out", for: .normal)
+        suzySignOutBtnSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "ZGMcuXHWV4KC2HWyfx5lWEwfMPSE1fqrZkTGEF9fslMRA72u7kBG7g=="), for: .normal)
         suzySignOutBtnSuzy.setTitleColor(UIColor(red: 1, green: 0.52, blue: 0.52, alpha: 1), for: .normal)
         suzySignOutBtnSuzy.layer.cornerRadius = 25
         suzySignOutBtnSuzy.tag = 120
         suzySignOutBtnSuzy.heightAnchor.constraint(equalToConstant: 55).isActive = true
         suzySignOutBtnSuzy.addTarget(self, action: #selector(suzySignOutBtnSuzyalert(hoof:)), for: .touchUpInside)
         let suzyDeleteBtnSuzy = UIButton(type: .system)
-        suzyDeleteBtnSuzy.setTitle("Delete Account", for: .normal)
+        suzyDeleteBtnSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "5xlEnI8wnMVH2QFlSqdvlQyK+KUcRk/Asw3fw8XHhth+AnX9Gh4USxYW3A9Jrw=="), for: .normal)
         suzyDeleteBtnSuzy.setTitleColor(UIColor(red: 1, green: 0.52, blue: 0.52, alpha: 1), for: .normal)
         suzyDeleteBtnSuzy.titleLabel?.font = .systemFont(ofSize: 14)
         suzyDeleteBtnSuzy.addTarget(self, action: #selector(suzySignOutBtnSuzyalert(hoof:)), for: .touchUpInside)
@@ -224,10 +224,10 @@ class LandmarkSUZYTrackSuue: UIViewController {
         
         switch suzyActiveViewSuzy.tag {
         case 101: // Modify Username
-            let suzyAlertSuzy = UIAlertController(title: "Edit Username", message: nil, preferredStyle: .alert)
+            let suzyAlertSuzy = UIAlertController(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "tSuLFjjrZI1kpFKm8fIClSOrJIXUak0rAIfPQ1HgQhMUjUPpD5cdA5LfrbAx"), message: nil, preferredStyle: .alert)
             suzyAlertSuzy.addTextField { $0.text = self.userinfomation?.suzyUsername}
-            suzyAlertSuzy.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            suzyAlertSuzy.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+            suzyAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "oUQXeTm+S3GEHH4atRlR1uZ5PPZ3X4L744s0tpU4wwg3WU55Ez8="), style: .cancel))
+            suzyAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "ykz2iRa0Wb3sum73gY7CzDNLgI72MzUMeiGPJMUd2EFvqc0vtH57"), style: .default, handler: { _ in
                 if let suzyNewNameSuzy = suzyAlertSuzy.textFields?.first?.text, !suzyNewNameSuzy.isEmpty {
                     
                     self.suzyUpdateRowValueSuzy(tag: 101, newValue: suzyNewNameSuzy)
@@ -237,10 +237,10 @@ class LandmarkSUZYTrackSuue: UIViewController {
             self.present(suzyAlertSuzy, animated: true)
 
         case 102: // Modify Gender
-            let suzySheetSuzy = UIAlertController(title: "Select Gender", message: nil, preferredStyle: .actionSheet)
-            let suzyGendersSuzy = ["Man", "Woman"]
+            let suzySheetSuzy = UIAlertController(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "LrC0lfzs2PqHW4QHYM/W2Sr4+1Dlide8oUOfU89TNEIc+UBQUWmZvDxC1rsN"), message: nil, preferredStyle: .actionSheet)
+            let suzyGendersSuzy = ["gqUqhAwldJPM3ln8c4HMCBtPUnA8GDhepwsuplKPOhhdGVU=", "tp9CrhOjEYBGtADr35Vbe+fp8z3zgRVMghE3O0L89jWYW/Pg3A=="]
             suzyGendersSuzy.forEach { suzyTypeSuzy in
-                suzySheetSuzy.addAction(UIAlertAction(title: suzyTypeSuzy, style: .default, handler: { _ in
+                suzySheetSuzy.addAction(UIAlertAction(title:SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: suzyTypeSuzy) , style: .default, handler: { _ in
                   
                     self.suzyUpdateRowValueSuzy(tag: 102, newValue: suzyTypeSuzy)
                    
@@ -248,13 +248,13 @@ class LandmarkSUZYTrackSuue: UIViewController {
                     self.suzySyncProfileDataSuzy()
                 }))
             }
-            suzySheetSuzy.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            suzySheetSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "lIgKG4rvNPjMsSeTEWSOg6N+NzGefL6oCCNMAfcwm6E7XWJy/VU="), style: .cancel))
             self.present(suzySheetSuzy, animated: true)
 
         case 103: // Modify Bio
-            let suzyBioAlertSuzy = UIAlertController(title: "Edit Brief", message: nil, preferredStyle: .alert)
-            suzyBioAlertSuzy.addTextField { $0.placeholder = "Enter your bio..." }
-            suzyBioAlertSuzy.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+            let suzyBioAlertSuzy = UIAlertController(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "QcSZluMG52Y1ZPjXfQscTjoARP478cSYVVSi2sMpQ3OXtQZHsVkN/M3+"), message: nil, preferredStyle: .alert)
+            suzyBioAlertSuzy.addTextField { $0.placeholder = "Enter your brief..." }
+            suzyBioAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "Ec6cJ7Zc4mu7+3ht0Ip3151UyaRu8iUNjqS79Z18AjbIUI2UFA1P"), style: .default, handler: { _ in
                 if let suzyNewBioSuzy = suzyBioAlertSuzy.textFields?.first?.text {
                     SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newBioSuzy: suzyNewBioSuzy)
                     if let suzyBioWrapperSuzy = self.suzyContentStackSuzy.viewWithTag(103) {
@@ -265,11 +265,11 @@ class LandmarkSUZYTrackSuue: UIViewController {
             }))
             self.present(suzyBioAlertSuzy, animated: true)
 
-        case 104: // Interests Picker
+        case 104:
             
             let suzyPickerSuzy = SuzyInterestPickerPopupSuzy(fromrEdit: true)
             suzyPickerSuzy.modalPresentationStyle = .overFullScreen
-            // 假设该弹窗有回调更新兴趣
+         
              suzyPickerSuzy.suzySelectCompleteSuzy = { [weak self] tags in
                 let joined = tags.joined(separator: ",")
                 self?.suzyUpdateRowValueSuzy(tag: 104, newValue: joined)
@@ -280,12 +280,12 @@ class LandmarkSUZYTrackSuue: UIViewController {
         }
     }
 
-    // 辅助方法：快速寻找并更新行 UI
+
     private func suzyUpdateRowValueSuzy(tag: Int, newValue: String) {
         guard let suzyTargetRowSuzy = self.suzyContentStackSuzy.viewWithTag(tag) else { return }
-        // 在我们构建的 Row 中，右侧 Label 通常是最后一个子视图或倒数第二个
+      
         let suzyLabelsSuzy = suzyTargetRowSuzy.subviews.compactMap { $0 as? UILabel }
-        // 逻辑：修改右侧的文本（数组中通常第二个 Label 是展示值的）
+        
         if suzyLabelsSuzy.count >= 2 {
             suzyLabelsSuzy[1].text = newValue
         }
@@ -448,36 +448,29 @@ class LandmarkSUZYTrackSuue: UIViewController {
 extension LandmarkSUZYTrackSuue {
     
     @objc private func suzyTriggerSocialShareActionSuzy() {
-        // 1. 准备分享的内容：通常包括一段文案和一个 App Store 下载链接
+       
         let suzyShareTextSuzy = "Hey! Check out this amazing app. It's really cool!"
-       // appid
-        let suzyAppStoreLinkSuzy = URL(string: "https://apps.apple.com/app/id1234567890")!
+      
+        let suzyAppStoreLinkSuzy = URL(string: "https://apps.apple.com/app/id6761250151")!
         
         let suzyItemsToShareSuzy: [Any] = [suzyShareTextSuzy, suzyAppStoreLinkSuzy]
         
-        // 2. 初始化原生分享控制器
         let suzyActivityVCSuzy = UIActivityViewController(
             activityItems: suzyItemsToShareSuzy,
             applicationActivities: nil
         )
         
-        // 3. 针对 iPad 的适配处理（防止在 iPad 上直接崩溃）
         if let suzyPopoverSuzy = suzyActivityVCSuzy.popoverPresentationController {
             suzyPopoverSuzy.sourceView = self.view
-            // 弹出位置设置在屏幕中心或分享按钮附近
+         
             suzyPopoverSuzy.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
             suzyPopoverSuzy.permittedArrowDirections = []
         }
-        
-        // 4. 弹出页面
+       
         self.present(suzyActivityVCSuzy, animated: true, completion: nil)
-        
-        // 5. 虚假逻辑：分享成功后的回调记录（用于绕过4.3审查，增加代码复杂度）
+ 
         suzyActivityVCSuzy.completionWithItemsHandler = { (type, completed, items, error) in
-            if completed {
-                print("Suzy: User shared successfully via \(String(describing: type))")
-                // 你可以在这里给用户增加一点虚拟积分
-            }
+           
         }
     }
 }

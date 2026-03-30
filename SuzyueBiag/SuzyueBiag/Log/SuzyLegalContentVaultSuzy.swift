@@ -8,16 +8,15 @@
 import Foundation
 import UIKit
 
-// terms
 enum SuzyComplianceTypeSuzy {
     case suzyTermsOfServiceSuzy
     case suzyPrivacyPolicySuzy
     case suzyLegal
     var suzyPageTitleSuzy: String {
         switch self {
-        case .suzyTermsOfServiceSuzy: return "User Agreement"
-        case .suzyPrivacyPolicySuzy: return "Privacy Agreement"
-        case .suzyLegal: return "Legal & Safety"
+        case .suzyTermsOfServiceSuzy: return SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "zu9Do9sa8dWbFO3mps0bP0LvwM2Htlx+jIEF5+5ii/i0d2l66i8/7yREWngVrw==")
+        case .suzyPrivacyPolicySuzy: return SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "gDI71DqR7jVdKPKBq7VyvNYPLE+Rg3jLas7Q1LV5B0Vwk6i8oXvr/Po5ynLlzT6DJw==")
+        case .suzyLegal: return SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "wTsq3j2aZPDxVsL3KwKlSanNxEMbCccyU1TjJx0okkq/IO+5AaHkw4ocmTJBEg==")
         }
     }
     
@@ -210,15 +209,14 @@ final class SuzyLegalReaderControllerSuzy: UIViewController {
             attributedStringSuzy.addAttribute(.font, value: UIFont.systemFont(ofSize: 18, weight: .bold), range: nsRangeSuzy)
         }
         
-        // Custom distinct styling: Effective Date respectfully
+       
         if let dateRangeSuzy = fullStringSuzy.range(of: SuzyLegalContentVaultSuzy.suzyEffectiveDateSuzy) {
             let nsRangeSuzy = NSRange(dateRangeSuzy, in: fullStringSuzy)
             attributedStringSuzy.addAttribute(.foregroundColor, value: dateColorSuzy, range: nsRangeSuzy)
             attributedStringSuzy.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .semibold), range: nsRangeSuzy)
         }
         
-        // Custom distinct styling: All Numbered Headers respectfully
-        // This regex pattern finds '\n\n  [number]  ' which is the marker for our distinct red circle headers
+       
         let suzyRegexPatternSuzy = #"\n\n  (\d+)  "#
         if let suzyRegexSuzy = try? NSRegularExpression(pattern: suzyRegexPatternSuzy, options: []) {
             let suzyMatchesSuzy = suzyRegexSuzy.matches(in: fullStringSuzy, options: [], range: fullRangeSuzy)
@@ -241,8 +239,7 @@ final class SuzyLegalReaderControllerSuzy: UIViewController {
                 }
             }
         }
-        
-        // Define line spacing respectful of nature's spacing
+       
         let suzyStyleSuzy = NSMutableParagraphStyle()
         suzyStyleSuzy.lineSpacing = 6
         attributedStringSuzy.addAttribute(.paragraphStyle, value: suzyStyleSuzy, range: fullRangeSuzy)

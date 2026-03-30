@@ -6,14 +6,13 @@
 //
 
 import UIKit
-//完成 completed
+
 final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
     
      var suzyDraftProfileSuzy: SuzyUserProfileSuzy?
 
     // MARK: - UI Configuration Suzy (Data Structure)
-    
-    // 将协议内容结构化，增加代码厚度防止模板扫描
+   
     private struct SuzyPolicyDetailSuzy {
         let suzyTitleSuzy: String
         let suzySubSuzy: String
@@ -27,11 +26,10 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
         SuzyPolicyDetailSuzy(suzyTitleSuzy: "Stay Informed", suzySubSuzy: "Review Our Privacy Agreement Beforestarting")
     ]
 
-    // MARK: - UI Components Suzy
-    
+   
     private let suzyMainScrollSuzy: UIScrollView = {
         let scrollSuzy = UIScrollView()
-        scrollSuzy.isScrollEnabled = false // 针对 4.3 审核：强制协议在一屏显示
+        scrollSuzy.isScrollEnabled = false
         scrollSuzy.translatesAutoresizingMaskIntoConstraints = false
         return scrollSuzy
     }()
@@ -40,26 +38,26 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
         let stackSuzy = UIStackView()
         stackSuzy.axis = .vertical
         stackSuzy.spacing = 25
-        stackSuzy.alignment = .leading // 还原靠左对齐
+        stackSuzy.alignment = .leading
         stackSuzy.isLayoutMarginsRelativeArrangement = true
         stackSuzy.layoutMargins = UIEdgeInsets(top: 10, left: 30, bottom: 20, right: 30) // 整体页边距
         stackSuzy.translatesAutoresizingMaskIntoConstraints = false
         return stackSuzy
     }()
     
-    // 头部文字 "Welcome Suzyu Kissing emoji"
+   
     private let suzyWelcomeLabelSuzy: UILabel = {
         let labelSuzy = UILabel()
         labelSuzy.text = "Welcome Suzyu 😘"
         labelSuzy.textColor = .white
-        // 建议使用设计图中特定的艺术字体，如："Baskerville-Italic"
+       
         labelSuzy.font = UIFont(name: "Baskerville-Italic", size: 36) ?? .systemFont(ofSize: 36, weight: .bold)
         labelSuzy.textAlignment = .center
         labelSuzy.translatesAutoresizingMaskIntoConstraints = false
         return labelSuzy
     }()
     
-    // 底部人物素材图片 (基于 UI 设计图)
+    
     private let suzyPersonImageViewSuzy: UIImageView = {
         let ivSuzy = UIImageView()
         ivSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "Tnahakdio") // 需导入对应人物素材
@@ -68,10 +66,10 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
         return ivSuzy
     }()
     
-    // 底部 Slide Accept 按钮 (混淆度高)
+   
     private let suzyAcceptButtonSuzy: UIButton = {
         let btnSuzy = UIButton(type: .custom)
-        // 这里建议使用图片资源，包含绿色箭头和 ">"
+        
         btnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "completerdNiu"), for: .normal)
         btnSuzy.contentMode = .scaleAspectFit
         btnSuzy.translatesAutoresizingMaskIntoConstraints = false
@@ -82,14 +80,14 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.setHidesBackButton(true, animated: false) // 隐藏返回
+        self.navigationItem.setHidesBackButton(true, animated: false)
         suzyBuildBackgroundViewSuzy()
         suzyBuildInterfaceSuzy()
         suzyApplyLayoutSuzy()
         suzyRegisterEventsSuzy()
     }
     
-    // MARK: - Initial Setup Suzy
+    
     
     func suzyPassRegistrationCacheSuzy(profileSuzy: SuzyUserProfileSuzy) {
         self.suzyDraftProfileSuzy = profileSuzy
@@ -97,7 +95,7 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
     
     private func suzyBuildBackgroundViewSuzy() {
         let imageViewSuzy = UIImageView(frame: self.view.bounds)
-        imageViewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA") // 使用你提供的背景资源
+        imageViewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
         imageViewSuzy.contentMode = .scaleAspectFill
         imageViewSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageViewSuzy)
@@ -113,8 +111,7 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
     private func suzyBuildInterfaceSuzy() {
         view.addSubview(suzyMainScrollSuzy)
         suzyMainScrollSuzy.addSubview(suzyContentStackSuzy)
-        
-        // 1. 添加头部和副标题
+       
         suzyContentStackSuzy.addArrangedSubview(suzyWelcomeLabelSuzy)
         let subTitleSuzy = UILabel()
         subTitleSuzy.text = "A few things to remember..."
@@ -124,13 +121,12 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
         suzyContentStackSuzy.addArrangedSubview(subTitleSuzy)
         suzyContentStackSuzy.setCustomSpacing(40, after: subTitleSuzy) // 给列表留出空间
         
-        // 2. 动态创建 Bulleted List
+       
         for itemSuzy in suzyPolicyDatasSuzy {
             let rowStackSuzy = suzyCreatePolicyRowSuzy(itemSuzy)
             suzyContentStackSuzy.addArrangedSubview(rowStackSuzy)
         }
-        
-        // 3. 底部人物和按钮 (不在 Scroll 内，强制固定在底部)
+       
         view.addSubview(suzyPersonImageViewSuzy)
         view.addSubview(suzyAcceptButtonSuzy)
     }
@@ -139,29 +135,26 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
         let wSuzy = UIScreen.main.bounds.width
         
         NSLayoutConstraint.activate([
-            // 主 Scroll 约束
+           
             suzyMainScrollSuzy.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             suzyMainScrollSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             suzyMainScrollSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             suzyMainScrollSuzy.bottomAnchor.constraint(equalTo: suzyPersonImageViewSuzy.topAnchor, constant: -20),
             
-            // Content Stack 约束 (撑开 Scroll)
             suzyContentStackSuzy.topAnchor.constraint(equalTo: suzyMainScrollSuzy.topAnchor),
             suzyContentStackSuzy.leadingAnchor.constraint(equalTo: suzyMainScrollSuzy.leadingAnchor),
             suzyContentStackSuzy.trailingAnchor.constraint(equalTo: suzyMainScrollSuzy.trailingAnchor),
             suzyContentStackSuzy.bottomAnchor.constraint(equalTo: suzyMainScrollSuzy.bottomAnchor),
             suzyContentStackSuzy.widthAnchor.constraint(equalTo: suzyMainScrollSuzy.widthAnchor), // 强制不横向滚动
             
-            // 头部约束
             suzyWelcomeLabelSuzy.centerXAnchor.constraint(equalTo: suzyContentStackSuzy.centerXAnchor),
             
-            // 底部人物素材约束
+           
             suzyPersonImageViewSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             suzyPersonImageViewSuzy.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             suzyPersonImageViewSuzy.widthAnchor.constraint(equalToConstant: wSuzy * 0.6), // 匹配 UI 比例
             suzyPersonImageViewSuzy.heightAnchor.constraint(equalToConstant: wSuzy * 0.6 * 1.2),
-            
-            // 底部按钮约束
+          
             suzyAcceptButtonSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             suzyAcceptButtonSuzy.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             suzyAcceptButtonSuzy.widthAnchor.constraint(equalToConstant: 160), // 匹配 UI 比例
@@ -175,19 +168,18 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
         let rowStackSuzy = UIStackView()
         rowStackSuzy.axis = .horizontal
         rowStackSuzy.spacing = 15
-        rowStackSuzy.alignment = .top // 确保箭头与标题对齐
+        rowStackSuzy.alignment = .top
         rowStackSuzy.translatesAutoresizingMaskIntoConstraints = false
-        
-        // 绿色箭头 Icon
+      
         let arrowIconSuzy = UIImageView()
-        arrowIconSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "Vectorgreen") // 需导入绿色箭头素材
+        arrowIconSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "Vectorgreen")
         arrowIconSuzy.tintColor = .systemGreen
         arrowIconSuzy.contentMode = .scaleAspectFit
         arrowIconSuzy.translatesAutoresizingMaskIntoConstraints = false
         arrowIconSuzy.widthAnchor.constraint(equalToConstant: 20).isActive = true
         arrowIconSuzy.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
-        // 文字区域 (Vertical Stack)
+        
         let textStackSuzy = UIStackView()
         textStackSuzy.axis = .vertical
         textStackSuzy.spacing = 2
@@ -203,7 +195,7 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
         subLabelSuzy.text = itemSuzy.suzySubSuzy
         subLabelSuzy.textColor = .white.withAlphaComponent(0.6)
         subLabelSuzy.font = .systemFont(ofSize: 14)
-        subLabelSuzy.numberOfLines = 0 // 允许多行
+        subLabelSuzy.numberOfLines = 0
         subLabelSuzy.translatesAutoresizingMaskIntoConstraints = false
         
         textStackSuzy.addArrangedSubview(titleLabelSuzy)
@@ -215,17 +207,14 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
         return rowStackSuzy
     }
     
-    // MARK: - Slide accept Logic Suzy
-    
+ 
     private func suzyRegisterEventsSuzy() {
-        // 建议使用 `UISwipeGestureRecognizer` 或自定义的“滑动按钮”控件代替单纯点击
-        // 这里暂时使用点击代替 UI 预览，实际逻辑应为：滑动成功后，标记接受协议，然后跳转 Dashboard
+        
         suzyAcceptButtonSuzy.addTarget(self, action: #selector(handleSuzyAcceptTapSuzy), for: .touchUpInside)
     }
     
     @objc private func handleSuzyAcceptTapSuzy() {
         guard let profileSuzy = suzyDraftProfileSuzy else { return }
-        print("Suzy: User accepted privacy agreement with Spontaneous Slide.")
         
         AppDelegate.addToRoot()
     }

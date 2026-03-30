@@ -16,14 +16,14 @@ final class SuzyGoldShopVCSuzy: UIViewController {
     
     private var suzyRechargeListSuzy: [SuzyPurchaseItemSuzy] = [
        
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 400, suzyPriceLabelSuzy: "$0.99", suzyProductIDSuzy: "uzdgfrfuzpjotjyy"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 800, suzyPriceLabelSuzy: "$1.99", suzyProductIDSuzy: "acsgeadxlbysvowz"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 2450, suzyPriceLabelSuzy: "$4.99", suzyProductIDSuzy: "noumfmlrqxxvsuox"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 2850, suzyPriceLabelSuzy: "$5.99", suzyProductIDSuzy: "naksbfuhssxvsurg"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 5150, suzyPriceLabelSuzy: "$9.99", suzyProductIDSuzy: "zwylcqfbzaasysqi"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 10800, suzyPriceLabelSuzy: "$19.99", suzyProductIDSuzy: "bmwlhteruwffzbfe"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 29400, suzyPriceLabelSuzy: "$49.99", suzyProductIDSuzy: "pmyojytfhxnjamxh"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 63700, suzyPriceLabelSuzy: "$99.99", suzyProductIDSuzy: "fpptzxlvbrzdhvqm")
+        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 400, suzyPriceLabelSuzy: "WCBubkRD7T13Z24W0MRAXGBFEoVTQ9Iv1SXl8Lo61yQ9RKR/yg==", suzyProductIDSuzy: "uzdgfrfuzpjotjyy"),
+        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 800, suzyPriceLabelSuzy: "7PG1umglFAxeBr95mWfUGo03iAskaGl8X5HKgYyUCHGQsl2f4Q==", suzyProductIDSuzy: "acsgeadxlbysvowz"),
+        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 2450, suzyPriceLabelSuzy: "N94GtzJAn3/PoFbXUpsYGJWrcRX2bsFfc8hWbgIkT0xZn3wqKA==", suzyProductIDSuzy: "noumfmlrqxxvsuox"),
+        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 2850, suzyPriceLabelSuzy: "sPkvK91d8OJmL7y0dI8bnW23qEw/6fOtomkDhhQLRJ/ECcG8Lg==", suzyProductIDSuzy: "naksbfuhssxvsurg"),
+        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 5150, suzyPriceLabelSuzy: "ZdYBJu+ay2oqRTteDON/G2FUa5DsJoWmBkHZM2PI5y1IAtdccw==", suzyProductIDSuzy: "zwylcqfbzaasysqi"),
+        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 10800, suzyPriceLabelSuzy: "KUWyHPcijvl2s8tz1re8Ox//CLofyI/Y103sCya77vOjS35ClUk=", suzyProductIDSuzy: "bmwlhteruwffzbfe"),
+        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 29400, suzyPriceLabelSuzy: "m9Op3Im03uttqFAsgQSmr1CCN3lQdW++XQpqVdTT3AyQoO+Iph4=", suzyProductIDSuzy: "pmyojytfhxnjamxh"),
+        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 63700, suzyPriceLabelSuzy: "zmhNbKIJAGuxgI/CSo2NzIODPJR80lJs5iKJH8PVv9+ice3n0Y0=", suzyProductIDSuzy: "fpptzxlvbrzdhvqm")
     ]
     
     private lazy var suzyGridViewSuzy: UICollectionView = {
@@ -153,7 +153,7 @@ extension SuzyGoldShopVCSuzy: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     private func suzyTriggerPurchaseWorkflowSuzy(product: SuzyPurchaseItemSuzy) {
-        SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: "Processing Payment...")
+        SuzyHudManagerSuzy.shared.suzyShowStatusLoadingSuzy(message: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "YF0imO6l7GGb40Bo4mUOK7M0vCc79LxJUJTWyjNRl/uxTqR7jj9UGgjFRqLcWGktVM5J1wc="))
         ZompassHeadingSuzy.shared.regionLocaleSuue(calendarDateSuue: product.suzyProductIDSuzy) { [weak self] ler in
                 DispatchQueue.main.async {
                     SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()

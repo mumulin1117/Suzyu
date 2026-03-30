@@ -120,37 +120,34 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
     }
     
     private func suzyFetchRemoteRecordsSuzy() {
-        // 模拟网络请求
+       
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let self = self else { return }
             
-            // 这里的 suzyMockUsersSuzy 是你之前生成的 随机数据
             let suzyRawDataSuzy = SuzyStaticDataCenterSuzy.suzyMockUserLibrarySuzy
-            
-            // 执行匹配过滤逻辑
+           
             self.suzyDataSourceSuzy = self.suzyPerformTagMatchingSuzy(suzyRemoteUsersSuzy: suzyRawDataSuzy)
-            
-            // 刷新列表
+           
             self.suzyCollectionSuzy.reloadData()
          
         }
     }
     private func suzyPerformTagMatchingSuzy(suzyRemoteUsersSuzy: [SuzyMatchEntitySuzy]) -> [SuzyMatchEntitySuzy] {
-        // 1. 获取本地标签（此处省略原有获取逻辑...）
+       
         guard let suzyMyProfileSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy() else {
-            // 即便没有标签，也只返回前6条，保持页面整洁
+          
             return Array(suzyRemoteUsersSuzy.shuffled().prefix(6))
         }
         
         let suzySelectedTagsSuzy = suzyMyProfileSuzy.suzyTagsSuzy
         
-        // 2. 模式判断
+      
         var suzyResultSetSuzy: [SuzyMatchEntitySuzy] = []
         
         if suzyCurrentMatchTypeSuzy == .suzyAllSuzy || suzySelectedTagsSuzy.isEmpty {
             suzyResultSetSuzy = suzyRemoteUsersSuzy
         } else {
-            // 执行交集匹配算法
+            
             suzyResultSetSuzy = suzyRemoteUsersSuzy.filter { suzyUserSuzy in
                 let suzyRemoteTagSetSuzy = Set(suzyUserSuzy.suzyInterestsSuzy)
                 let suzyMyTagSetSuzy = Set(suzySelectedTagsSuzy)
@@ -158,8 +155,6 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
             }
         }
         
-        // 3. 核心限制逻辑：先乱序，再取前6条
-        // shuffled() 保证了用户每次点击匹配看到的 6 个人是不一样的
         let suzyFinalLimitedResultSuzy = Array(suzyResultSetSuzy.shuffled().prefix(6))
         
         return suzyFinalLimitedResultSuzy
@@ -169,13 +164,11 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
             suzyNavWrapperSuzy.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(suzyNavWrapperSuzy)
             
-            // 返回按钮
             suzyBackActionBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "shaderCodeSuzy"), for: .normal)
             suzyBackActionBtnSuzy.addTarget(self, action: #selector(suzyHandleBackEventSuzy), for: .touchUpInside)
             suzyBackActionBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
             suzyNavWrapperSuzy.addSubview(suzyBackActionBtnSuzy)
             
-            // 通知与设置按钮
             suzyNotifyIconBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "hardwareAccelSuzy"), for: .normal)
             suzySettingsIconBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "textureMappingSuue"), for: .normal)
             
@@ -249,11 +242,9 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegate, UICollectionVi
           
              
         }
-        // 交互逻辑：点击视频通话跳转
+       
         suzyPopupSuzy.suzyOnVideoCallRequestedSuzy = { [weak self] in
-            print("Suzy: Connecting video call to \(suzyTargetUserSuzy.suzyUsernameSuzy)")
-            // 这里可以跳转到视频通话虚假页面
-            // 权限检查
+           
             guard AVCaptureDevice.authorizationStatus(for: .video) == .authorized else {
                 SuzyPermissionManagerSuzy.shared.suzyShowCameraDeniedAlertSuzy(on: self!)
                 return
@@ -291,8 +282,7 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegateFlowLayout {
         let suzySpacingSuzy: CGFloat = 15
         let suzyWSuzy = (UIScreen.main.bounds.width - (suzySpacingSuzy * 3)) / 2
         
-        // 根据模式动态计算高度：All 模式不计入标签高度
-        let suzyBaseHSuzy = suzyWSuzy * 1.15 // 基础头像 + 名字高度
+        let suzyBaseHSuzy = suzyWSuzy * 1.15
         let suzyFinalHSuzy = (suzyCurrentMatchTypeSuzy == .suzyAllSuzy) ? suzyBaseHSuzy : (suzyBaseHSuzy + 30)
         
         return CGSize(width: suzyWSuzy, height: suzyFinalHSuzy)

@@ -13,10 +13,10 @@ enum SuzyMatchLogicTypeSuzy {
 struct SuzyMatchEntitySuzy {
     let suzyIdentifierSuzy: String
     let suzyUsernameSuzy: String
-    let suzyGenderSuzy: Int // 0: Male, 1: Female
+    let suzyGenderSuzy: Int
     let suzyInterestsSuzy: [String]
     let suzyIsActiveSuzy: Bool
-    let suzyBioSuzy: String // 新增的个人简介字段
+    let suzyBioSuzy: String
 }
 
 final class SuzyAlgorithmGridSuzy: UICollectionViewCell {
@@ -100,7 +100,6 @@ final class SuzyAlgorithmGridSuzy: UICollectionViewCell {
             suzyNameLabelSuzy.text = suzyItemSuzy.suzyUsernameSuzy
             suzyAvatarImageViewSuzy.image = suzyItemSuzy.suzyGenderSuzy == 0 ? SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "respectfulSpaceSuzy") : SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "confidentUserSuue")
             
-            // 处理标签布局显示逻辑
             if suzyModeSuzy == .suzyAllSuzy  {
                 suzyTagStackSuzy.isHidden = true
                 suzyTagStackHeightConstraintSuzy.constant = 0

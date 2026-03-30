@@ -10,8 +10,7 @@ import UIKit
 final class SuzyActioningSheetVCSuzy: UIViewController {
     
     var pathUID:String?
-    
-    // MARK: - UI Components
+  
     private let suzyDimmingBackdropSuzy = UIView()
     private let suzyContainerStackSuzy = UIStackView()
     
@@ -19,7 +18,7 @@ final class SuzyActioningSheetVCSuzy: UIViewController {
     private let suzyReportActionBtnSuzy = UIButton(type: .custom)
     private let suzyCancelActionBtnSuzy = UIButton(type: .custom)
     
-    // MARK: - Life Cycle
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         suzyInitializeReportingInterfaceSuzy()
@@ -28,12 +27,10 @@ final class SuzyActioningSheetVCSuzy: UIViewController {
     private func suzyInitializeReportingInterfaceSuzy() {
         view.backgroundColor = .clear
         
-        // 1. Backdrop setup
         suzyDimmingBackdropSuzy.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         suzyDimmingBackdropSuzy.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(suzyDimmingBackdropSuzy)
-        
-        // 2. Stack container for buttons
+       
         suzyContainerStackSuzy.axis = .vertical
         suzyContainerStackSuzy.spacing = 12
         suzyContainerStackSuzy.distribution = .fillEqually
@@ -42,26 +39,25 @@ final class SuzyActioningSheetVCSuzy: UIViewController {
         
         // 3. Button Configuration
         suzyConfigureStandardButtonSuzy(suzyBlockActionBtnSuzy,
-                                      titleSuzy: "Block this user",
+                                      titleSuzy:SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "JUNLcdXr5PDwTxX7mAkgHwBkekqIIpm2565aMpyHHmOhTVAXtCmywxGfUpr/uNI=") ,
                                       iconNameSuzy: "minus.circle",
                                       isPurpleSuzy: false)
         
         suzyConfigureStandardButtonSuzy(suzyReportActionBtnSuzy,
-                                      titleSuzy: "Report",
+                                      titleSuzy: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "TU5e48uAj+YtAjF5huzgcx/vNz6VAjab0kPlGIaR6joYNeFYfHw="),
                                       iconNameSuzy: "exclamationmark.circle",
                                       isPurpleSuzy: false)
         
         suzyConfigureStandardButtonSuzy(suzyCancelActionBtnSuzy,
-                                      titleSuzy: "Cancel",
+                                      titleSuzy: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "l9VN+th6xh3V0U/Sxsi25uFS469zBmHIuRXwGy5tBqK8rL0C7es="),
                                       iconNameSuzy: nil,
                                       isPurpleSuzy: true)
         
-        // 4. Adding to stack
+   
         suzyContainerStackSuzy.addArrangedSubview(suzyBlockActionBtnSuzy)
         suzyContainerStackSuzy.addArrangedSubview(suzyReportActionBtnSuzy)
         suzyContainerStackSuzy.addArrangedSubview(suzyCancelActionBtnSuzy)
-        
-        // 在 suzyInitializeReportingInterfaceSuzy 内部添加
+     
         suzyBlockActionBtnSuzy.addTarget(self, action: #selector(suzyHandleBlockConfirmedSuzy), for: .touchUpInside)
         suzyReportActionBtnSuzy.addTarget(self, action: #selector(suzyHandleReportTransitionSuzy), for: .touchUpInside)
         NSLayoutConstraint.activate([

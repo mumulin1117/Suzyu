@@ -14,7 +14,7 @@ class SuzyMessageListCell: UITableViewCell {
     private let lastMsgLabel = UILabel()
     private let timeLabel = UILabel()
     private let unreadBadge = UILabel()
-    private let callIcon = UIImageView() // 专门处理通话图标
+    private let callIcon = UIImageView() 
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -88,7 +88,6 @@ class SuzyMessageListCell: UITableViewCell {
         nameLabel.text = model.userInfo.suzyUsernameSuzy
         timeLabel.text = model.lastTime
         
-        // 处理消息展示逻辑
         if case .call = model.messages.last?.content {
             callIcon.isHidden = false
             lastMsgLabel.isHidden = true

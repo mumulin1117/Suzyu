@@ -9,7 +9,7 @@ import UIKit
 
 final class SuzyUserQuickViewSuzy: UIView {
     
-    // MARK: - UI Components Suzy
+  
     private let suzyBlurEffectSuzy = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private let suzyCardContainerSuzy = UIImageView()
     private let suzyAvatarOutlineSuzy = UIView()
@@ -21,7 +21,7 @@ final class SuzyUserQuickViewSuzy: UIView {
     private let suzyCallActionBtnSuzy = UIButton(type: .custom)
     private let suzyDismissBtnSuzy = UIButton(type: .custom)
     
-    // MARK: - Data Source Suzy
+  
     private var suzyEntitySuzy: SuzyMatchEntitySuzy?
     var suzyOnVideoCallRequestedSuzy: (() -> Void)?
 
@@ -45,13 +45,12 @@ final class SuzyUserQuickViewSuzy: UIView {
         suzyBlurEffectSuzy.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(suzyBlurEffectSuzy)
         
-        // 卡片主体
+     
         suzyCardContainerSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyCardContainerSuzy")
         suzyCardContainerSuzy.contentMode = .scaleToFill
         suzyCardContainerSuzy.translatesAutoresizingMaskIntoConstraints = false
         addSubview(suzyCardContainerSuzy)
-        
-        // 头像边框与图片
+       
         suzyAvatarOutlineSuzy.backgroundColor = .white
         suzyAvatarOutlineSuzy.layer.cornerRadius = 55
         suzyAvatarOutlineSuzy.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +62,7 @@ final class SuzyUserQuickViewSuzy: UIView {
         suzyUserAvatarSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyAvatarOutlineSuzy.addSubview(suzyUserAvatarSuzy)
         
-        // 名字与消息图标
+       
         suzyDisplayNameSuzy.textColor = .white
         suzyDisplayNameSuzy.font = .systemFont(ofSize: 22, weight: .bold)
         suzyDisplayNameSuzy.translatesAutoresizingMaskIntoConstraints = false
@@ -76,39 +75,38 @@ final class SuzyUserQuickViewSuzy: UIView {
         
         suzyCardContainerSuzy.addSubview(suzyMessageIconSuzy)
         
-        // 简介
+       
         suzyBioLabelSuzy.textColor = .lightGray
         suzyBioLabelSuzy.font = .systemFont(ofSize: 16)
         suzyBioLabelSuzy.textAlignment = .center
         suzyBioLabelSuzy.numberOfLines = 2
         suzyBioLabelSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyCardContainerSuzy.addSubview(suzyBioLabelSuzy)
-        
-        // 标签容器
+     
         suzyTagFlowStackSuzy.axis = .vertical
         suzyTagFlowStackSuzy.spacing = 10
         suzyTagFlowStackSuzy.alignment = .center
         suzyTagFlowStackSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyCardContainerSuzy.addSubview(suzyTagFlowStackSuzy)
         
-        // 视频通话按钮
-        suzyCallActionBtnSuzy.setTitle("Video Call", for: .normal)
+       
+        suzyCallActionBtnSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "kSSADjjOSFjzLVpBsDiRbKeg/b3d7EpnRCqsoo8GanAdzZqCIEF9y/Jx"), for: .normal)
         suzyCallActionBtnSuzy.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
-//        suzyCallActionBtnSuzy.backgroundColor = UIColor(red: 0.5, green: 0.2, blue: 1.0, alpha: 1.0)
+
         suzyCallActionBtnSuzy.layer.cornerRadius = 20
         suzyCallActionBtnSuzy.layer.masksToBounds = true
         suzyCallActionBtnSuzy.addTarget(self, action: #selector(suzyInitiateCallSuzy), for: .touchUpInside)
         suzyCallActionBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyCardContainerSuzy.addSubview(suzyCallActionBtnSuzy)
         suzyApplyGradientToButtonSuzy(suzyTargetButtonSuzy: suzyCallActionBtnSuzy)
-        // 关闭按钮
+        
         suzyDismissBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "huntinniuclose"), for: .normal)
         suzyDismissBtnSuzy.tintColor = UIColor(white: 1.0, alpha: 0.5)
         suzyDismissBtnSuzy.addTarget(self, action: #selector(suzyHideQuickViewSuzy), for: .touchUpInside)
         suzyDismissBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         addSubview(suzyDismissBtnSuzy)
         
-        // 约束布局 (按比例)
+     
         NSLayoutConstraint.activate([
             suzyCardContainerSuzy.centerXAnchor.constraint(equalTo: centerXAnchor),
             suzyCardContainerSuzy.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 40),
@@ -160,7 +158,7 @@ final class SuzyUserQuickViewSuzy: UIView {
         suzyBioLabelSuzy.text = suzyItemSuzy.suzyBioSuzy
         suzyUserAvatarSuzy.image = suzyItemSuzy.suzyGenderSuzy == 0 ? SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "respectfulSpaceSuzy") : SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "confidentUserSuue")
         
-        // 动态生成标签行
+       
         suzyTagFlowStackSuzy.arrangedSubviews.forEach { $0.removeFromSuperview() }
         let suzyTopRowSuzy = UIStackView()
         let suzyBottomRowSuzy = UIStackView()
@@ -204,8 +202,7 @@ final class SuzyUserQuickViewSuzy: UIView {
         if let index = SuzyMessageCacheManager.shared.conversations.firstIndex(where: {
                 $0.userInfo.suzyIdentifierSuzy == suzyEntitySuzy?.suzyIdentifierSuzy
             }) {
-                
-                // 3. 直接修改原数组中的数据
+               
                 SuzyMessageCacheManager.shared.conversations[index].messages.append(newMessage)
             let updatedConversation = SuzyMessageCacheManager.shared.conversations.remove(at: index)
                     SuzyMessageCacheManager.shared.conversations.insert(updatedConversation, at: 0)

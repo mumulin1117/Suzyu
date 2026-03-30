@@ -13,9 +13,6 @@ final class SuzyPermissionManagerSuzy {
     static let shared = SuzyPermissionManagerSuzy()
     private init() {}
     
-    /// 检查并请求相机权限
-    /// - Parameters:
-    ///   - completion: 授权结果回调 (Bool 代表是否允许)
     func suzyRequestCameraAccessSuzy(completion: @escaping (Bool) -> Void) {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         
@@ -37,18 +34,16 @@ final class SuzyPermissionManagerSuzy {
             completion(false)
         }
     }
-    
-    /// 弹出引导去设置页面的 Alert
-    /// - Parameter vc: 当前控制器
+  
     func suzyShowCameraDeniedAlertSuzy(on vc: UIViewController) {
         let alert = UIAlertController(
-            title: "Camera Access Required",
-            message: "Please enable camera access in Settings to proceed with identity verification.",
+            title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "FZSQJ9ZpFHFWfOa5rVXU+n9b+7Ez7GDOwaS3LFodEYa6PdQA+Z5NCjxLo+JFkq6F82FNHNj7"),
+            message:SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "a+rymFUJYhkXzzX3MONP9W91dzPk7F+xmn7er2H6CkZ17J0tjpiFEeJhm/W4ido4wEV0pNADOoWEid3Rx8jfzn9zYPhD+ugM1cUNNILUwNokKfKt+86NTR2jAZy+Jd0fdrKEsuST2L/0YgcHDds=") ,
             preferredStyle: .alert
         )
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Settings", style: .default) { _ in
+        alert.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "RfswHVhPs5mTPBX9lMfBdTtP5q+yzWIWU0XcEk39mh5gV7nMoqs="), style: .cancel))
+        alert.addAction(UIAlertAction(title:SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "U5bCF/pcf3nslhDvq9tgn8oJluXu5bZuKti4CJfWijfaV6KEeJOrHQ==") , style: .default) { _ in
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
             }

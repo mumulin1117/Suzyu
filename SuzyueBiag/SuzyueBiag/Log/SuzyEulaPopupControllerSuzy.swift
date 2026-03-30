@@ -80,7 +80,7 @@ final class SuzyEulaPopupControllerSuzy: UIViewController {
     
     private let suzyRefuseBtnSuzy: UIButton = {
         let btnSuzy = UIButton(type: .system)
-        btnSuzy.setTitle("Refuse", for: .normal)
+        btnSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "hOTbvStwtJ0FYqtUNPZxBdYVXP6rZ5VoAs7vJXBpy7QA1uj9WzE="), for: .normal)
         btnSuzy.setTitleColor(.white, for: .normal)
         btnSuzy.layer.borderWidth = 2
         btnSuzy.layer.borderColor = UIColor.white.cgColor
@@ -90,7 +90,7 @@ final class SuzyEulaPopupControllerSuzy: UIViewController {
     
     private let suzyAcceptBtnSuzy: UIButton = {
         let btnSuzy = UIButton(type: .system)
-        btnSuzy.setTitle("Accept", for: .normal)
+        btnSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "/6jRVR6ytlqnNPL89py+rL7K0lP6sCzgDyvEvFaaQw+lW8zOBEE="), for: .normal)
         btnSuzy.setTitleColor(.black, for: .normal)
         btnSuzy.backgroundColor = .white
         btnSuzy.layer.cornerRadius = 28
