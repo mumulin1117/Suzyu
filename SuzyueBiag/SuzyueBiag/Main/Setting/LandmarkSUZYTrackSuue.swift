@@ -174,14 +174,14 @@ class LandmarkSUZYTrackSuue: UIViewController {
         }
         
         let suzyDeleteAlertSuzy = UIAlertController(
-                    title: "Delete Account",
-                    message: "This action is irreversible. All your data, including messages and coins, will be permanently deleted.",
+                    title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "0a/yCV49dk0lFxhaJm5P9hpg1Z/Bs/yVysTjQLXXrj81GdqRYXdpJY3pDiXeKg=="),
+                    message: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "fsW9xEPcgSz4dEmOwMwAfMOkLTnBozByotoN7XXoXO9TbUdXAzUSnPzKwRZytEYWQAjLvth2nZIVmKFywrctRDHZpL6ByVZ07ifcAUUoyzFrDSW2gQHPKOLqKOXH1Y5jPtF0KFVClVmw/0n6kUPy+RAZ2pLB+eW5J8X0egTJgIK+lA111i0="),
                     preferredStyle: .alert
                 
         )
                 
-        suzyDeleteAlertSuzy.addAction(UIAlertAction(title: "Keep Account", style: .cancel))
-        suzyDeleteAlertSuzy.addAction(UIAlertAction(title: "Delete Permanently", style: .destructive, handler: { _ in
+        suzyDeleteAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "37ChiB1aMuXweckbj5yo946DRZgFvbt5xW10WYPFar86F5hz4yc+9XAUt34="), style: .cancel))
+        suzyDeleteAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "iZdIpMxaacpnt+y/4W2/sK+CL7aD+Zz+oZAbZjbVPYQDPhIiA2nxITh3YgchrJdOcxs="), style: .destructive, handler: { _ in
             SuzySecureVaultSuzy.sharedSuzy.suzyExecutePermanentAccountDestructionSuzy { [weak self] _ in
                         self?.adloiseh()
                     }

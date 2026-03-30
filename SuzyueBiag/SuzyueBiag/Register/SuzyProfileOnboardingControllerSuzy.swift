@@ -136,7 +136,8 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
     private let suzySubLabelSuzy: UILabel = {
         let labelSuzy = UILabel()
         labelSuzy.textColor = UIColor.white.withAlphaComponent(0.6)
-        labelSuzy.font = .systemFont(ofSize: 16)
+        labelSuzy.font = .systemFont(ofSize: 14)
+        labelSuzy.numberOfLines = 0
         labelSuzy.textAlignment = .center
         return labelSuzy
     }()
@@ -592,7 +593,12 @@ extension SuzyProfileOnboardingControllerSuzy {
         imageViewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "gegnderpickong")
         imageViewSuzy.contentMode = .scaleAspectFit
         imageViewSuzy.translatesAutoresizingMaskIntoConstraints = false
-        imageViewSuzy.heightAnchor.constraint(equalToConstant: 184).isActive = true
+        if UIScreen.main.bounds.height < 700 {
+            imageViewSuzy.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        }else{
+            imageViewSuzy.heightAnchor.constraint(equalToConstant: 174).isActive = true
+        }
+        
         stackSuzy.addArrangedSubview(imageViewSuzy)
         
         for gSuzy in gendersSuzy {
@@ -602,7 +608,7 @@ extension SuzyProfileOnboardingControllerSuzy {
             btnSuzy.layer.borderWidth = 1
             btnSuzy.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
             btnSuzy.layer.cornerRadius = 15
-            btnSuzy.heightAnchor.constraint(equalToConstant: 60).isActive = true
+            btnSuzy.heightAnchor.constraint(equalToConstant: 55).isActive = true
             btnSuzy.contentHorizontalAlignment = .left
             btnSuzy.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
             
@@ -617,7 +623,7 @@ extension SuzyProfileOnboardingControllerSuzy {
                 guard let self = self else { return }
                             
                 self.suzyProfileDataSuzy.suzyGenderSuzy = gSuzy
-                // 触发生感反馈，增加用户体验差异化
+             
                 let suzyImpactSuzy = UIImpactFeedbackGenerator(style: .medium)
                 suzyImpactSuzy.impactOccurred()
                 
@@ -634,7 +640,7 @@ extension SuzyProfileOnboardingControllerSuzy {
         suzyPickerSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyContainerViewSuzy.addSubview(suzyPickerSuzy)
         
-        // 默认选中 32 岁（匹配 UI 设计图）或之前保存的值
+      
         let suzyInitialAgeSuzy = suzyProfileDataSuzy.suzyAgeSuzy > 0 ? suzyProfileDataSuzy.suzyAgeSuzy : 32
         if let suzyIndexSuzy = suzyAgeRangeSuzy.firstIndex(of: suzyInitialAgeSuzy) {
             suzyPickerSuzy.selectRow(suzyIndexSuzy, inComponent: 0, animated: false)

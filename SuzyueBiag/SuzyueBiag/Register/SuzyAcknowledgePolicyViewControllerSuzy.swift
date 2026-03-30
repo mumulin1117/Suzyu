@@ -139,7 +139,7 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
             suzyMainScrollSuzy.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             suzyMainScrollSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             suzyMainScrollSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            suzyMainScrollSuzy.bottomAnchor.constraint(equalTo: suzyPersonImageViewSuzy.topAnchor, constant: -20),
+            suzyMainScrollSuzy.bottomAnchor.constraint(equalTo: suzyPersonImageViewSuzy.topAnchor, constant: -5),
             
             suzyContentStackSuzy.topAnchor.constraint(equalTo: suzyMainScrollSuzy.topAnchor),
             suzyContentStackSuzy.leadingAnchor.constraint(equalTo: suzyMainScrollSuzy.leadingAnchor),
@@ -153,7 +153,7 @@ final class SuzyAcknowledgePolicyViewControllerSuzy: UIViewController {
             suzyPersonImageViewSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             suzyPersonImageViewSuzy.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             suzyPersonImageViewSuzy.widthAnchor.constraint(equalToConstant: wSuzy * 0.6), // 匹配 UI 比例
-            suzyPersonImageViewSuzy.heightAnchor.constraint(equalToConstant: wSuzy * 0.6 * 1.2),
+            suzyPersonImageViewSuzy.heightAnchor.constraint(equalToConstant: wSuzy * 0.45 * 1.2),
           
             suzyAcceptButtonSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             suzyAcceptButtonSuzy.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),

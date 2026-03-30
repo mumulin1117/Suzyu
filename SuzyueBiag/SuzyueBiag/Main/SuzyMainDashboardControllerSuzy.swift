@@ -46,7 +46,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         suzyAllFilterBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyAllFilterBtnSuzy"), for: .normal)
-        suzyAllFilterBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyAllFilterBtnSuzysel@"), for: .selected)
+        suzyAllFilterBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyAllFilterBtnSuzysel"), for: .selected)
         
         suzyInterestFilterBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyInterestFilterBtnSuzy"), for: .normal)
         suzyInterestFilterBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzyInterestFilterBtnSuzysel"), for: .selected)
