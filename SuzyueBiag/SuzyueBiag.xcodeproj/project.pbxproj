@@ -150,9 +150,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SuzyueBiag/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Suzyu;
-				INFOPLIST_KEY_NSCameraUsageDescription = "To ensure a secure environment, Suzy requires camera access for real-time identity verification and to enable interactive visual features during your discovery journey.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "To ensure a secure environment, Suzyu requires camera access for  identity verification and to enable interactive visual features during your discovery journey.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Suzy uses the microphone to facilitate seamless audio-based interactions and voice-guided features, helping you connect more naturally with the community.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access to your photo library allows you to personalize your profile with existing captures and share your favorite moments within the community.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -194,9 +193,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SuzyueBiag/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Suzyu;
-				INFOPLIST_KEY_NSCameraUsageDescription = "To ensure a secure environment, Suzy requires camera access for real-time identity verification and to enable interactive visual features during your discovery journey.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "To ensure a secure environment, Suzyu requires camera access for  identity verification and to enable interactive visual features during your discovery journey.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Suzy uses the microphone to facilitate seamless audio-based interactions and voice-guided features, helping you connect more naturally with the community.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access to your photo library allows you to personalize your profile with existing captures and share your favorite moments within the community.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";

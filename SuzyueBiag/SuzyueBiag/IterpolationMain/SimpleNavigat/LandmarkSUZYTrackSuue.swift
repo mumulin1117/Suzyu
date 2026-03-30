@@ -1,0 +1,476 @@
+//
+//  LandmarkSUZYTrackSuue.swift
+//  SuzyueBiag
+//
+//  Created by  on 2026/3/26.
+//
+
+
+import UIKit
+import StoreKit
+class LandmarkSUZYTrackSuue: UIViewController {
+    let backBtn = UIButton(type: .custom)
+    private let suzyMainScrollerSuzy = UIScrollView()
+    private let suzyContentStackSuzy = UIStackView()
+    
+    private let suzyHeaderImageSuzy = UIImageView()
+    private let suzyGoldCountLabelSuzy = UILabel()
+    
+     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        suzyInitializeInterfaceSuzy()
+        suzyApplyLayoutConstraintsSuzy()
+        suzySyncProfileDataSuzy()
+    }
+    private let suzyFallbackBgImageViewSuzy: UIImageView = {
+        let iv = UIImageView.init(frame: UIScreen.main.bounds)
+        iv.image = SuzyArtToyVibeEngine.suzyfilterApplySuzy(assetManagerSuue: "SuzyWelcomeBgSuzyELUA")
+        iv.contentMode = .scaleAspectFill
+       
+        return iv
+    }()
+    
+    lazy var contentSafetySuzy: UIButton = {
+        let jdjjj = UIButton()
+        jdjjj.setImage(SuzyArtToyVibeEngine.suzyfilterApplySuzy(assetManagerSuue: "suzy_ic_coin_small"), for: .normal)
+        jdjjj.setTitle(" \(SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.deseriali ?? 0)", for: .normal)
+        jdjjj.translatesAutoresizingMaskIntoConstraints = false
+        jdjjj.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        jdjjj.addTarget(self, action: #selector(presentalllAhoiun), for: .touchUpInside)
+        return jdjjj
+    }()
+   @objc func presentalllAhoiun()  {
+        let talll = SuzyGoldShopVCSuzy()
+        talll.modalPresentationStyle = .fullScreen
+        self.present(talll, animated: true)
+    }
+    
+    @objc func backActionAshuu()  {
+        self.navigationController?.popViewController(animated: true)
+    }
+    private func suzyInitializeInterfaceSuzy() {
+        view.addSubview(suzyFallbackBgImageViewSuzy)
+        backBtn.setImage(UIImage(systemName: "arrow.left"), for: .normal)
+        backBtn.tintColor = .white
+        backBtn.addTarget(self, action: #selector(backActionAshuu), for: .touchUpInside)
+        backBtn.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(backBtn)
+        
+        view.addSubview(contentSafetySuzy)
+        
+        suzyMainScrollerSuzy.showsVerticalScrollIndicator = false
+        suzyMainScrollerSuzy.alwaysBounceVertical = true
+        view.addSubview(suzyMainScrollerSuzy)
+
+        suzyContentStackSuzy.axis = .vertical
+        suzyContentStackSuzy.spacing = 16
+        suzyContentStackSuzy.alignment = .fill
+        suzyMainScrollerSuzy.addSubview(suzyContentStackSuzy)
+
+        suzyHeaderImageSuzy.layer.cornerRadius = 55
+        suzyHeaderImageSuzy.layer.borderWidth = 3
+        suzyHeaderImageSuzy.layer.borderColor = UIColor.systemPink.withAlphaComponent(0.3).cgColor
+        suzyHeaderImageSuzy.clipsToBounds = true
+        
+        suzyAssembleFunctionalBlocksSuzy()
+    }
+    var userinfomation:SuzyUserProfileSuzy?{
+        return SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()
+    }
+    private func suzyAssembleFunctionalBlocksSuzy() {
+        let suzyAvatarContainerSuzy = UIView()
+        suzyAvatarContainerSuzy.addSubview(suzyHeaderImageSuzy)
+        suzyHeaderImageSuzy.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            backBtn.widthAnchor.constraint(equalToConstant: 25),
+            backBtn.heightAnchor.constraint(equalToConstant: 30),
+            backBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+         
+            contentSafetySuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            contentSafetySuzy.widthAnchor.constraint(equalToConstant: 150),
+            contentSafetySuzy.heightAnchor.constraint(equalToConstant: 30),
+            contentSafetySuzy.centerYAnchor.constraint(equalTo: backBtn.centerYAnchor),
+            
+            
+            suzyHeaderImageSuzy.centerXAnchor.constraint(equalTo: suzyAvatarContainerSuzy.centerXAnchor),
+            suzyHeaderImageSuzy.topAnchor.constraint(equalTo: suzyAvatarContainerSuzy.topAnchor, constant: 40),
+            suzyHeaderImageSuzy.bottomAnchor.constraint(equalTo: suzyAvatarContainerSuzy.bottomAnchor, constant: -20),
+            suzyHeaderImageSuzy.widthAnchor.constraint(equalToConstant: 110),
+            suzyHeaderImageSuzy.heightAnchor.constraint(equalToConstant: 110)
+        ])
+        suzyContentStackSuzy.addArrangedSubview(suzyAvatarContainerSuzy)
+        
+        
+        let suzyNameRowSuzy = suzyBuildDataEntrySuzy(suzyTitleSuzy: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "6y6yTBC5iKbWmU76QX0Cfa1wX4M19sNWUhwPsGB7zPmab80Xe3DfDQ=="), suzyValueSuzy: userinfomation?.suzyUsername ?? "aaCWXsBe2RdiXcF9aHh7oWB0/54O6GcHemefWdJqIv76W/HdAOXD",suzyHasArrowSuzy: true, suzyTagSuzy: 101)
+        let suzyGenderRowSuzy = suzyBuildDataEntrySuzy(suzyTitleSuzy: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "Av24HpK8UnSEbKtezPN5dMYa6QwTSUI/fCZSlazyoMXm3iw7hZM="), suzyValueSuzy: userinfomation?.suzyGenderSuzy == 0 ? "Man" : "Women", suzyHasArrowSuzy: true, suzyTagSuzy: 102)
+        let suzyBioAreaSuzy = suzyBuildLargeInputAreaSuzy(suzyInitialTextSuzy:userinfomation?.suzyBioSuzy ?? "No Brief" , suzyTagSuzy: 103)
+        
+        let inter = userinfomation?.suzyTagsSuzy.joined(separator: ",") ?? "No Tags"
+        
+        let suzyInterestRowSuzy = suzyBuildDataEntrySuzy(suzyTitleSuzy: "Interests", suzyValueSuzy: inter, suzyHasArrowSuzy: true, suzyTagSuzy: 104)
+
+        let suzyActionGridSuzy = UIStackView()
+        suzyActionGridSuzy.axis = .horizontal
+        suzyActionGridSuzy.distribution = .fillEqually
+        suzyActionGridSuzy.spacing = 12
+        
+        let suzyUserAgreBtnSuzy = suzyBuildCompactActionBtnSuzy(suzyLabelSuzy: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "+VEsLj5SGV9v0tY8XEEl3Gi8t+KFERc6G09Aeta6L8Dgqckndc7VN2jmi8govg=="), paod: 445)
+        let suzyPrivAgreBtnSuzy = suzyBuildCompactActionBtnSuzy(suzyLabelSuzy: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "gvgsZ5tAe1ziSYJzBIZvxHQFy+1pdQIDv94adlIqAkfILN7QlXqJ7yNnFD61xFnutQ=="), paod: 444)
+        suzyActionGridSuzy.addArrangedSubview(suzyUserAgreBtnSuzy)
+        suzyActionGridSuzy.addArrangedSubview(suzyPrivAgreBtnSuzy)
+
+        let suzyMinorGridSuzy = UIStackView()
+        suzyMinorGridSuzy.axis = .horizontal
+        suzyMinorGridSuzy.distribution = .fillEqually
+        suzyMinorGridSuzy.spacing = 12
+        
+        let suzyRateBtnSuzy = suzyBuildCompactActionBtnSuzy(suzyLabelSuzy: "Rate Us", suzyIconNameSuzy: "star", paod: 446)
+        let suzyLegalBtnSuzy = suzyBuildCompactActionBtnSuzy(suzyLabelSuzy: "Legal & Safety", suzyIconNameSuzy: "checkmark.shield", paod: 447)
+        suzyMinorGridSuzy.addArrangedSubview(suzyRateBtnSuzy)
+        suzyMinorGridSuzy.addArrangedSubview(suzyLegalBtnSuzy)
+
+        let suzyShareBtnSuzy = UIButton(type: .system)
+        suzyShareBtnSuzy.backgroundColor = UIColor(red: 0.83, green: 0.92, blue: 1, alpha: 1)
+        suzyShareBtnSuzy.setTitleColor(.black, for: .normal)
+        suzyShareBtnSuzy.setTitle("Share with Friends", for: .normal)
+        suzyShareBtnSuzy.layer.cornerRadius = 25
+        suzyShareBtnSuzy.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        suzyShareBtnSuzy.tintColor = .black
+       
+        suzyShareBtnSuzy.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        suzyShareBtnSuzy.addTarget(self, action: #selector((suzyTriggerSocialShareActionSuzy)), for: .touchUpInside)
+        let suzySignOutBtnSuzy = UIButton(type: .system)
+        suzySignOutBtnSuzy.layer.borderColor = UIColor(red: 1, green: 0.52, blue: 0.52, alpha: 1).cgColor
+        suzySignOutBtnSuzy.layer.borderWidth = 1
+        suzySignOutBtnSuzy.setTitle(SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "ZGMcuXHWV4KC2HWyfx5lWEwfMPSE1fqrZkTGEF9fslMRA72u7kBG7g=="), for: .normal)
+        suzySignOutBtnSuzy.setTitleColor(UIColor(red: 1, green: 0.52, blue: 0.52, alpha: 1), for: .normal)
+        suzySignOutBtnSuzy.layer.cornerRadius = 25
+        suzySignOutBtnSuzy.tag = 120
+        suzySignOutBtnSuzy.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        suzySignOutBtnSuzy.addTarget(self, action: #selector(suzySignOutBtnSuzyalert(hoof:)), for: .touchUpInside)
+        let suzyDeleteBtnSuzy = UIButton(type: .system)
+        suzyDeleteBtnSuzy.setTitle(SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "5xlEnI8wnMVH2QFlSqdvlQyK+KUcRk/Asw3fw8XHhth+AnX9Gh4USxYW3A9Jrw=="), for: .normal)
+        suzyDeleteBtnSuzy.setTitleColor(UIColor(red: 1, green: 0.52, blue: 0.52, alpha: 1), for: .normal)
+        suzyDeleteBtnSuzy.titleLabel?.font = .systemFont(ofSize: 14)
+        suzyDeleteBtnSuzy.addTarget(self, action: #selector(suzySignOutBtnSuzyalert(hoof:)), for: .touchUpInside)
+        [suzyNameRowSuzy, suzyGenderRowSuzy, suzyBioAreaSuzy, suzyInterestRowSuzy, suzyShareBtnSuzy, suzyActionGridSuzy, suzyMinorGridSuzy, suzySignOutBtnSuzy, suzyDeleteBtnSuzy].forEach {
+            suzyContentStackSuzy.addArrangedSubview($0)
+        }
+    }
+
+    
+    @objc func suzySignOutBtnSuzyalert(hoof:UIButton)  {
+        
+        
+        if hoof.tag == 120 {
+            SuzySecureVaultSuzy.sharedSuzy.suzyDeconstructLoginSessionSuzy { [weak self] in
+                self?.adloiseh()
+                
+            }
+            return
+        }
+        
+        let suzyDeleteAlertSuzy = UIAlertController(
+                    title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "0a/yCV49dk0lFxhaJm5P9hpg1Z/Bs/yVysTjQLXXrj81GdqRYXdpJY3pDiXeKg=="),
+                    message: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "fsW9xEPcgSz4dEmOwMwAfMOkLTnBozByotoN7XXoXO9TbUdXAzUSnPzKwRZytEYWQAjLvth2nZIVmKFywrctRDHZpL6ByVZ07ifcAUUoyzFrDSW2gQHPKOLqKOXH1Y5jPtF0KFVClVmw/0n6kUPy+RAZ2pLB+eW5J8X0egTJgIK+lA111i0="),
+                    preferredStyle: .alert
+                
+        )
+                
+        suzyDeleteAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "37ChiB1aMuXweckbj5yo946DRZgFvbt5xW10WYPFar86F5hz4yc+9XAUt34="), style: .cancel))
+        suzyDeleteAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "iZdIpMxaacpnt+y/4W2/sK+CL7aD+Zz+oZAbZjbVPYQDPhIiA2nxITh3YgchrJdOcxs="), style: .destructive, handler: { _ in
+            SuzySecureVaultSuzy.sharedSuzy.suzyExecutePermanentAccountDestructionSuzy { [weak self] _ in
+                        self?.adloiseh()
+                    }
+        }))
+                
+        self.present(suzyDeleteAlertSuzy, animated: true)
+    }
+    
+    func adloiseh()  {
+        
+        let navSuzy = UINavigationController(rootViewController: PromiseChainSuzy())
+        navSuzy.isNavigationBarHidden = true
+        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = navSuzy
+    }
+    private func suzyApplyLayoutConstraintsSuzy() {
+        suzyMainScrollerSuzy.translatesAutoresizingMaskIntoConstraints = false
+        suzyContentStackSuzy.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            suzyMainScrollerSuzy.topAnchor.constraint(equalTo: self.backBtn.bottomAnchor),
+            suzyMainScrollerSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            suzyMainScrollerSuzy.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            suzyMainScrollerSuzy.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            suzyContentStackSuzy.topAnchor.constraint(equalTo: suzyMainScrollerSuzy.topAnchor),
+            suzyContentStackSuzy.leadingAnchor.constraint(equalTo: suzyMainScrollerSuzy.leadingAnchor, constant: 20),
+            suzyContentStackSuzy.trailingAnchor.constraint(equalTo: suzyMainScrollerSuzy.trailingAnchor, constant: -20),
+            suzyContentStackSuzy.bottomAnchor.constraint(equalTo: suzyMainScrollerSuzy.bottomAnchor, constant: -20),
+            suzyContentStackSuzy.widthAnchor.constraint(equalTo: suzyMainScrollerSuzy.widthAnchor, constant: -40)
+        ])
+    }
+
+    private func suzySyncProfileDataSuzy() {
+        let suzyTargetAvatarSuzy = (userinfomation?.suzyGenderSuzy == 0) ? "respectfulSpaceSuzy" : "confidentUserSuue"
+        suzyHeaderImageSuzy.image = SuzyArtToyVibeEngine.suzyfilterApplySuzy(assetManagerSuue: suzyTargetAvatarSuzy)
+    }
+
+    @objc private func suzyTriggerModifierSuzy(_ sender: UITapGestureRecognizer) {
+        guard let suzyActiveViewSuzy = sender.view else { return }
+        
+        switch suzyActiveViewSuzy.tag {
+        case 101: // Modify Username
+            let suzyAlertSuzy = UIAlertController(title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "tSuLFjjrZI1kpFKm8fIClSOrJIXUak0rAIfPQ1HgQhMUjUPpD5cdA5LfrbAx"), message: nil, preferredStyle: .alert)
+            suzyAlertSuzy.addTextField { $0.text = self.userinfomation?.suzyUsername}
+            suzyAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "oUQXeTm+S3GEHH4atRlR1uZ5PPZ3X4L744s0tpU4wwg3WU55Ez8="), style: .cancel))
+            suzyAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "ykz2iRa0Wb3sum73gY7CzDNLgI72MzUMeiGPJMUd2EFvqc0vtH57"), style: .default, handler: { _ in
+                if let suzyNewNameSuzy = suzyAlertSuzy.textFields?.first?.text, !suzyNewNameSuzy.isEmpty {
+                    
+                    self.suzyUpdateRowValueSuzy(tag: 101, newValue: suzyNewNameSuzy)
+                    SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(usersuzyName: suzyNewNameSuzy)
+                }
+            }))
+            self.present(suzyAlertSuzy, animated: true)
+
+        case 102: // Modify Gender
+            let suzySheetSuzy = UIAlertController(title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "LrC0lfzs2PqHW4QHYM/W2Sr4+1Dlide8oUOfU89TNEIc+UBQUWmZvDxC1rsN"), message: nil, preferredStyle: .actionSheet)
+            let suzyGendersSuzy = ["gqUqhAwldJPM3ln8c4HMCBtPUnA8GDhepwsuplKPOhhdGVU=", "tp9CrhOjEYBGtADr35Vbe+fp8z3zgRVMghE3O0L89jWYW/Pg3A=="]
+            suzyGendersSuzy.forEach { suzyTypeSuzy in
+                suzySheetSuzy.addAction(UIAlertAction(title:SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: suzyTypeSuzy) , style: .default, handler: { _ in
+                  
+                    self.suzyUpdateRowValueSuzy(tag: 102, newValue: suzyTypeSuzy)
+                   
+                    SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(gender:suzyTypeSuzy == "Man" ? 0 : 1)
+                    self.suzySyncProfileDataSuzy()
+                }))
+            }
+            suzySheetSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "lIgKG4rvNPjMsSeTEWSOg6N+NzGefL6oCCNMAfcwm6E7XWJy/VU="), style: .cancel))
+            self.present(suzySheetSuzy, animated: true)
+
+        case 103: // Modify Bio
+            let suzyBioAlertSuzy = UIAlertController(title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "QcSZluMG52Y1ZPjXfQscTjoARP478cSYVVSi2sMpQ3OXtQZHsVkN/M3+"), message: nil, preferredStyle: .alert)
+            suzyBioAlertSuzy.addTextField { $0.placeholder = "Enter your brief..." }
+            suzyBioAlertSuzy.addAction(UIAlertAction(title: SuzyArtToyVibeEngine.suzyredoStackSuue(stateMachineSuzy: "Ec6cJ7Zc4mu7+3ht0Ip3151UyaRu8iUNjqS79Z18AjbIUI2UFA1P"), style: .default, handler: { _ in
+                if let suzyNewBioSuzy = suzyBioAlertSuzy.textFields?.first?.text {
+                    SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(newBioSuzy: suzyNewBioSuzy)
+                    if let suzyBioWrapperSuzy = self.suzyContentStackSuzy.viewWithTag(103) {
+                        suzyBioWrapperSuzy.subviews.compactMap({ $0 as? UILabel }).first?.text = suzyNewBioSuzy
+                       
+                    }
+                }
+            }))
+            self.present(suzyBioAlertSuzy, animated: true)
+
+        case 104:
+            
+            let suzyPickerSuzy = SuzyInterestPickerPopupSuzy(fromrEdit: true)
+            suzyPickerSuzy.modalPresentationStyle = .overFullScreen
+         
+             suzyPickerSuzy.suzySelectCompleteSuzy = { [weak self] tags in
+                let joined = tags.joined(separator: ",")
+                self?.suzyUpdateRowValueSuzy(tag: 104, newValue: joined)
+             }
+            self.present(suzyPickerSuzy, animated: true)
+
+        default: break
+        }
+    }
+
+
+    private func suzyUpdateRowValueSuzy(tag: Int, newValue: String) {
+        guard let suzyTargetRowSuzy = self.suzyContentStackSuzy.viewWithTag(tag) else { return }
+      
+        let suzyLabelsSuzy = suzyTargetRowSuzy.subviews.compactMap { $0 as? UILabel }
+        
+        if suzyLabelsSuzy.count >= 2 {
+            suzyLabelsSuzy[1].text = newValue
+        }
+    }
+
+    private func suzyBuildDataEntrySuzy(suzyTitleSuzy: String, suzyValueSuzy: String, suzyHasArrowSuzy: Bool = false, suzyTagSuzy: Int) -> UIView {
+        let suzyBaseViewSuzy = UIView()
+        suzyBaseViewSuzy.backgroundColor = UIColor(white: 0.1, alpha: 1)
+        suzyBaseViewSuzy.layer.cornerRadius = 15
+        suzyBaseViewSuzy.tag = suzyTagSuzy
+        suzyBaseViewSuzy.isUserInteractionEnabled = true
+        suzyBaseViewSuzy.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(suzyTriggerModifierSuzy(_:))))
+        
+        let suzyLeftLabelSuzy = UILabel()
+        suzyLeftLabelSuzy.text = suzyTitleSuzy
+        suzyLeftLabelSuzy.textColor = .gray
+        
+        let suzyRightLabelSuzy = UILabel()
+        suzyRightLabelSuzy.text = suzyValueSuzy
+        suzyRightLabelSuzy.textColor = .white
+        
+        suzyBaseViewSuzy.addSubview(suzyLeftLabelSuzy)
+        suzyBaseViewSuzy.addSubview(suzyRightLabelSuzy)
+        suzyLeftLabelSuzy.translatesAutoresizingMaskIntoConstraints = false
+        suzyRightLabelSuzy.translatesAutoresizingMaskIntoConstraints = false
+        
+        var suzyRightAnchorSuzy = suzyBaseViewSuzy.trailingAnchor.constraint(equalTo: suzyBaseViewSuzy.trailingAnchor, constant: -15)
+        
+        if suzyHasArrowSuzy {
+            let suzyIconSuzy = UIImageView(image: UIImage(systemName: "play.fill"))
+            suzyIconSuzy.tintColor = .gray
+            suzyIconSuzy.translatesAutoresizingMaskIntoConstraints = false
+            suzyBaseViewSuzy.addSubview(suzyIconSuzy)
+            NSLayoutConstraint.activate([
+                suzyIconSuzy.trailingAnchor.constraint(equalTo: suzyBaseViewSuzy.trailingAnchor, constant: -15),
+                suzyIconSuzy.centerYAnchor.constraint(equalTo: suzyBaseViewSuzy.centerYAnchor),
+                suzyIconSuzy.widthAnchor.constraint(equalToConstant: 10),
+                suzyIconSuzy.heightAnchor.constraint(equalToConstant: 10)
+            ])
+            suzyRightAnchorSuzy = suzyRightLabelSuzy.trailingAnchor.constraint(equalTo: suzyIconSuzy.leadingAnchor, constant: -8)
+        }
+
+        NSLayoutConstraint.activate([
+            suzyBaseViewSuzy.heightAnchor.constraint(equalToConstant: 55),
+            suzyLeftLabelSuzy.leadingAnchor.constraint(equalTo: suzyBaseViewSuzy.leadingAnchor, constant: 15),
+            suzyLeftLabelSuzy.centerYAnchor.constraint(equalTo: suzyBaseViewSuzy.centerYAnchor),
+            suzyRightLabelSuzy.centerYAnchor.constraint(equalTo: suzyBaseViewSuzy.centerYAnchor),
+            suzyRightLabelSuzy.leadingAnchor.constraint(equalTo: suzyBaseViewSuzy.leadingAnchor, constant: 150),
+            suzyRightAnchorSuzy
+        ])
+        return suzyBaseViewSuzy
+    }
+
+    private func suzyBuildLargeInputAreaSuzy(suzyInitialTextSuzy: String, suzyTagSuzy: Int) -> UIView {
+        let suzyWrapperSuzy = UIView()
+        suzyWrapperSuzy.backgroundColor = UIColor(white: 0.1, alpha: 1)
+        suzyWrapperSuzy.layer.cornerRadius = 15
+        suzyWrapperSuzy.tag = suzyTagSuzy
+        suzyWrapperSuzy.isUserInteractionEnabled = true
+        suzyWrapperSuzy.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(suzyTriggerModifierSuzy(_:))))
+
+        let suzyTextShowcaseSuzy = UILabel()
+        suzyTextShowcaseSuzy.text = suzyInitialTextSuzy
+        suzyTextShowcaseSuzy.textColor = .white
+        suzyTextShowcaseSuzy.numberOfLines = 0
+        
+        let suzyCountLabelSuzy = UILabel()
+        suzyCountLabelSuzy.text = "\(suzyInitialTextSuzy.count)/150"
+        suzyCountLabelSuzy.textColor = .darkGray
+        suzyCountLabelSuzy.font = .systemFont(ofSize: 12)
+
+        suzyWrapperSuzy.addSubview(suzyTextShowcaseSuzy)
+        suzyWrapperSuzy.addSubview(suzyCountLabelSuzy)
+        suzyTextShowcaseSuzy.translatesAutoresizingMaskIntoConstraints = false
+        suzyCountLabelSuzy.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            suzyWrapperSuzy.heightAnchor.constraint(equalToConstant: 120),
+            suzyTextShowcaseSuzy.topAnchor.constraint(equalTo: suzyWrapperSuzy.topAnchor, constant: 15),
+            suzyTextShowcaseSuzy.leadingAnchor.constraint(equalTo: suzyWrapperSuzy.leadingAnchor, constant: 15),
+            suzyTextShowcaseSuzy.trailingAnchor.constraint(equalTo: suzyWrapperSuzy.trailingAnchor, constant: -15),
+            suzyCountLabelSuzy.bottomAnchor.constraint(equalTo: suzyWrapperSuzy.bottomAnchor, constant: -10),
+            suzyCountLabelSuzy.trailingAnchor.constraint(equalTo: suzyWrapperSuzy.trailingAnchor, constant: -15),
+           
+        ])
+        return suzyWrapperSuzy
+    }
+
+    private func suzyBuildCompactActionBtnSuzy(suzyLabelSuzy: String, suzyIconNameSuzy: String? = nil,paod:Int) -> UIView {
+        let suzyBtnBaseSuzy = UIView()
+        suzyBtnBaseSuzy.tag = paod
+        suzyBtnBaseSuzy.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(operationStepSuzy(tap:))))
+        suzyBtnBaseSuzy.backgroundColor = UIColor(white: 0.1, alpha: 1)
+        suzyBtnBaseSuzy.layer.cornerRadius = 15
+        suzyBtnBaseSuzy.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        let suzyStackSuzy = UIStackView()
+        suzyStackSuzy.axis = .horizontal
+        suzyStackSuzy.spacing = 8
+        suzyStackSuzy.alignment = .center
+        
+        if let suzyImgNameSuzy = suzyIconNameSuzy {
+            let suzyIconSuzy = UIImageView(image: UIImage(systemName: suzyImgNameSuzy))
+            suzyIconSuzy.tintColor = .white
+            suzyIconSuzy.widthAnchor.constraint(equalToConstant: 18).isActive = true
+            suzyIconSuzy.heightAnchor.constraint(equalToConstant: 18).isActive = true
+            suzyStackSuzy.addArrangedSubview(suzyIconSuzy)
+        }
+        
+        let suzyTitleSuzy = UILabel()
+        suzyTitleSuzy.text = suzyLabelSuzy
+        suzyTitleSuzy.textColor = .white
+        suzyTitleSuzy.font = .systemFont(ofSize: 14)
+        suzyStackSuzy.addArrangedSubview(suzyTitleSuzy)
+        
+        suzyBtnBaseSuzy.addSubview(suzyStackSuzy)
+        suzyStackSuzy.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            suzyStackSuzy.centerXAnchor.constraint(equalTo: suzyBtnBaseSuzy.centerXAnchor),
+            suzyStackSuzy.centerYAnchor.constraint(equalTo: suzyBtnBaseSuzy.centerYAnchor)
+        ])
+        return suzyBtnBaseSuzy
+    }
+    
+   @objc func operationStepSuzy(tap:UITapGestureRecognizer) {
+       
+       switch tap.view?.tag {
+       case 444:
+           let eulaVcSuzy = SuzyLegalReaderControllerSuzy(suzyTypeSuzy: .suzyPrivacyPolicySuzy)
+           eulaVcSuzy.modalPresentationStyle = .overFullScreen
+           eulaVcSuzy.modalTransitionStyle = .crossDissolve
+           self.present(eulaVcSuzy, animated: true)
+       case 445:
+           let eulaVcSuzy = SuzyLegalReaderControllerSuzy(suzyTypeSuzy: .suzyTermsOfServiceSuzy)
+           eulaVcSuzy.modalPresentationStyle = .overFullScreen
+           eulaVcSuzy.modalTransitionStyle = .crossDissolve
+           self.present(eulaVcSuzy, animated: true)
+       case 446:
+           if #available(iOS 14.0, *) {
+               if let suzySceneSuzy = view.window?.windowScene {
+                   SKStoreReviewController.requestReview(in: suzySceneSuzy)
+                   
+               }
+           } else {
+               SKStoreReviewController.requestReview()
+               
+           }
+       case 447:
+           let eulaVcSuzy = SuzyLegalReaderControllerSuzy(suzyTypeSuzy: .suzyLegal)
+           eulaVcSuzy.modalPresentationStyle = .overFullScreen
+           eulaVcSuzy.modalTransitionStyle = .crossDissolve
+           self.present(eulaVcSuzy, animated: true)
+       default:
+           break
+       }
+    }
+}
+
+
+extension LandmarkSUZYTrackSuue {
+    
+    @objc private func suzyTriggerSocialShareActionSuzy() {
+       
+        let suzyShareTextSuzy = "Hey! Check out this amazing app. It's really cool!"
+      
+        let suzyAppStoreLinkSuzy = URL(string: "https://apps.apple.com/app/id6761250151")!
+        
+        let suzyItemsToShareSuzy: [Any] = [suzyShareTextSuzy, suzyAppStoreLinkSuzy]
+        
+        let suzyActivityVCSuzy = UIActivityViewController(
+            activityItems: suzyItemsToShareSuzy,
+            applicationActivities: nil
+        )
+        
+        if let suzyPopoverSuzy = suzyActivityVCSuzy.popoverPresentationController {
+            suzyPopoverSuzy.sourceView = self.view
+         
+            suzyPopoverSuzy.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            suzyPopoverSuzy.permittedArrowDirections = []
+        }
+       
+        self.present(suzyActivityVCSuzy, animated: true, completion: nil)
+ 
+        suzyActivityVCSuzy.completionWithItemsHandler = { (type, completed, items, error) in
+           
+        }
+    }
+}
