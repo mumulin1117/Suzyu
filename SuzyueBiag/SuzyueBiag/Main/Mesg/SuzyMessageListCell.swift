@@ -14,7 +14,7 @@ class SuzyMessageListCell: UITableViewCell {
     private let lastMsgLabel = UILabel()
     private let timeLabel = UILabel()
     private let unreadBadge = UILabel()
-    private let callIcon = UIImageView() 
+    private let clipboardIcon = UIImageView() 
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -47,11 +47,11 @@ class SuzyMessageListCell: UITableViewCell {
         unreadBadge.layer.cornerRadius = 10
         unreadBadge.clipsToBounds = true
         
-        callIcon.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "phone.circle")
+        clipboardIcon.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "phone.circle")
    
-        callIcon.isHidden = true
+        clipboardIcon.isHidden = true
 
-        [avatarImageView, nameLabel, lastMsgLabel, timeLabel, unreadBadge, callIcon].forEach {
+        [avatarImageView, nameLabel, lastMsgLabel, timeLabel, unreadBadge, clipboardIcon].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
@@ -71,10 +71,10 @@ class SuzyMessageListCell: UITableViewCell {
             lastMsgLabel.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: -5),
             lastMsgLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            callIcon.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            callIcon.centerYAnchor.constraint(equalTo: lastMsgLabel.centerYAnchor),
-            callIcon.widthAnchor.constraint(equalToConstant: 24),
-            callIcon.heightAnchor.constraint(equalToConstant: 24),
+            clipboardIcon.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            clipboardIcon.centerYAnchor.constraint(equalTo: lastMsgLabel.centerYAnchor),
+            clipboardIcon.widthAnchor.constraint(equalToConstant: 24),
+            clipboardIcon.heightAnchor.constraint(equalToConstant: 24),
             
             unreadBadge.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             unreadBadge.centerYAnchor.constraint(equalTo: lastMsgLabel.centerYAnchor),
@@ -88,11 +88,11 @@ class SuzyMessageListCell: UITableViewCell {
         nameLabel.text = model.userInfo.suzyUsernameSuzy
         timeLabel.text = model.lastTime
         
-        if case .call = model.messages.last?.content {
-            callIcon.isHidden = false
+        if case .clipboard = model.messages.last?.content {
+            clipboardIcon.isHidden = false
             lastMsgLabel.isHidden = true
         } else {
-            callIcon.isHidden = true
+            clipboardIcon.isHidden = true
             lastMsgLabel.isHidden = false
             if case .text(let t) = model.messages.last?.content{ lastMsgLabel.text = t }
             

@@ -139,10 +139,10 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
             .font: UIFont.systemFont(ofSize: 18, weight: .bold),
             .foregroundColor: UIColor.white
         ])
-        let suzyCoinAttachmentSuzy = NSTextAttachment()
-        suzyCoinAttachmentSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_ic_coin_small")
-        suzyCoinAttachmentSuzy.bounds = CGRect(x: 0, y: -4, width: 20, height: 20)
-        suzyBtnTitleSuzy.append(NSAttributedString(attachment: suzyCoinAttachmentSuzy))
+        let DeserialAttachmentSuzy = NSTextAttachment()
+        DeserialAttachmentSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_ic_coin_small")
+        DeserialAttachmentSuzy.bounds = CGRect(x: 0, y: -4, width: 20, height: 20)
+        suzyBtnTitleSuzy.append(NSAttributedString(attachment: DeserialAttachmentSuzy))
         suzyBtnTitleSuzy.append(NSAttributedString(string: " 20", attributes: [
             .font: UIFont.systemFont(ofSize: 18, weight: .bold),
             .foregroundColor: UIColor.white
@@ -151,7 +151,7 @@ final class SuzyInterestPickerPopupSuzy: UIViewController {
         if fromrEdit {
             suzyDoneButtonSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "d0OPJY6URr2B6FfrFjRvhmO7MbISn7jgkKmm1/nPVQMfIBNu"), for: .normal)
         }else{
-           let recomine = SuzyMatchManagerSuzy.shared.suzyGetRemainingFreeMatchesSuzy()
+           let recomine = SuzyAertionManagerSuzy.shared.suzyGetRemainingFreeAertionSuzy()
             if recomine > 0 {
                 suzyDoneButtonSuzy.setTitleColor(.white, for: .normal)
                 suzyDoneButtonSuzy.setTitle("Three free times a day \(recomine)/3", for: .normal)

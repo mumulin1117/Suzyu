@@ -224,7 +224,7 @@ final class PromiseChainSuzy: UIViewController {
         eulaVcSuzy.modalPresentationStyle = .overFullScreen
         eulaVcSuzy.modalTransitionStyle = .crossDissolve
         
-        eulaVcSuzy.suzyActionCallbackSuzy = { [weak self] didAcceptSuzy in
+        eulaVcSuzy.suzyclipboardbackSuzy = { [weak self] didAcceptSuzy in
             guard let self = self else { return }
             self.suzyIsAgreedSuzy = didAcceptSuzy
         }
@@ -365,7 +365,7 @@ extension PromiseChainSuzy: ASAuthorizationControllerDelegate {
                     suzyUsername: "",
                     suzyTagsSuzy: [],
                     suzyBioSuzy: "",
-                    suzyCoinsSuzy: 0,
+                    deseriali: 0,
                     suzyIsVerifiedSuzy: false,
                     suzyRegTimestampSuzy: Date().timeIntervalSince1970
                 )

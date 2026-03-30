@@ -35,7 +35,7 @@ class LandmarkSUZYTrackSuue: UIViewController {
     lazy var contentSafetySuzy: UIButton = {
         let jdjjj = UIButton()
         jdjjj.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_ic_coin_small"), for: .normal)
-        jdjjj.setTitle(" \(SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.suzyCoinsSuzy ?? 0)", for: .normal)
+        jdjjj.setTitle(" \(SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.deseriali ?? 0)", for: .normal)
         jdjjj.translatesAutoresizingMaskIntoConstraints = false
         jdjjj.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         jdjjj.addTarget(self, action: #selector(presentalllAhoiun), for: .touchUpInside)

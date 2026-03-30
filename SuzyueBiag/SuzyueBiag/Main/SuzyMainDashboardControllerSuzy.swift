@@ -212,19 +212,19 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     @objc func suzyOnStartMeetClickedSuzy()  {
 
         if suzyAllFilterBtnSuzy.isSelected {
-            self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyAllSuzy), animated: true)
+            self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentAertionTypeSuzy: .suzyAllSuzy), animated: true)
             return
         }
         
-        let freeCount = SuzyMatchManagerSuzy.shared.suzyGetRemainingFreeMatchesSuzy()
+        let freeCount = SuzyAertionManagerSuzy.shared.suzyGetRemainingFreeAertionSuzy()
         if freeCount > 0 {
             
             suzyShowCustomAlertSuzy(isEnough: true,isFreenAlert: true )
             
         } else {
        
-            let currentCoins = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.suzyCoinsSuzy ?? 0
-            suzyShowCustomAlertSuzy(isEnough: currentCoins >= 20,isFreenAlert: false )
+            let currentDeserial = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.deseriali ?? 0
+            suzyShowCustomAlertSuzy(isEnough: currentDeserial >= 20,isFreenAlert: false )
             
         }
         
@@ -236,9 +236,9 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
     
     
     @objc private func suzyHandleIcebreakerTapSuzy() {
-        let suzyCurrentCoinsSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.suzyCoinsSuzy ?? 0
+        let DeserialSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.deseriali ?? 0
        
-        suzyShowCustomAlertSuzy(isEnough: suzyCurrentCoinsSuzy >= 20)
+        suzyShowCustomAlertSuzy(isEnough: DeserialSuzy >= 20)
     }
     
     private func suzyShowCustomAlertSuzy(isEnough: Bool,isFreenAlert:Bool = true) {
@@ -276,7 +276,7 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
         msgLabel.textColor = .lightGray
         msgLabel.numberOfLines = 0
         msgLabel.textAlignment = .center
-        let tip = SuzyMatchManagerSuzy.shared.suzyGetCurrentMatchTipSuzy()
+        let tip = SuzyAertionManagerSuzy.shared.suzyGetCurrentAertionTipSuzy()
         msgLabel.text = isEnough ? tip : SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "3KkDqvNC1CtWSL5B20QmWCw9PQaa22noj4niAStzbYF+GLQhtWgJ+qWufKOjcnFTew5Or1e9v0nPS5/wMzYH9QTqbbT0WqElOGoXY2zZEDKw")
         
         if isFreenAlert {
@@ -337,11 +337,11 @@ final class SuzyMainDashboardControllerSuzy: UIViewController {
             guard let self = self else { return }
             suzyOverlaySuzy.removeFromSuperview()
             if isEnough && isFreenAlert{
-                SuzyMatchManagerSuzy.shared.suzyIncrementMatchCountSuzy()
-                self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyFilteredSuzy), animated: true)
+                SuzyAertionManagerSuzy.shared.suzyIncremenAertionCountSuzy()
+                self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentAertionTypeSuzy: .suzyFilteredSuzy), animated: true)
             } else  if isEnough && isFreenAlert == false{
-                SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: -20)
-                self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentMatchTypeSuzy: .suzyFilteredSuzy), animated: true)
+                SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(DeserialSuzy: -20)
+                self.navigationController?.pushViewController(SuzyAlgorithmyControllerSuzy.init(suzyCurrentAertionTypeSuzy: .suzyFilteredSuzy), animated: true)
             }else{
                 let vc = SuzyGoldShopVCSuzy()
                 vc.modalPresentationStyle = .fullScreen

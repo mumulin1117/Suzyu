@@ -10,7 +10,7 @@ import UIKit
 class SuzyChatDetailViewController: UIViewController {
     private var suzyInputBarBottomConstraintSuzy: NSLayoutConstraint!
    
-    var targetUser: SuzyMatchEntitySuzy?
+    var targetUser: UseAertionEntitySuzy?
     var chatHistory: [SuzyChatDetailRecord] = []
     
  
@@ -22,7 +22,7 @@ class SuzyChatDetailViewController: UIViewController {
     private let suzyControlWrapperSuzy = UIStackView()
     private let suzyCameraSwitchBtnSuzy = UIButton(type: .custom)
    
-    private let suzyMatchedUserInfoSuzy = UIButton(type: .custom)
+    private let suzyAertionUserInfoSuzy = UIButton(type: .custom)
     private let suzyFallbackBgImageViewSuzy: UIImageView = {
         let iv = UIImageView.init(frame: UIScreen.main.bounds)
         iv.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "SuzyWelcomeBgSuzyELUA")
@@ -66,24 +66,24 @@ class SuzyChatDetailViewController: UIViewController {
         suzyCameraSwitchBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "calcaremaifl"), for: .normal)
         suzyCameraSwitchBtnSuzy.addTarget(self, action: #selector(funcbuildCafff), for: .touchUpInside)
         
-        suzyMatchedUserInfoSuzy.addTarget(self, action: #selector(showReportMenu), for: .touchUpInside)
-        suzyMatchedUserInfoSuzy.setTitle(targetUser?.suzyUsernameSuzy, for: .normal)
-        suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12)
-        suzyMatchedUserInfoSuzy.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2500)
-        suzyMatchedUserInfoSuzy.layer.cornerRadius = 10
-        suzyMatchedUserInfoSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "exclamationmark"), for: .normal)
-        suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
+        suzyAertionUserInfoSuzy.addTarget(self, action: #selector(showReportMenu), for: .touchUpInside)
+        suzyAertionUserInfoSuzy.setTitle(targetUser?.suzyUsernameSuzy, for: .normal)
+        suzyAertionUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12)
+        suzyAertionUserInfoSuzy.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2500)
+        suzyAertionUserInfoSuzy.layer.cornerRadius = 10
+        suzyAertionUserInfoSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "exclamationmark"), for: .normal)
+        suzyAertionUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
       
             
-        suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        suzyAertionUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
 
-        [backBtn, suzyCameraSwitchBtnSuzy,suzySpacerSuzy, suzyMatchedUserInfoSuzy].forEach {
+        [backBtn, suzyCameraSwitchBtnSuzy,suzySpacerSuzy, suzyAertionUserInfoSuzy].forEach {
             $0.tintColor = .white
             $0.translatesAutoresizingMaskIntoConstraints = false
             suzyControlWrapperSuzy.addArrangedSubview($0)
             
         }
-        let widthConstraint = suzyMatchedUserInfoSuzy.widthAnchor.constraint(equalToConstant: 140)
+        let widthConstraint = suzyAertionUserInfoSuzy.widthAnchor.constraint(equalToConstant: 140)
         widthConstraint.priority = .required
         widthConstraint.isActive = true
         NSLayoutConstraint.activate([
@@ -94,8 +94,8 @@ class SuzyChatDetailViewController: UIViewController {
             suzyCameraSwitchBtnSuzy.heightAnchor.constraint(equalToConstant: 40),
             suzyCameraSwitchBtnSuzy.widthAnchor.constraint(equalToConstant: 40),
             backBtn.widthAnchor.constraint(equalToConstant: 30),
-            suzyMatchedUserInfoSuzy.heightAnchor.constraint(equalToConstant: 40),
-            suzyMatchedUserInfoSuzy.widthAnchor.constraint(equalToConstant: 140)
+            suzyAertionUserInfoSuzy.heightAnchor.constraint(equalToConstant: 40),
+            suzyAertionUserInfoSuzy.widthAnchor.constraint(equalToConstant: 140)
             
         ])
        
@@ -105,7 +105,7 @@ class SuzyChatDetailViewController: UIViewController {
         guard let target = self.targetUser else {
             return
         }
-        let calddvc = SuzyCallSessionVCSuzy.init(suzyMatchSuzy: target)
+        let calddvc = SuzyClipboardSessionVCSuzy.init(suzyAertiony: target)
         calddvc.protrShow = {
             let vc = SuzyGoldShopVCSuzy()
             vc.modalPresentationStyle = .fullScreen

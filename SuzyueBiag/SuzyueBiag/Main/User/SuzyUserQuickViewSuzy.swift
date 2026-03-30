@@ -18,12 +18,12 @@ final class SuzyUserQuickViewSuzy: UIView {
     private let suzyMessageIconSuzy = UIButton()
     private let suzyBioLabelSuzy = UILabel()
     private let suzyTagFlowStackSuzy = UIStackView()
-    private let suzyCallActionBtnSuzy = UIButton(type: .custom)
+    private let suzyclipboardBtnSuzy = UIButton(type: .custom)
     private let suzyDismissBtnSuzy = UIButton(type: .custom)
     
   
-    private var suzyEntitySuzy: SuzyMatchEntitySuzy?
-    var suzyOnVideoCallRequestedSuzy: (() -> Void)?
+    private var suzyEntitySuzy: UseAertionEntitySuzy?
+    var suzyOnmetricCoRequestedSuzy: (() -> Void)?
 
     var suzyOnMessagesendRequestedSuzy: (() -> Void)?
     
@@ -90,15 +90,15 @@ final class SuzyUserQuickViewSuzy: UIView {
         suzyCardContainerSuzy.addSubview(suzyTagFlowStackSuzy)
         
        
-        suzyCallActionBtnSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "kSSADjjOSFjzLVpBsDiRbKeg/b3d7EpnRCqsoo8GanAdzZqCIEF9y/Jx"), for: .normal)
-        suzyCallActionBtnSuzy.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        suzyclipboardBtnSuzy.setTitle(SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "kSSADjjOSFjzLVpBsDiRbKeg/b3d7EpnRCqsoo8GanAdzZqCIEF9y/Jx"), for: .normal)
+        suzyclipboardBtnSuzy.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
 
-        suzyCallActionBtnSuzy.layer.cornerRadius = 20
-        suzyCallActionBtnSuzy.layer.masksToBounds = true
-        suzyCallActionBtnSuzy.addTarget(self, action: #selector(suzyInitiateCallSuzy), for: .touchUpInside)
-        suzyCallActionBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
-        suzyCardContainerSuzy.addSubview(suzyCallActionBtnSuzy)
-        suzyApplyGradientToButtonSuzy(suzyTargetButtonSuzy: suzyCallActionBtnSuzy)
+        suzyclipboardBtnSuzy.layer.cornerRadius = 20
+        suzyclipboardBtnSuzy.layer.masksToBounds = true
+        suzyclipboardBtnSuzy.addTarget(self, action: #selector(suzyInitiateclipboardlSuzy), for: .touchUpInside)
+        suzyclipboardBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
+        suzyCardContainerSuzy.addSubview(suzyclipboardBtnSuzy)
+        suzyApplyGradientToButtonSuzy(suzyTargetButtonSuzy: suzyclipboardBtnSuzy)
         
         suzyDismissBtnSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "huntinniuclose"), for: .normal)
         suzyDismissBtnSuzy.tintColor = UIColor(white: 1.0, alpha: 0.5)
@@ -139,10 +139,10 @@ final class SuzyUserQuickViewSuzy: UIView {
             suzyTagFlowStackSuzy.topAnchor.constraint(equalTo: suzyBioLabelSuzy.bottomAnchor, constant: 20),
             suzyTagFlowStackSuzy.centerXAnchor.constraint(equalTo: suzyCardContainerSuzy.centerXAnchor),
             
-            suzyCallActionBtnSuzy.bottomAnchor.constraint(equalTo: suzyCardContainerSuzy.bottomAnchor, constant: -30),
-            suzyCallActionBtnSuzy.centerXAnchor.constraint(equalTo: suzyCardContainerSuzy.centerXAnchor),
-            suzyCallActionBtnSuzy.widthAnchor.constraint(equalTo: suzyCardContainerSuzy.widthAnchor, multiplier: 0.8),
-            suzyCallActionBtnSuzy.heightAnchor.constraint(equalToConstant: 50),
+            suzyclipboardBtnSuzy.bottomAnchor.constraint(equalTo: suzyCardContainerSuzy.bottomAnchor, constant: -30),
+            suzyclipboardBtnSuzy.centerXAnchor.constraint(equalTo: suzyCardContainerSuzy.centerXAnchor),
+            suzyclipboardBtnSuzy.widthAnchor.constraint(equalTo: suzyCardContainerSuzy.widthAnchor, multiplier: 0.8),
+            suzyclipboardBtnSuzy.heightAnchor.constraint(equalToConstant: 50),
             
             suzyDismissBtnSuzy.topAnchor.constraint(equalTo: suzyCardContainerSuzy.bottomAnchor, constant: 20),
             suzyDismissBtnSuzy.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -152,7 +152,7 @@ final class SuzyUserQuickViewSuzy: UIView {
     }
     
     // MARK: - API Suzy
-    func suzyShowWithEntitySuzy(suzyItemSuzy: SuzyMatchEntitySuzy) {
+    func suzyShowWithEntitySuzy(suzyItemSuzy: UseAertionEntitySuzy) {
         self.suzyEntitySuzy = suzyItemSuzy
         suzyDisplayNameSuzy.text = suzyItemSuzy.suzyUsernameSuzy
         suzyBioLabelSuzy.text = suzyItemSuzy.suzyBioSuzy
@@ -186,18 +186,16 @@ final class SuzyUserQuickViewSuzy: UIView {
         return suzyLSuzy
     }
     
-    @objc private func suzyInitiateCallSuzy() {
+    @objc private func suzyInitiateclipboardlSuzy() {
         
         
-        suzyOnVideoCallRequestedSuzy?()
-        sendCallmessageAction()
+        suzyOnmetricCoRequestedSuzy?()
+        sendclipboardmessageAction()
     }
     
-    private func sendCallmessageAction() {
-      
-        // 存储消息逻辑
-        
-        let newMessage = SuzyChatDetailRecord(isMine: true, content: .call(duration: "00:00"), time: "Now")
+    private func sendclipboardmessageAction() {
+     
+        let newMessage = SuzyChatDetailRecord(isMine: true, content: .clipboard(duration: "00:00"), time: "Now")
         
         if let index = SuzyMessageCacheManager.shared.conversations.firstIndex(where: {
                 $0.userInfo.suzyIdentifierSuzy == suzyEntitySuzy?.suzyIdentifierSuzy

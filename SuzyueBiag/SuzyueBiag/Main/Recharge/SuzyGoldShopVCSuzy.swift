@@ -11,19 +11,19 @@ final class SuzyGoldShopVCSuzy: UIViewController {
     
     private let suzyHeaderPanelSuzy = UIView()
     private let suzyBalanceLabelSuzy = UILabel()
-    private let suzyCoinPreviewSuzy = UIImageView()
+    private let DeserialPreviewSuzy = UIImageView()
     private let suzyBackActionBtnSuzy = UIButton(type: .custom)
     
     private var suzyRechargeListSuzy: [SuzyPurchaseItemSuzy] = [
        
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 400, suzyPriceLabelSuzy: "WCBubkRD7T13Z24W0MRAXGBFEoVTQ9Iv1SXl8Lo61yQ9RKR/yg==", suzyProductIDSuzy: "uzdgfrfuzpjotjyy"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 800, suzyPriceLabelSuzy: "7PG1umglFAxeBr95mWfUGo03iAskaGl8X5HKgYyUCHGQsl2f4Q==", suzyProductIDSuzy: "acsgeadxlbysvowz"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 2450, suzyPriceLabelSuzy: "N94GtzJAn3/PoFbXUpsYGJWrcRX2bsFfc8hWbgIkT0xZn3wqKA==", suzyProductIDSuzy: "noumfmlrqxxvsuox"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 2850, suzyPriceLabelSuzy: "sPkvK91d8OJmL7y0dI8bnW23qEw/6fOtomkDhhQLRJ/ECcG8Lg==", suzyProductIDSuzy: "naksbfuhssxvsurg"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 5150, suzyPriceLabelSuzy: "ZdYBJu+ay2oqRTteDON/G2FUa5DsJoWmBkHZM2PI5y1IAtdccw==", suzyProductIDSuzy: "zwylcqfbzaasysqi"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 10800, suzyPriceLabelSuzy: "KUWyHPcijvl2s8tz1re8Ox//CLofyI/Y103sCya77vOjS35ClUk=", suzyProductIDSuzy: "bmwlhteruwffzbfe"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 29400, suzyPriceLabelSuzy: "m9Op3Im03uttqFAsgQSmr1CCN3lQdW++XQpqVdTT3AyQoO+Iph4=", suzyProductIDSuzy: "pmyojytfhxnjamxh"),
-        SuzyPurchaseItemSuzy(suzyCoinAmountSuzy: 63700, suzyPriceLabelSuzy: "zmhNbKIJAGuxgI/CSo2NzIODPJR80lJs5iKJH8PVv9+ice3n0Y0=", suzyProductIDSuzy: "fpptzxlvbrzdhvqm")
+        SuzyPurchaseItemSuzy(DeserialAmountSuzy: 400, suzyPriceLabelSuzy: "WCBubkRD7T13Z24W0MRAXGBFEoVTQ9Iv1SXl8Lo61yQ9RKR/yg==", suzyProductIDSuzy: "uzdgfrfuzpjotjyy"),
+        SuzyPurchaseItemSuzy(DeserialAmountSuzy: 800, suzyPriceLabelSuzy: "7PG1umglFAxeBr95mWfUGo03iAskaGl8X5HKgYyUCHGQsl2f4Q==", suzyProductIDSuzy: "acsgeadxlbysvowz"),
+        SuzyPurchaseItemSuzy(DeserialAmountSuzy: 2450, suzyPriceLabelSuzy: "N94GtzJAn3/PoFbXUpsYGJWrcRX2bsFfc8hWbgIkT0xZn3wqKA==", suzyProductIDSuzy: "noumfmlrqxxvsuox"),
+        SuzyPurchaseItemSuzy(DeserialAmountSuzy: 2850, suzyPriceLabelSuzy: "sPkvK91d8OJmL7y0dI8bnW23qEw/6fOtomkDhhQLRJ/ECcG8Lg==", suzyProductIDSuzy: "naksbfuhssxvsurg"),
+        SuzyPurchaseItemSuzy(DeserialAmountSuzy: 5150, suzyPriceLabelSuzy: "ZdYBJu+ay2oqRTteDON/G2FUa5DsJoWmBkHZM2PI5y1IAtdccw==", suzyProductIDSuzy: "zwylcqfbzaasysqi"),
+        SuzyPurchaseItemSuzy(DeserialAmountSuzy: 10800, suzyPriceLabelSuzy: "KUWyHPcijvl2s8tz1re8Ox//CLofyI/Y103sCya77vOjS35ClUk=", suzyProductIDSuzy: "bmwlhteruwffzbfe"),
+        SuzyPurchaseItemSuzy(DeserialAmountSuzy: 29400, suzyPriceLabelSuzy: "m9Op3Im03uttqFAsgQSmr1CCN3lQdW++XQpqVdTT3AyQoO+Iph4=", suzyProductIDSuzy: "pmyojytfhxnjamxh"),
+        SuzyPurchaseItemSuzy(DeserialAmountSuzy: 63700, suzyPriceLabelSuzy: "zmhNbKIJAGuxgI/CSo2NzIODPJR80lJs5iKJH8PVv9+ice3n0Y0=", suzyProductIDSuzy: "fpptzxlvbrzdhvqm")
     ]
     
     private lazy var suzyGridViewSuzy: UICollectionView = {
@@ -74,15 +74,15 @@ final class SuzyGoldShopVCSuzy: UIViewController {
         suzyBalanceLabelSuzy.font = .systemFont(ofSize: 28, weight: .heavy)
         suzyHeaderPanelSuzy.addSubview(suzyBalanceLabelSuzy)
         
-        suzyCoinPreviewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_coin_glow")
-        suzyHeaderPanelSuzy.addSubview(suzyCoinPreviewSuzy)
+        DeserialPreviewSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzy_coin_glow")
+        suzyHeaderPanelSuzy.addSubview(DeserialPreviewSuzy)
         
         view.addSubview(suzyGridViewSuzy)
         
         suzyBackActionBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyHeaderPanelSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyBalanceLabelSuzy.translatesAutoresizingMaskIntoConstraints = false
-        suzyCoinPreviewSuzy.translatesAutoresizingMaskIntoConstraints = false
+        DeserialPreviewSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyGridViewSuzy.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -99,10 +99,10 @@ final class SuzyGoldShopVCSuzy: UIViewController {
             suzyBalanceLabelSuzy.centerYAnchor.constraint(equalTo: suzyHeaderPanelSuzy.centerYAnchor),
             suzyBalanceLabelSuzy.leadingAnchor.constraint(equalTo: suzyHeaderPanelSuzy.leadingAnchor, constant: 25),
             
-            suzyCoinPreviewSuzy.centerYAnchor.constraint(equalTo: suzyHeaderPanelSuzy.centerYAnchor),
-            suzyCoinPreviewSuzy.trailingAnchor.constraint(equalTo: suzyHeaderPanelSuzy.trailingAnchor, constant: -20),
-            suzyCoinPreviewSuzy.widthAnchor.constraint(equalTo: suzyHeaderPanelSuzy.heightAnchor, multiplier: 0.6),
-            suzyCoinPreviewSuzy.heightAnchor.constraint(equalTo: suzyCoinPreviewSuzy.widthAnchor),
+            DeserialPreviewSuzy.centerYAnchor.constraint(equalTo: suzyHeaderPanelSuzy.centerYAnchor),
+            DeserialPreviewSuzy.trailingAnchor.constraint(equalTo: suzyHeaderPanelSuzy.trailingAnchor, constant: -20),
+            DeserialPreviewSuzy.widthAnchor.constraint(equalTo: suzyHeaderPanelSuzy.heightAnchor, multiplier: 0.6),
+            DeserialPreviewSuzy.heightAnchor.constraint(equalTo: DeserialPreviewSuzy.widthAnchor),
             
             suzyGridViewSuzy.topAnchor.constraint(equalTo: suzyHeaderPanelSuzy.bottomAnchor, constant: 10),
             suzyGridViewSuzy.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -122,7 +122,7 @@ final class SuzyGoldShopVCSuzy: UIViewController {
     
     private func suzyRefreshCurrentGoldSuzy() {
         if let currentProfile = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy() {
-            suzyBalanceLabelSuzy.text = "My Gold : \(currentProfile.suzyCoinsSuzy)"
+            suzyBalanceLabelSuzy.text = "My Gold : \(currentProfile.deseriali)"
         }
     }
     
@@ -160,9 +160,9 @@ extension SuzyGoldShopVCSuzy: UICollectionViewDataSource, UICollectionViewDelega
                     
                     switch ler {
                     case .success(let success):
-                        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: product.suzyCoinAmountSuzy)
+                        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(DeserialSuzy: product.DeserialAmountSuzy)
                         self?.suzyRefreshCurrentGoldSuzy()
-                        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Gained \(product.suzyCoinAmountSuzy) Coins", isSuccess: true)
+                        SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Gained \(product.DeserialAmountSuzy) Coins", isSuccess: true)
                     case .failure(let failure):
                         SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: failure.localizedDescription, isSuccess: false)
                     }

@@ -6,7 +6,7 @@
 //
 
 struct SuzyPurchaseItemSuzy {
-    let suzyCoinAmountSuzy: Int
+    let DeserialAmountSuzy: Int
     let suzyPriceLabelSuzy: String
     let suzyProductIDSuzy: String
 }

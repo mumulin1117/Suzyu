@@ -489,18 +489,18 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             
           
             let suzySelectedAge = self.suzyProfileDataSuzy.suzyAgeSuzy
-            let suzyIsMatching = (suzySelectedAge >= 18 && suzySelectedAge <= 60)
+            let suzyIsAertioning = (suzySelectedAge >= 18 && suzySelectedAge <= 60)
             
-            if suzyIsMatching {
+            if suzyIsAertioning {
                 self.suzyHasLivenessVerifiedSuzy = true
                 SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Verification Successful: Gender & Age matched.", isSuccess: true)
                 self.suzyAdvanceToNextStateSuzy()
             } else {
-                // 失败提示并回退
+                
                 SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: "Verification Failed: Profile mismatch. Please re-select.", isSuccess: false)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    // 强制返回第一步重新选择性别/年纪
+                  
                     self.suzyCurrentStateSuzy = .suzyGenderSelectSuzy
                     self.suzyRefreshStateUISuzy()
                 }
@@ -560,7 +560,7 @@ final class SuzyProfileOnboardingControllerSuzy: UIViewController {
             suzyUsername: "",
             suzyTagsSuzy: draft.suzyTagsSuzy,
             suzyBioSuzy: draft.suzyBioSuzy ?? "",
-            suzyCoinsSuzy: 0,
+            deseriali: 0,
             suzyIsVerifiedSuzy: false,
             suzyRegTimestampSuzy: Date().timeIntervalSince1970
         )
@@ -732,7 +732,7 @@ extension SuzyProfileOnboardingControllerSuzy{
             suzyAgeSuzy: suzyProfileDataSuzy.suzyAgeSuzy, suzyUsername: "",
             suzyTagsSuzy: suzyProfileDataSuzy.suzyTagsSuzy,
             suzyBioSuzy: suzyProfileDataSuzy.suzyBioSuzy ?? "",
-            suzyCoinsSuzy: 0,
+            deseriali: 0,
             suzyIsVerifiedSuzy: suzyHasLivenessVerifiedSuzy,
             suzyRegTimestampSuzy: Date().timeIntervalSince1970
         )

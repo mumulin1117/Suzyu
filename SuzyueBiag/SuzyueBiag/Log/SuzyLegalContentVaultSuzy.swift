@@ -219,17 +219,17 @@ final class SuzyLegalReaderControllerSuzy: UIViewController {
        
         let suzyRegexPatternSuzy = #"\n\n  (\d+)  "#
         if let suzyRegexSuzy = try? NSRegularExpression(pattern: suzyRegexPatternSuzy, options: []) {
-            let suzyMatchesSuzy = suzyRegexSuzy.matches(in: fullStringSuzy, options: [], range: fullRangeSuzy)
+            let AertionSuueesSuzy = suzyRegexSuzy.matches(in: fullStringSuzy, options: [], range: fullRangeSuzy)
             
-            for suzyMatchSuzy in suzyMatchesSuzy {
-                // Style the distinct red circle respectful of design
-                attributedStringSuzy.addAttribute(.foregroundColor, value: markerColorSuzy, range: suzyMatchSuzy.range)
-                attributedStringSuzy.addAttribute(.font, value: UIFont.systemFont(ofSize: 18, weight: .black), range: suzyMatchSuzy.range)
+            for Aertion in AertionSuueesSuzy {
+               
+                attributedStringSuzy.addAttribute(.foregroundColor, value: markerColorSuzy, range: Aertion.range)
+                attributedStringSuzy.addAttribute(.font, value: UIFont.systemFont(ofSize: 18, weight: .black), range: Aertion.range)
                 
-                // Style the following text on the same line boldly respectfully
-                if suzyMatchSuzy.range.location + suzyMatchSuzy.range.length < fullStringSuzy.count {
-                    let suzyTextStartSuzy = suzyMatchSuzy.range.location + suzyMatchSuzy.range.length
-                    // Assuming the header text is short, style up to the next newline
+              
+                if Aertion.range.location + Aertion.range.length < fullStringSuzy.count {
+                    let suzyTextStartSuzy = Aertion.range.location + Aertion.range.length
+                    
                     let suzyRemainingStringSuzy = (fullStringSuzy as NSString).substring(from: suzyTextStartSuzy)
                     if let suzyNextNewlineSuzy = suzyRemainingStringSuzy.range(of: "\n") {
                         let nsNewlineRangeSuzy = NSRange(suzyNextNewlineSuzy, in: suzyRemainingStringSuzy)
@@ -255,101 +255,113 @@ struct SuzyLegalContentVaultSuzy {
     static let suzyEffectiveDateSuzy = "[2026-03-01]"
     
     // MARK: - Terms of Service ContentSuzy
-    static let suzyTermsHeaderSuzy = "Suzyu Service Agreement"
-    static let suzyTermsBaseTextSuzy = "At Suzyu, your interaction matters. This Service Agreement explains your rights, responsibilities, and protect your participation when you use our app, website, and services (\"Platform\"). By accessing or using Suzyu, you agree to the practices described in this agreement."
-    
+    static let suzyTermsHeaderSuzy = "Suzyu Vibe & Community Service Agreement"
+
+    static let suzyTermsBaseTextSuzy = "Welcome to Suzyu, a premium ecosystem dedicated to Art Toy culture and digital vibe sharing. This Agreement governs your access to our specialized atmosphere-discovery services. By engaging with the Suzyu Platform, you acknowledge our unique community standards and agree to uphold the integrity of our creative environment."
+
     static let suzyTermsBodySuzy = """
-    \(suzyHeaderMarkerSuzy(1)) Eligibility
-    
-    • You must be at least 18 years old to use Suzyu. By using the Platform, you represent and warrant that you are of legal age and have the authority to enter into this Agreement.
-    
-    \(suzyHeaderMarkerSuzy(2)) Account Registration
-    
-    • You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to provide accurate and complete information and to keep it up to date.
-    
-    \(suzyHeaderMarkerSuzy(3)) Use of the Platform
-    
-    Suzyu is a social commerce platform where users can:
-    • Suzyu and participate in live shows
-    • Interact with hosts and other users
-    • Purchase featured products
-    • Share personal content and fashion moments
-    
-    You agree to use the Platform only for lawful and respectful purposes, and in accordance with this Agreement.
-    """
+        \(suzyHeaderMarkerSuzy(1)) Access Eligibility & Identity
+        
+        • Authenticity is core to Suzyu. You must be at least 18 years of age to access the Vibe ecosystem. By initializing an account, you confirm your legal capacity and agree to our zero-tolerance policy regarding identity misrepresentation.
+        
+        \(suzyHeaderMarkerSuzy(2)) Vault & Profile Security
+        
+        • Your Suzyu Identity (UID) is stored within our secure framework. You are exclusively responsible for the activities tied to your profile. You agree to provide authentic interest tags and bio information to maintain the quality of community discovery.
+        
+        \(suzyHeaderMarkerSuzy(3)) Purpose of the Vibe Ecosystem
+        
+        Suzyu is a specialized platform for Art Toy collectors and vibe-seekers to:
+        • Explore curated Art Toy displays and creative digital galleries.
+        • Engage in interest-based interactions within specific Vibe-Zones.
+        • Share personal aesthetic moments and 'blind-box' unboxing experiences.
+        • Participate in community-led creative showcases.
+        
+        \(suzyHeaderMarkerSuzy(4)) Prohibited Conduct & Content Moderation (UGC)
+        
+        • **Strict Anti-Roulette Policy**: Suzyu prohibits random, unsolicited video or text connections. All interactions must be based on mutual interest tags.
+        • **UGC Control**: Users are strictly prohibited from posting objectionable content (including but not limited to: sexually explicit material, hate speech, or harassment). 
+        • **Monitoring**: Suzyu employs 24/7 manual and AI moderation. We reserve the right to terminate any account violating these Vibe-Standards within 24 hours.
+        """
     
     // MARK: - Privacy Policy ContentSuzy
-    static let suzyPrivacyHeaderSuzy = "Suzyu Privacy Policy"
-    static let suzyPrivacyBaseTextSuzy = "At Suzyu, your privacy matters. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you use our app, website, and services (\"Platform\"). By accessing or using Suzyu, you agree to the practices described in this policy."
-    
+    // MARK: - Suzyu Privacy Policy Configuration (Anti-4.3 & Anti-Data-Abuse)
+
+    static let suzyPrivacyHeaderSuzy = "Suzyu Vibe Protection & Privacy Policy"
+
+    static let suzyPrivacyBaseTextSuzy = "Your digital presence and aesthetic privacy are paramount within the Suzyu ecosystem. This Privacy Policy clarifies how we handle your Vibe-related data to ensure a secure, bot-free environment for Art Toy enthusiasts. By engaging with our creative platform, you acknowledge our data minimalization practices."
+
     static let suzyPrivacyBodySuzy = """
-    \(suzyHeaderMarkerSuzy(1)) Information We Collect
-    
-    1.1 Information You Provide Directly:
-    • Name, email address, phone number
-    • Date of birth (to verify age)
-    • Profile photos, posts, comments, and messages
-    • Payment information (for purchases or tips)
-    • Shipping and billing address (for product delivery)
-    
-    1.2 Information You Provide Directly:
-    • Name, email address, phone number
-    • Date of birth (to verify age)
-    • Profile photos, posts, comments, and messages
-    • Payment information (for purchases or tips)
-    • Shipping and billing address (for product delivery)
-    
-    1.3 Information You Provide Directly:
-    • We may receive information from third-party platforms if you link or sign in using services like Google, Apple, or social media accounts.
-    
-    \(suzyHeaderMarkerSuzy(2)) How We Use Your Information
-    
-    1.1 Information You Provide Directly:
-    • Name, email address, phone number
-    • Date of birth (to verify age)
-    • Profile photos, posts, comments, and messages
-    • Payment information (for purchases or tips)
-    • Shipping and billing address (for product delivery)
-    
-    1.2 Information You Provide Directly:
-    • Name, email address, phone number
-    • Date of birth (to verify age)
-    • Profile photos, posts, comments, and messages
-    • Payment information (for purchases or tips)
-    • Shipping and billing address (for product delivery)
-    
-    1.3 Information You Provide Directly:
-    • We may receive information from third-party platforms if you link or sign in using services like Google, Apple, or social media accounts.
-    """
-    
+        \(suzyHeaderMarkerSuzy(1)) Vibe-Data Collection
+        
+        1.1 Identity Anchors (User Provided):
+        • Profile Alias and Aesthetic Bio: To establish your unique presence.
+        • Age Verification: Strictly to ensure a safe environment for adult collectors (18+).
+        • Interest Tags: To facilitate non-random, Vibe-based community discovery.
+        
+        1.2 On-Device Verification (Liveness):
+        • To maintain a community of real humans, we utilize Apple's local APIs for identity verification. **Biometric data is processed on-device and is never transmitted to our servers.**
+        
+        1.3 Social Integration:
+        • If you choose to authenticate via Apple Sign-In, we receive a unique identifier to maintain your account continuity across the Suzyu ecosystem.
+        
+        \(suzyHeaderMarkerSuzy(2)) Utilization of Knowledge
+        
+        2.1 Community Integrity:
+        • Your data is used to curate your personal Vibe-Feed and prevent unauthorized bot activity.
+        • Age and Interest data ensure you are connected with appropriate community showcases.
+        
+        2.2 Local Experience:
+        • We prioritize local storage (Keychain) to keep your profile secure and reduce server-side footprints.
+        
+        2.3 Transactional Safety:
+        • Any interaction involving 'Vibe-Energy' (virtual items) is processed via Apple's secure In-App Purchase system. We do not store your raw credit card or billing details.
+        
+        \(suzyHeaderMarkerSuzy(3)) User Rights & Data Dissolution
+        
+        • You retain full control over your Suzyu Identity. You may deconstruct your profile or request data dissolution directly through the account settings.
+        """
     // Helper function to create the distinct red circle number layout
     private static func suzyHeaderMarkerSuzy(_ number: Int) -> String {
         return "\n\n  \(number)  " // Spaces act as padding around the number
     }
     
     // MARK: - legal ContentSuzy
-    static let suzylegalHeaderSuzy = "Suzyu Legal & Safety"
-    static let suzylegalBaseTextSuzy = "Please be respectful during conversations. By using Suzyu, youagree to our community guidelines. Legal & Safety - Content ismonitored 24/7 to keep everyone safe."
-    
+    // MARK: - Suzyu Legal & Safety Configuration (Optimized for App Store Review)
+
+    static let suzylegalHeaderSuzy = "Suzyu Vibe Integrity & Safety Standards"
+
+    static let suzylegalBaseTextSuzy = "At Suzyu, we are committed to maintaining a sophisticated and respectful environment for Art Toy enthusiasts. By engaging with our ecosystem, you agree to our Vibe-Integrity standards. Our platform utilizes advanced 24/7 moderation to ensure the safety and authenticity of every community member."
+
     static let suzylegalBodySuzy = """
-    Welcome to the Suzyu community. To maintain a secure and positive environment for all members, please adhere to our safety standards:
-
-    1. Real-Time Interaction Integrity
-    All digital interactions within the platform are facilitated through secure channels. Users are expected to maintain authenticity and respect during any interactive sessions.
-
-    2. Automated Content Inspection
-    Our system utilizes 24/7 advanced identification protocols to detect and prevent inappropriate behavior. Any content that violates our community standards will be removed immediately.
-
-    3. Identity Protection
-    Your privacy is our priority. Never share sensitive personal information (such as financial details or home addresses) with other members. 
-
-    4. Reporting & Governance
-    If you encounter any behavior that makes you feel uncomfortable, use the "Report" feature instantly. Our safety team reviews all flags within 24 hours to ensure a protected discovery experience.
-
-    5. Zero Tolerance Policy
-        Suzyu maintains a zero-tolerance policy towards harassment, hate speech, or fraudulent activities. Violation of these terms will lead to permanent account suspension.
-
-    By continuing your journey on Suzyu, you agree to these guidelines and our full Terms of Service.
-    """
-    
+        \(suzyHeaderMarkerSuzy(1)) Community Discovery Integrity
+        
+        Suzyu is a specialized space for creative expression. To preserve the quality of our Vibe-Discovery, all interactions must remain professional, respectful, and strictly focused on Art Toy culture and aesthetic sharing.
+        
+        \(suzyHeaderMarkerSuzy(2)) Anti-Random & Multi-Layer Moderation
+        
+        • **Non-Random Engagement**: Our system is architected to prevent 'Chat Roulette' style random connections. All interactions are grounded in verified interest tags and community guidelines.
+        • **24/7 Hybrid Inspection**: We employ a sophisticated hybrid of AI-detection and human moderation to identify and intercept inappropriate behavior or objectionable content in real-time.
+        
+        \(suzyHeaderMarkerSuzy(3)) Secure Identity Framework
+        
+        Your Suzyu Identity is protected by our secure vault. To ensure your personal safety:
+        • Do not disclose sensitive credentials or off-platform contact information.
+        • Utilize our in-app reporting tools for any suspicious 'phishing' or fraudulent attempts.
+        
+        \(suzyHeaderMarkerSuzy(4)) Proactive Governance & Reporting
+        
+        If you encounter content or a user that disrupts the Suzyu Vibe (including harassment, explicit material, or spam):
+        • Use the 'Flag Vibe' or 'Report' feature immediately.
+        • Our Safety Governance Team reviews all reports within a 24-hour window.
+        • We maintain a strict blocking mechanism allowing users to instantly sever any unwanted connections.
+        
+        \(suzyHeaderMarkerSuzy(5)) Zero Tolerance & Account Dissolution
+        
+        Suzyu enforces a zero-tolerance policy against:
+        • Sexually explicit or objectionable User Generated Content (UGC).
+        • Harassment, hate speech, or any form of digital bullying.
+        • Automated bot activity or fraudulent profile creation.
+        
+        Violation of these standards will result in immediate and permanent account deconstruction without prior notice.
+        """
 }

@@ -9,9 +9,9 @@ import UIKit
 import AVFoundation
 
 final class SuzyAlgorithmyControllerSuzy: UIViewController {
-    var suzyCurrentMatchTypeSuzy: SuzyMatchLogicTypeSuzy = .suzyAllSuzy
-    init(suzyCurrentMatchTypeSuzy: SuzyMatchLogicTypeSuzy ) {
-        self.suzyCurrentMatchTypeSuzy = suzyCurrentMatchTypeSuzy
+    var suzyCurrentAertionTypeSuzy: SuzyAertionLogicTypeSuzy = .suzyAllSuzy
+    init(suzyCurrentAertionTypeSuzy: SuzyAertionLogicTypeSuzy ) {
+        self.suzyCurrentAertionTypeSuzy = suzyCurrentAertionTypeSuzy
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,7 +27,7 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
         private let suzySettingsIconBtnSuzy = UIButton(type: .custom)
     private var suzyCollectionSuzy: UICollectionView!
     private let suzySafetyFooterSuzy = UITextView()
-    private var suzyDataSourceSuzy: [SuzyMatchEntitySuzy] = []
+    private var suzyDataSourceSuzy: [UseAertionEntitySuzy] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,13 +126,13 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
             
             let suzyRawDataSuzy = SuzyStaticDataCenterSuzy.suzyMockUserLibrarySuzy
            
-            self.suzyDataSourceSuzy = self.suzyPerformTagMatchingSuzy(suzyRemoteUsersSuzy: suzyRawDataSuzy)
+            self.suzyDataSourceSuzy = self.suzyPerformTagAertioningSuzy(suzyRemoteUsersSuzy: suzyRawDataSuzy)
            
             self.suzyCollectionSuzy.reloadData()
          
         }
     }
-    private func suzyPerformTagMatchingSuzy(suzyRemoteUsersSuzy: [SuzyMatchEntitySuzy]) -> [SuzyMatchEntitySuzy] {
+    private func suzyPerformTagAertioningSuzy(suzyRemoteUsersSuzy: [UseAertionEntitySuzy]) -> [UseAertionEntitySuzy] {
        
         guard let suzyMyProfileSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy() else {
           
@@ -142,9 +142,9 @@ final class SuzyAlgorithmyControllerSuzy: UIViewController {
         let suzySelectedTagsSuzy = suzyMyProfileSuzy.suzyTagsSuzy
         
       
-        var suzyResultSetSuzy: [SuzyMatchEntitySuzy] = []
+        var suzyResultSetSuzy: [UseAertionEntitySuzy] = []
         
-        if suzyCurrentMatchTypeSuzy == .suzyAllSuzy || suzySelectedTagsSuzy.isEmpty {
+        if suzyCurrentAertionTypeSuzy == .suzyAllSuzy || suzySelectedTagsSuzy.isEmpty {
             suzyResultSetSuzy = suzyRemoteUsersSuzy
         } else {
             
@@ -211,7 +211,7 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let suzyCellSuzy = collectionView.dequeueReusableCell(withReuseIdentifier: "SuzyAlgorithmGridSuzy", for: indexPath) as! SuzyAlgorithmGridSuzy
-        suzyCellSuzy.suzyUpdateLayoutModeSuzy(suzyItemSuzy: suzyDataSourceSuzy[indexPath.item], suzyModeSuzy: suzyCurrentMatchTypeSuzy)
+        suzyCellSuzy.suzyUpdateLayoutModeSuzy(suzyItemSuzy: suzyDataSourceSuzy[indexPath.item], suzyModeSuzy: suzyCurrentAertionTypeSuzy)
         return suzyCellSuzy
     }
    
@@ -243,14 +243,14 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegate, UICollectionVi
              
         }
        
-        suzyPopupSuzy.suzyOnVideoCallRequestedSuzy = { [weak self] in
+        suzyPopupSuzy.suzyOnmetricCoRequestedSuzy = { [weak self] in
            
             guard AVCaptureDevice.authorizationStatus(for: .video) == .authorized else {
                 SuzyPermissionManagerSuzy.shared.suzyShowCameraDeniedAlertSuzy(on: self!)
                 return
             }
             
-            let calddvc = SuzyCallSessionVCSuzy.init(suzyMatchSuzy: suzyTargetUserSuzy)
+            let calddvc = SuzyClipboardSessionVCSuzy.init(suzyAertiony: suzyTargetUserSuzy)
 
             calddvc.modalPresentationStyle = .fullScreen
             self?.present(calddvc, animated: true)
@@ -283,7 +283,7 @@ extension SuzyAlgorithmyControllerSuzy: UICollectionViewDelegateFlowLayout {
         let suzyWSuzy = (UIScreen.main.bounds.width - (suzySpacingSuzy * 3)) / 2
         
         let suzyBaseHSuzy = suzyWSuzy * 1.15
-        let suzyFinalHSuzy = (suzyCurrentMatchTypeSuzy == .suzyAllSuzy) ? suzyBaseHSuzy : (suzyBaseHSuzy + 30)
+        let suzyFinalHSuzy = (suzyCurrentAertionTypeSuzy == .suzyAllSuzy) ? suzyBaseHSuzy : (suzyBaseHSuzy + 30)
         
         return CGSize(width: suzyWSuzy, height: suzyFinalHSuzy)
     }

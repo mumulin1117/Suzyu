@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-enum SuzyCallStatusSuzy {
+enum SuzyclipboardStatusSuzy {
     case suzyInitializingSuzy
     case suzyConnectingSuzy
     case suzyConnectedSuzy
@@ -21,7 +21,7 @@ fileprivate struct SuzyLocalAssetsSuzy {
     static let suzyFemaleVidsSuzy = ["femaleZEEEE1", "femaleZEEEE2"]
 }
 
-final class SuzyCallSessionVCSuzy: UIViewController {
+final class SuzyClipboardSessionVCSuzy: UIViewController {
     private let suzyCaptureQueueSuzy = DispatchQueue(label: "com.suzy.camera.running.queue.suzy")
 
     deinit {
@@ -40,8 +40,8 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         return iv
     }()
    
-    private let suzyCurrentMatchSuzy: SuzyMatchEntitySuzy
-    private var suzyCallStateSuzy: SuzyCallStatusSuzy = .suzyInitializingSuzy
+    private let suzyCurrentAertionSuzy: UseAertionEntitySuzy
+    private var clipboardStateSuzy: SuzyclipboardStatusSuzy = .suzyInitializingSuzy
     private var suzyPlaybackEndedObserverSuzy: NSObjectProtocol?
 
     private var suzyCapSessionSuzy: AVCaptureSession?
@@ -56,13 +56,13 @@ final class SuzyCallSessionVCSuzy: UIViewController {
     private let suzyControlWrapperSuzy = UIStackView()
     private let suzyCameraSwitchBtnSuzy = UIButton(type: .custom)
     private let suzyCameraToggleBtnSuzy = UIButton(type: .custom)
-    private let suzyMatchedUserInfoSuzy = UIButton(type: .custom)
-    private let suzyCoinIndicatorBtnSuzy = UIButton(type: .custom)
-    private let suzyEndCallActionBtnSuzy = UIButton(type: .custom)
+    private let suzyAertionUserInfoSuzy = UIButton(type: .custom)
+    private let DeserialiIndicatorBtnSuzy = UIButton(type: .custom)
+    private let suzyEndclipboardActionBtnSuzy = UIButton(type: .custom)
 
     // MARK: - Init Suzy
-    init(suzyMatchSuzy: SuzyMatchEntitySuzy) {
-        self.suzyCurrentMatchSuzy = suzyMatchSuzy
+    init(suzyAertiony: UseAertionEntitySuzy) {
+        self.suzyCurrentAertionSuzy = suzyAertiony
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -73,7 +73,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         super.viewDidLoad()
         view.addSubview(suzyFallbackBgImageViewSuzy)
         
-        suzyBuildCallCanvasSuzy()
+        suzyBuildclipboardCanvasSuzy()
         
         suzyRequestHardwarePermsSuzy()
         NotificationCenter.default.addObserver(self, selector: #selector(suzyPerformHangupActionSuzy), name: NSNotification.Name("SuzySwitchToReportDetails"), object: nil)
@@ -87,7 +87,7 @@ final class SuzyCallSessionVCSuzy: UIViewController {
     }
 
     // MARK: - Hierarchy Suzy
-    private func suzyBuildCallCanvasSuzy() {
+    private func suzyBuildclipboardCanvasSuzy() {
         
         suzyRemoteContainerSuzy.backgroundColor = .clear
          suzyRemoteContainerSuzy.frame = view.bounds
@@ -122,41 +122,41 @@ final class SuzyCallSessionVCSuzy: UIViewController {
         suzyCameraToggleBtnSuzy.addTarget(self, action: #selector(suzyPerformCamToggleSuzy), for: .touchUpInside)
         
         
-        suzyMatchedUserInfoSuzy.addTarget(self, action: #selector(reportdUserInfoSuzy), for: .touchUpInside)
-        suzyMatchedUserInfoSuzy.setTitle(suzyCurrentMatchSuzy.suzyUsernameSuzy, for: .normal)
-        suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12)
-        suzyMatchedUserInfoSuzy.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2500)
-        suzyMatchedUserInfoSuzy.layer.cornerRadius = 10
-        suzyMatchedUserInfoSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "exclamationmark"), for: .normal)
-        suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
+        suzyAertionUserInfoSuzy.addTarget(self, action: #selector(reportdUserInfoSuzy), for: .touchUpInside)
+        suzyAertionUserInfoSuzy.setTitle(suzyCurrentAertionSuzy.suzyUsernameSuzy, for: .normal)
+        suzyAertionUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12)
+        suzyAertionUserInfoSuzy.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2500)
+        suzyAertionUserInfoSuzy.layer.cornerRadius = 10
+        suzyAertionUserInfoSuzy.setImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "exclamationmark"), for: .normal)
+        suzyAertionUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
       
             
-        suzyMatchedUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        suzyAertionUserInfoSuzy.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
 
-        [suzyCameraSwitchBtnSuzy, suzyCameraToggleBtnSuzy, suzyMatchedUserInfoSuzy].forEach {
+        [suzyCameraSwitchBtnSuzy, suzyCameraToggleBtnSuzy, suzyAertionUserInfoSuzy].forEach {
             $0.tintColor = .white
             $0.translatesAutoresizingMaskIntoConstraints = false
             suzyControlWrapperSuzy.addArrangedSubview($0)
             
         }
         
-        suzyCoinIndicatorBtnSuzy.addTarget(self, action: #selector(suzyHandleIcebreakerTapSuzy), for: .touchUpInside)
-        suzyCoinIndicatorBtnSuzy.setBackgroundImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzIndicatorBtnSuzy"), for: .normal)
-        suzyCoinIndicatorBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(suzyCoinIndicatorBtnSuzy)
+        DeserialiIndicatorBtnSuzy.addTarget(self, action: #selector(suzyHandleIcebreakerTapSuzy), for: .touchUpInside)
+        DeserialiIndicatorBtnSuzy.setBackgroundImage(SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "suzIndicatorBtnSuzy"), for: .normal)
+        DeserialiIndicatorBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(DeserialiIndicatorBtnSuzy)
         
-        suzyEndCallActionBtnSuzy.setImage(UIImage(systemName: "phone.down.fill"), for: .normal)
-        suzyEndCallActionBtnSuzy.tintColor = .white
-        suzyEndCallActionBtnSuzy.backgroundColor = .systemRed
-        suzyEndCallActionBtnSuzy.layer.cornerRadius = 40
-        suzyEndCallActionBtnSuzy.addTarget(self, action: #selector(suzyPerformHangupActionSuzy), for: .touchUpInside)
-        suzyEndCallActionBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(suzyEndCallActionBtnSuzy)
+        suzyEndclipboardActionBtnSuzy.setImage(UIImage(systemName: "phone.down.fill"), for: .normal)
+        suzyEndclipboardActionBtnSuzy.tintColor = .white
+        suzyEndclipboardActionBtnSuzy.backgroundColor = .systemRed
+        suzyEndclipboardActionBtnSuzy.layer.cornerRadius = 40
+        suzyEndclipboardActionBtnSuzy.addTarget(self, action: #selector(suzyPerformHangupActionSuzy), for: .touchUpInside)
+        suzyEndclipboardActionBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(suzyEndclipboardActionBtnSuzy)
  
         NSLayoutConstraint.activate([
             suzyCameraSwitchBtnSuzy.widthAnchor.constraint(equalToConstant: 40),
             suzyCameraToggleBtnSuzy.widthAnchor.constraint(equalToConstant: 114),
-            suzyMatchedUserInfoSuzy.widthAnchor.constraint(equalToConstant: 140),
+            suzyAertionUserInfoSuzy.widthAnchor.constraint(equalToConstant: 140),
             
             suzyControlWrapperSuzy.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             suzyControlWrapperSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -166,27 +166,27 @@ final class SuzyCallSessionVCSuzy: UIViewController {
             suzyUserPlaceholderSuzy.widthAnchor.constraint(equalToConstant: 130),
             suzyUserPlaceholderSuzy.heightAnchor.constraint(equalToConstant: 170),
             
-            suzyCoinIndicatorBtnSuzy.bottomAnchor.constraint(equalTo: suzyEndCallActionBtnSuzy.topAnchor, constant: -30),
-            suzyCoinIndicatorBtnSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            suzyCoinIndicatorBtnSuzy.heightAnchor.constraint(equalToConstant: 45),
-            suzyCoinIndicatorBtnSuzy.widthAnchor.constraint(equalToConstant: 319),
+            DeserialiIndicatorBtnSuzy.bottomAnchor.constraint(equalTo: suzyEndclipboardActionBtnSuzy.topAnchor, constant: -30),
+            DeserialiIndicatorBtnSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            DeserialiIndicatorBtnSuzy.heightAnchor.constraint(equalToConstant: 45),
+            DeserialiIndicatorBtnSuzy.widthAnchor.constraint(equalToConstant: 319),
             
             
-            suzyEndCallActionBtnSuzy.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            suzyEndCallActionBtnSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            suzyEndCallActionBtnSuzy.widthAnchor.constraint(equalToConstant: 80),
-            suzyEndCallActionBtnSuzy.heightAnchor.constraint(equalToConstant: 80),
+            suzyEndclipboardActionBtnSuzy.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            suzyEndclipboardActionBtnSuzy.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            suzyEndclipboardActionBtnSuzy.widthAnchor.constraint(equalToConstant: 80),
+            suzyEndclipboardActionBtnSuzy.heightAnchor.constraint(equalToConstant: 80),
 
         ])
         
     }
 }
 
-extension SuzyCallSessionVCSuzy {
+extension SuzyClipboardSessionVCSuzy {
     
    @objc func reportdUserInfoSuzy()  {
        let actionreport = SuzyActioningSheetVCSuzy()
-       actionreport.pathUID = suzyCurrentMatchSuzy.suzyIdentifierSuzy
+       actionreport.pathUID = suzyCurrentAertionSuzy.suzyIdentifierSuzy
        actionreport.modalPresentationStyle = .fullScreen
        self.present(actionreport, animated: true)
        
@@ -211,7 +211,7 @@ extension SuzyCallSessionVCSuzy {
                 }
                 
                 
-                self.suzyInitiateCallStateMachineSuzy()
+                self.suzyInitiateclipboardStateMachineSuzy()
             }
             
             
@@ -226,16 +226,16 @@ extension SuzyCallSessionVCSuzy {
     }
     
     
-    private func suzyInitiateCallStateMachineSuzy() {
-        self.suzyCallStateSuzy = .suzyConnectingSuzy
+    private func suzyInitiateclipboardStateMachineSuzy() {
+        self.clipboardStateSuzy = .suzyConnectingSuzy
         
        
-        let suzyCalledIdsSuzy = UserDefaults.standard.stringArray(forKey: "suzy_called_success_ids") ?? []
+        let suzyclipboardIdsSuzy = UserDefaults.standard.stringArray(forKey: "suzy_called_success_ids") ?? []
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
             guard let self = self else { return }
             SuzyHudManagerSuzy.shared.suzyHideLoadingSuzy()
-            if suzyCalledIdsSuzy.contains(self.suzyCurrentMatchSuzy.suzyIdentifierSuzy) {
+            if suzyclipboardIdsSuzy.contains(self.suzyCurrentAertionSuzy.suzyIdentifierSuzy) {
                 
                 SuzyHudManagerSuzy.shared.suzyShowToastSuzy(message: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "8uQY094c3G8l2hX3J2izCOGXEQj/rd0sJYXaglKHg2hGD2hEhkDyBubVK9XLBC+3"), isSuccess: false)
                 self.suzyHandleUserUnavailableSuzy(reason: SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "KQQQ19Kfz6rwVOUHNSYL2L6DyRfCVXSr5eg/ACXUCFypZZ2W3jKPmOVqRiV/VET+"))
@@ -249,7 +249,7 @@ extension SuzyCallSessionVCSuzy {
     private func suzyConfigureRemoteFakeFeedSuzy() {
     
         var suzyPlayedVidsSuzy = UserDefaults.standard.stringArray(forKey: "suzy_played_vids") ?? []
-        let suzyBasePoolSuzy = (self.suzyCurrentMatchSuzy.suzyGenderSuzy == 0) ?
+        let suzyBasePoolSuzy = (self.suzyCurrentAertionSuzy.suzyGenderSuzy == 0) ?
             SuzyLocalAssetsSuzy.suzyMaleVidsSuzy :
             SuzyLocalAssetsSuzy.suzyFemaleVidsSuzy
         
@@ -264,7 +264,7 @@ extension SuzyCallSessionVCSuzy {
         }
       
         var suzyCalledIdsSuzy = UserDefaults.standard.stringArray(forKey: "suzy_called_success_ids") ?? []
-        suzyCalledIdsSuzy.append(self.suzyCurrentMatchSuzy.suzyIdentifierSuzy)
+        suzyCalledIdsSuzy.append(self.suzyCurrentAertionSuzy.suzyIdentifierSuzy)
         UserDefaults.standard.set(suzyCalledIdsSuzy, forKey: "suzy_called_success_ids")
         
         suzyPlayedVidsSuzy.append(suzyTargetVidSuzy)
@@ -320,7 +320,7 @@ extension SuzyCallSessionVCSuzy {
 }
 
 
-extension SuzyCallSessionVCSuzy {
+extension SuzyClipboardSessionVCSuzy {
    
     func suzyToggleCameraSessionSuzy() {
        
@@ -399,7 +399,7 @@ extension SuzyCallSessionVCSuzy {
 
 
 
-extension SuzyCallSessionVCSuzy {
+extension SuzyClipboardSessionVCSuzy {
   
     private static let suzyPoolSuzy = [
         "If you could travel anywhere right now, where would it be? ✈️",
@@ -414,9 +414,9 @@ extension SuzyCallSessionVCSuzy {
 
    
     @objc private func suzyHandleIcebreakerTapSuzy() {
-        let suzyCurrentCoinsSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.suzyCoinsSuzy ?? 0
+        let DeserialSuzy = SuzySecureVaultSuzy.sharedSuzy.suzyFetchCurrentProfileSuzy()?.deseriali ?? 0
        
-        suzyShowCustomAlertSuzy(isEnough: suzyCurrentCoinsSuzy >= 20)
+        suzyShowCustomAlertSuzy(isEnough: DeserialSuzy >= 20)
     }
     
     private func suzyShowCustomAlertSuzy(isEnough: Bool) {
@@ -535,11 +535,11 @@ extension SuzyCallSessionVCSuzy {
        
       
        
-        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(deltaCoinsSuzy: -20)
+        SuzySecureVaultSuzy.sharedSuzy.suzyUpdateMutableAttributesSuzy(DeserialSuzy: -20)
         
       
         
-        let suzySelectedQuestionsSuzy = SuzyCallSessionVCSuzy.suzyPoolSuzy.shuffled().prefix(4)
+        let suzySelectedQuestionsSuzy = SuzyClipboardSessionVCSuzy.suzyPoolSuzy.shuffled().prefix(4)
         
         let suzyDisplayMsgSuzy = suzySelectedQuestionsSuzy.joined(separator: "\n\n")
         

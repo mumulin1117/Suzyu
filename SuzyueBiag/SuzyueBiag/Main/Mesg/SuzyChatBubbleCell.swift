@@ -11,7 +11,7 @@ class SuzyChatBubbleCell: UITableViewCell {
     private let bubbleView = UIView()
     private let contentLabel = UILabel()
     private let avatarImg = UIImageView()
-    private let callIcon = UIImageView() 
+    private let clipboardIcon = UIImageView() 
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     
@@ -27,9 +27,9 @@ class SuzyChatBubbleCell: UITableViewCell {
     private func setupUI() {
         backgroundColor = .clear
         selectionStyle = .none
-        callIcon.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "phone.circle")
+        clipboardIcon.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "phone.circle")
    
-        callIcon.isHidden = true
+        clipboardIcon.isHidden = true
         avatarImg.layer.cornerRadius = 15
         avatarImg.clipsToBounds = true
         
@@ -37,7 +37,7 @@ class SuzyChatBubbleCell: UITableViewCell {
         contentLabel.numberOfLines = 0
         contentLabel.font = .systemFont(ofSize: 16)
         
-        [callIcon,avatarImg, bubbleView].forEach {
+        [clipboardIcon,avatarImg, bubbleView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
@@ -46,17 +46,17 @@ class SuzyChatBubbleCell: UITableViewCell {
         
         leadingConstraint = avatarImg.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10)
         trailingConstraint = bubbleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
-        trailingAboutcallIconConstraint = callIcon.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40)
+        trailingAboutcallIconConstraint = clipboardIcon.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40)
         NSLayoutConstraint.activate([
             
             avatarImg.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             avatarImg.widthAnchor.constraint(equalToConstant: 30),
             avatarImg.heightAnchor.constraint(equalToConstant: 30),
             
-            callIcon.leadingAnchor.constraint(equalTo: bubbleView.trailingAnchor),
-            callIcon.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor),
-            callIcon.widthAnchor.constraint(equalToConstant: 24),
-            callIcon.heightAnchor.constraint(equalToConstant: 24),
+            clipboardIcon.leadingAnchor.constraint(equalTo: bubbleView.trailingAnchor),
+            clipboardIcon.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor),
+            clipboardIcon.widthAnchor.constraint(equalToConstant: 24),
+            clipboardIcon.heightAnchor.constraint(equalToConstant: 24),
            
             
             bubbleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
@@ -98,7 +98,7 @@ class SuzyChatBubbleCell: UITableViewCell {
         }
         
         if case .text(let t) = msg.content {
-            callIcon.isHidden = true
+            clipboardIcon.isHidden = true
             contentLabel.text = t
             contentLabel.isHidden = false
             bubbleView.isHidden = false
@@ -106,7 +106,7 @@ class SuzyChatBubbleCell: UITableViewCell {
         }
         else {
             contentLabel.isHidden = true
-            callIcon.isHidden = false
+            clipboardIcon.isHidden = false
             bubbleView.isHidden = true
         }
     }

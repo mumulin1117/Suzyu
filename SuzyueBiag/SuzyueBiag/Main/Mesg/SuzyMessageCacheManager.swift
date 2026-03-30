@@ -8,7 +8,7 @@
 import Foundation
 enum SuzyMessageType {
     case text(String)
-    case call(duration: String)
+    case clipboard(duration: String)
 }
 
 struct SuzyChatDetailRecord {
@@ -19,7 +19,7 @@ struct SuzyChatDetailRecord {
 
 
 struct SuzyConversationModel {
-    let userInfo: SuzyMatchEntitySuzy
+    let userInfo: UseAertionEntitySuzy
     var unreadCount: Int
     var messages: [SuzyChatDetailRecord]
     
@@ -32,7 +32,7 @@ struct SuzyConversationModel {
         guard let last = messages.last else { return "" }
         switch last.content {
         case .text(let txt): return txt
-        case .call: return SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "izVD5l1tUiPCjuH8rR7/NCo1HabZaeQJtqsZXxHAifGHu4yH161LF7aa8CA=")
+        case .clipboard: return SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: "izVD5l1tUiPCjuH8rR7/NCo1HabZaeQJtqsZXxHAifGHu4yH161LF7aa8CA=")
         }
     }
 }

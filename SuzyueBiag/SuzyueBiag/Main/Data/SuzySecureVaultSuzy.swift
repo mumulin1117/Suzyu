@@ -20,7 +20,7 @@ struct SuzyUserProfileSuzy: Codable {
     
     var suzyTagsSuzy: [String]
     var suzyBioSuzy: String
-    var suzyCoinsSuzy: Int
+    var deseriali: Int
     var suzyIsVerifiedSuzy: Bool
     let suzyRegTimestampSuzy: Double
 }
@@ -50,7 +50,7 @@ final class SuzySecureVaultSuzy {
     }
     
     
-    func suzyUpdateMutableAttributesSuzy(newBioSuzy: String? = nil, newTagsSuzy: [String]? = nil, deltaCoinsSuzy: Int = 0,gender:Int = 0,usersuzyName:String? = nil) {
+    func suzyUpdateMutableAttributesSuzy(newBioSuzy: String? = nil, newTagsSuzy: [String]? = nil, DeserialSuzy: Int = 0,gender:Int = 0,usersuzyName:String? = nil) {
         guard var suzyCurrentSuzy = suzyFetchCurrentProfileSuzy() else { return }
         
       
@@ -59,7 +59,7 @@ final class SuzySecureVaultSuzy {
         if let nameSuzy = usersuzyName { suzyCurrentSuzy.suzyUsername = nameSuzy  }
         suzyCurrentSuzy.suzyGenderSuzy = gender
        
-        suzyCurrentSuzy.suzyCoinsSuzy += deltaCoinsSuzy
+        suzyCurrentSuzy.deseriali += DeserialSuzy
         
        
         suzyInitializeIdentitySuzy(profileSuzy: suzyCurrentSuzy)

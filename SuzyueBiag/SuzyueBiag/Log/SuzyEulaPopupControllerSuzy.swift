@@ -9,7 +9,7 @@ import UIKit
 //elua
 final class SuzyEulaPopupControllerSuzy: UIViewController {
     
-    var suzyActionCallbackSuzy: ((Bool) -> Void)?
+    var suzyclipboardbackSuzy: ((Bool) -> Void)?
     
     private let suzyContainerViewSuzy: UIView = {
         let viewSuzy = UIView()
@@ -36,7 +36,7 @@ final class SuzyEulaPopupControllerSuzy: UIViewController {
     
     private let suzyHeaderLabelSuzy: UILabel = {
         let labelSuzy = UILabel()
-        labelSuzy.text = "Safety, Terms, EULA & UserContent Acknowledgement"
+        labelSuzy.text = "Suzyu Vibe Integrity & Community Covenant"
         labelSuzy.font = .systemFont(ofSize: 26, weight: .black)
         labelSuzy.textColor = .white
         labelSuzy.numberOfLines = 0
@@ -46,26 +46,33 @@ final class SuzyEulaPopupControllerSuzy: UIViewController {
     private let suzyBodyTextLabelSuzy: UILabel = {
         let labelSuzy = UILabel()
         labelSuzy.text = """
-        For safety reasons, Suzyu is strictly available to users 18 years of age or older. By tapping 'Accept', you confirm and certify that you are at least 18 years old.
+        To preserve the premium Art Toy community atmosphere, Suzyu is strictly accessible to users 18 years of age or older. By proceeding, you certify your adult status.
 
-        User Conduct & Zero Tolerance Policy:
-        Suzyu enforces a zero tolerance policy toward objectionable content and abusive behavior. The following are strictly prohibited on the platform:
-        • Sexual, explicit, or pornographic content.
-        • Harassment, hate speech, threats, or abusive behavior.
-        • Illegal activities or content that violates applicable laws.
-        • Any behavior that may endanger the safety or well-being of other users.
+        Vibe Integrity & Zero Tolerance:
+        Suzyu enforces a strict 'Zero Tolerance' policy toward objectionable content. To protect our collectors, the following are permanently banned:
+        • Any sexually explicit, pornographic, or suggestive material.
+        • Harassment, digital bullying, or hate speech.
+        • Random, unsolicited interactions (Anti-Roulette mechanism).
+        • Fraudulent profiles or automated bot activities.
 
-        Monitoring & Enforcement:
-        To ensure a safe environment, we employ both automated filters and human moderators to review reported content 24/7. 
+        24/7 Shield & Governance:
+        Our ecosystem is secured by a hybrid of AI filters and human guardians who monitor the Vibe-Stream 24/7. Any disruption to community safety is neutralized immediately.
 
-        Reporting & Blocking:
-        Users can report any violations or block offensive users instantly using the in-app tools. Any content or behavior that violates these rules may be immediately removed, and the associated account may be permanently banned without prior notice.
+        Empowerment Tools:
+        You have the absolute right to 'Flag Vibe' (Report) or 'Sever Connection' (Block) any user instantly. Violations result in permanent account deconstruction within 24 hours without prior notice.
 
-        By proceeding, you acknowledge our guidelines for a safe experience. Legal & Safety.
+        By tapping 'Accept', you embrace the Suzyu Vibe and agree to our EULA and Safety Standards.
         """
-        labelSuzy.font = .systemFont(ofSize: 15, weight: .medium)
-        labelSuzy.textColor = UIColor.white.withAlphaComponent(0.8)
+        labelSuzy.font = .systemFont(ofSize: 14, weight: .medium)
+        labelSuzy.textColor = UIColor.white.withAlphaComponent(0.85)
         labelSuzy.numberOfLines = 0
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        let attributedString = NSMutableAttributedString(string: labelSuzy.text!)
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+        labelSuzy.attributedText = attributedString
+        
         return labelSuzy
     }()
     
@@ -156,10 +163,10 @@ final class SuzyEulaPopupControllerSuzy: UIViewController {
     }
     
     @objc private func handleSuzyRefusalSuzy() {
-        dismiss(animated: true) { self.suzyActionCallbackSuzy?(false) }
+        dismiss(animated: true) { self.suzyclipboardbackSuzy?(false) }
     }
     
     @objc private func handleSuzyAcceptanceSuzy() {
-        dismiss(animated: true) { self.suzyActionCallbackSuzy?(true) }
+        dismiss(animated: true) { self.suzyclipboardbackSuzy?(true) }
     }
 }

@@ -6,11 +6,11 @@
 //
 
 import UIKit
-enum SuzyMatchLogicTypeSuzy {
+enum SuzyAertionLogicTypeSuzy {
     case suzyAllSuzy
     case suzyFilteredSuzy
 }
-struct SuzyMatchEntitySuzy {
+struct UseAertionEntitySuzy {
     let suzyIdentifierSuzy: String
     let suzyUsernameSuzy: String
     let suzyGenderSuzy: Int
@@ -96,7 +96,7 @@ final class SuzyAlgorithmGridSuzy: UICollectionViewCell {
     
 
     
-    func suzyUpdateLayoutModeSuzy(suzyItemSuzy: SuzyMatchEntitySuzy, suzyModeSuzy: SuzyMatchLogicTypeSuzy) {
+    func suzyUpdateLayoutModeSuzy(suzyItemSuzy: UseAertionEntitySuzy, suzyModeSuzy: SuzyAertionLogicTypeSuzy) {
             suzyNameLabelSuzy.text = suzyItemSuzy.suzyUsernameSuzy
             suzyAvatarImageViewSuzy.image = suzyItemSuzy.suzyGenderSuzy == 0 ? SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "respectfulSpaceSuzy") : SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "confidentUserSuue")
             

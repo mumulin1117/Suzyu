@@ -9,7 +9,7 @@ import UIKit
 
 final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
     private let suzyMainContainerSuzy = UIImageView.init(image: SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "bMainContainerg"))
-    private let suzyCoinIconSuzy = UIImageView()
+    private let DeserialIconSuzy = UIImageView()
     private let suzyAmountLabelSuzy = UILabel()
     private let suzyPurchaseBtnSuzy = UILabel()
     
@@ -24,9 +24,9 @@ final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
   
         contentView.addSubview(suzyMainContainerSuzy)
         
-        suzyCoinIconSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "bubbleacall")
-        suzyCoinIconSuzy.contentMode = .scaleAspectFit
-        suzyMainContainerSuzy.addSubview(suzyCoinIconSuzy)
+        DeserialIconSuzy.image = SuzyArtToyVibeEngine.suzyFetchVibeGraphic(suzyAliasName: "bubbleacall")
+        DeserialIconSuzy.contentMode = .scaleAspectFit
+        suzyMainContainerSuzy.addSubview(DeserialIconSuzy)
         
         suzyAmountLabelSuzy.textColor = .white
         suzyAmountLabelSuzy.font = .systemFont(ofSize: 18, weight: .bold)
@@ -43,7 +43,7 @@ final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
         
         
         suzyMainContainerSuzy.translatesAutoresizingMaskIntoConstraints = false
-        suzyCoinIconSuzy.translatesAutoresizingMaskIntoConstraints = false
+        DeserialIconSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyAmountLabelSuzy.translatesAutoresizingMaskIntoConstraints = false
         suzyPurchaseBtnSuzy.translatesAutoresizingMaskIntoConstraints = false
         
@@ -53,12 +53,12 @@ final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
             suzyMainContainerSuzy.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             suzyMainContainerSuzy.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            suzyCoinIconSuzy.topAnchor.constraint(equalTo: suzyMainContainerSuzy.topAnchor, constant: 0),
-            suzyCoinIconSuzy.centerXAnchor.constraint(equalTo: suzyMainContainerSuzy.centerXAnchor),
-            suzyCoinIconSuzy.widthAnchor.constraint(equalTo: suzyMainContainerSuzy.widthAnchor, multiplier: 0.5),
-            suzyCoinIconSuzy.heightAnchor.constraint(equalTo: suzyCoinIconSuzy.widthAnchor),
+            DeserialIconSuzy.topAnchor.constraint(equalTo: suzyMainContainerSuzy.topAnchor, constant: 0),
+            DeserialIconSuzy.centerXAnchor.constraint(equalTo: suzyMainContainerSuzy.centerXAnchor),
+            DeserialIconSuzy.widthAnchor.constraint(equalTo: suzyMainContainerSuzy.widthAnchor, multiplier: 0.5),
+            DeserialIconSuzy.heightAnchor.constraint(equalTo: DeserialIconSuzy.widthAnchor),
             
-            suzyAmountLabelSuzy.topAnchor.constraint(equalTo: suzyCoinIconSuzy.bottomAnchor, constant: 4),
+            suzyAmountLabelSuzy.topAnchor.constraint(equalTo: DeserialIconSuzy.bottomAnchor, constant: 4),
             suzyAmountLabelSuzy.centerXAnchor.constraint(equalTo: suzyMainContainerSuzy.centerXAnchor),
             
             suzyPurchaseBtnSuzy.bottomAnchor.constraint(equalTo: suzyMainContainerSuzy.bottomAnchor, constant: -15),
@@ -69,7 +69,7 @@ final class SuzyRechargeGridCellSuzy: UICollectionViewCell {
     }
     
     func suzyUpdateCellSuzy(item: SuzyPurchaseItemSuzy) {
-        suzyAmountLabelSuzy.text = "\(item.suzyCoinAmountSuzy)"
+        suzyAmountLabelSuzy.text = "\(item.DeserialAmountSuzy)"
         suzyPurchaseBtnSuzy.text = SuzyArtToyVibeEngine.suzyRestoreSecretVibeString(suzyEncodedString: item.suzyPriceLabelSuzy) 
     }
 }
